@@ -193,17 +193,8 @@
 
   <script>
     // --- CONFIGURATION ---
-    // Use Render backend URL for production deployment
-    const getApiUrl = () => {
-      // If localhost, 127.0.0.1, OR file protocol (empty hostname), use local backend
-      const host = window.location.hostname;
-      if (host === 'localhost' || host === '127.0.0.1' || host === '') {
-        return 'http://127.0.0.1:3000/api/generate-plan';
-      }
-      // Production: Use deployed Render backend
-      return 'https://go-study-backend.onrender.com/api/generate-plan';
-    };
-    const API_URL = getApiUrl();
+    // Always use Render backend URL (works for both local testing and production)
+    const API_URL = 'https://go-study-backend.onrender.com/api/generate-plan';
     console.log("API URL configured as:", API_URL);
 
     // --- DOM ELEMENTS ---
