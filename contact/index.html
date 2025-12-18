@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - GoStudy!</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- Favicon -->
+  <link rel="icon" href= type="image/png" />
+  <link rel="shortcut icon" href= type="image/png" />
+  <link rel="apple-touch-icon" href= />
+  <meta name="theme-color" content="#007AFF" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF", 
+            secondary: "#F5F5F7", 
+            dark: "#1D1D1F",
+            success: "#34C759",
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          boxShadow: {
+            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+            'card': '0 4px 20px rgba(0,0,0,0.04)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <script type="module" src="js/auth.js"></script>
+  <style>
+    /* Smooth reveal styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hero-blob {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+    }
+  </style>
+    <!-- Favicon and touch icon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+</head>
+
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+         <img src="/assets/nabv-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/pricing/">Pricing</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="w-full mx-auto mt-20 min-h-screen">
+
+    <!-- HEADER / HERO -->
+    <section class="relative pt-24 pb-12 md:pt-32 md:pb-16 px-6 text-center reveal active">
+      <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-dark">
+          Get in touch
+        </h1>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Have a question about our Spaced Repetition algorithms? Need help with your account? We're here to help you learn better.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTENT GRID -->
+    <section class="px-6 pb-24 reveal">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        
+        <!-- LEFT COLUMN: INFO -->
+        <div class="space-y-8">
+          
+          <!-- Info Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-subtle">
+              <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+                <span class="material-icons-round text-primary">support_agent</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">Support</h3>
+              <p class="text-sm text-gray-500 mb-2">Technical issues & account help.</p>
+              <a href="mailto:support@gostudy.ai" class="text-sm font-medium text-primary hover:underline">support@gostudy.ai</a>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-subtle">
+              <div class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center mb-4">
+                <span class="material-icons-round text-purple-600">school</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">Sales</h3>
+              <p class="text-sm text-gray-500 mb-2">For Schools & Universities.</p>
+              <a href="mailto:sales@gostudy.ai" class="text-sm font-medium text-primary hover:underline">sales@gostudy.ai</a>
+            </div>
+          </div>
+
+          <!-- FAQ Link -->
+          <div class="bg-secondary/50 p-8 rounded-3xl border border-gray-100">
+            <h3 class="font-bold text-xl mb-2">Looking for quick answers?</h3>
+            <p class="text-gray-500 mb-6">Check out our FAQ for instant answers about file formats, privacy, and pricing.</p>
+            <a href="/index.html/#FAQ" class="inline-flex items-center gap-2 text-dark font-medium hover:text-primary transition-colors">
+              Visit FAQ 
+              <span class="material-icons-round text-sm">arrow_forward</span>
+            </a>
+          </div>
+
+          <!-- Social / Address -->
+          <div class="pl-2">
+            <h4 class="font-bold text-dark mb-4">Office</h4>
+            <p class="text-gray-500 leading-relaxed mb-6">
+              123 Innovation Drive<br>
+              Palo Alto, CA 94301<br>
+              United States
+            </p>
+            <div class="flex gap-4">
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">thumb_up</span></a> <!-- Placeholder for social icons -->
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">photo_camera</span></a>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">alternate_email</span></a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: FORM -->
+        <div class="bg-white p-8 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-card">
+          <form action="#" method="POST" class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="first-name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                <input type="text" id="first-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Jane">
+              </div>
+              <div>
+                <label for="last-name" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                <input type="text" id="last-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Doe">
+              </div>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+              <input type="email" id="email" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="jane@university.edu">
+            </div>
+
+<div>
+  <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">
+    Subject
+  </label>
+
+  <div class="relative">
+    <select
+      id="subject"
+      class="w-full px-4 py-3 pr-12 rounded-xl bg-gray-50 border border-gray-200
+             focus:bg-white focus:border-primary focus:ring-primary transition-colors
+             appearance-none"
+    >
+      <option>General Inquiry</option>
+      <option>Technical Support</option>
+      <option>Billing Question</option>
+      <option>Feature Request</option>
+      <option>Enterprise / School License</option>
+    </select>
+
+    <!-- Custom arrow -->
+    <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500">
+      <span class="material-icons-round">expand_more</span>
+    </div>
+  </div>
+</div>
+
+
+            <div>
+              <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+              <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors resize-none" placeholder="How can we help you?"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-600 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-blue-500/20">
+              Send Message
+            </button>
+            
+            <p class="text-center text-xs text-gray-400 mt-4">
+              By sending this form, you agree to our <a href="privacy.html" class="underline hover:text-dark">Privacy Policy</a>.
+            </p>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="text-primary font-bold">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

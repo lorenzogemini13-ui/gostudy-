@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F" }, fontFamily: { sans: ["Inter", "sans-serif"] } } } };
+  </script>
+      <!-- Favicon and touch icon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <!-- html2pdf for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-white text-dark font-sans antialiased relative min-h-screen">
+  
+  <!-- Purple Mesh Gradient Background -->
+  <div class="absolute top-0 left-0 right-0 h-[600px] pointer-events-none -z-10" style="background: radial-gradient(circle at 50% -20%, #E0E7FF 0%, #F3F4F6 60%, transparent 100%);"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-blue-400/10 blur-[100px] rounded-full -z-10"></div>
+
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-sm rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-4xl">
+      <span class="font-bold text-lg tracking-tight text-dark flex items-center gap-2">
+         GoStudy!
+      </span>
+      <a class="bg-dark text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-black transition-colors" href="/index.html">Log Out</a>
+    </nav>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-6xl mx-auto px-6 py-12 pt-40">
+    <h1 class="text-3xl font-bold mb-2">My Library</h1>
+    <p class="text-gray-500 mb-8">Upload a document (Max 5MB) to generate a study plan.</p>
+
+    <!-- 1. UPLOAD BOX -->
+    <div id="upload-section" class="bg-white border text-center transition-all p-12 rounded-[2rem] shadow-sm max-w-2xl mx-auto mt-20">
+      <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 mx-auto">
+        <span class="material-icons-round text-3xl">cloud_upload</span>
+      </div>
+      <h3 class="text-2xl font-bold mb-3 tracking-tight">Upload study material</h3>
+      <p class="text-gray-500 mb-8 max-w-sm mx-auto">Upload your PDF, DOCX, or TXT file. We'll generate a comprehensive study plan instantly.</p>
+      
+      <!-- Hidden Input -->
+      <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt" />
+      
+      <!-- Error Message Area -->
+      <p id="validation-error" class="hidden text-red-500 text-sm font-bold mb-4"></p>
+
+      <button onclick="document.getElementById('file-input').click()" class="bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-colors">
+        Select Document
+      </button>
+    </div>
+
+    <!-- 2. LOADING SPINNER -->
+    <div id="loading-section" class="hidden border border-gray-100 rounded-3xl p-16 flex flex-col items-center justify-center text-center bg-white">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-6"></div>
+      <h3 class="text-xl font-bold mb-2">Analyzing Cognitive Load...</h3>
+      <p class="text-gray-400">Consulting AI (this takes ~15 seconds)</p>
+    </div>
+
+    <!-- 3. RESULTS AREA -->
+    <div id="results-section" class="hidden space-y-6 pt-10">
+      
+      <!-- HEADER & EXPORTS -->
+      <div class="flex flex-col md:flex-row justify-between items-end border-b pb-6 mb-8 mt-12">
+          <div class="text-center md:text-left w-full">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-dark">Generated Plan</h1>
+            <p class="text-gray-500 max-w-xl">This is the manuscript that will help you study, faster, better and effortlessly.</p>
+          </div>
+           <!-- Export Buttons -->
+          <div class="flex gap-3 mt-4 md:mt-0">
+            <button onclick="exportMarkdown()" class="flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-gray-50 text-sm font-medium transition-colors">
+                <span class="material-icons-round text-base">code</span> Markdown
+            </button>
+            <button onclick="exportPDF()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-dark text-white hover:bg-black text-sm font-medium transition-colors">
+                <span class="material-icons-round text-base">picture_as_pdf</span> PDF
+            </button>
+          </div>
+      </div>
+          
+      <!-- CONTENT GRID (To be captured for PDF) -->
+      <div id="printable-content" class="space-y-6">
+
+        <!-- Summary -->
+        <div class="bg-white p-8 rounded-[2rem] border border-gray-200 shadow-sm relative overflow-hidden group">
+          <div class="flex items-center gap-4 mb-6">
+             <div class="w-12 h-12 bg-blue-100/50 rounded-xl flex items-center justify-center text-blue-600">
+                <span class="material-icons-round">school</span>
+             </div>
+             <h2 class="text-xl font-bold text-dark">Summary</h2>
+          </div>
+          <p id="result-summary" class="text-gray-600 leading-relaxed text-lg"></p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Quiz -->
+          <div class="bg-[#F7F7F8] p-8 rounded-[2rem] border border-gray-200/50 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
+                        <span class="material-icons-round">quiz</span>
+                    </div>
+                    <h2 class="text-lg font-bold">Quiz</h2>
+                </div>
+                 <button onclick="toggleAnswers()" class="text-xs font-bold bg-green-100 text-green-700 px-3 py-1.5 rounded-full hover:bg-green-200 transition-colors">
+                    See the Answers ->
+                 </button>
+            </div>
+            <div id="result-quiz" class="space-y-1"></div>
+          </div>
+
+          <!-- Schedule -->
+          <div class="bg-[#F7F7F8] p-8 rounded-[2rem] border border-gray-200/50 shadow-sm">
+             <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600">
+                    <span class="material-icons-round">calendar_today</span>
+                </div>
+                <h2 class="text-lg font-bold">Plan</h2>
+            </div>
+            <div id="result-schedule" class="space-y-4"></div>
+          </div>
+        </div>
+
+        <!-- Memory Palace -->
+        <div class="bg-[#333333] text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
+           <div class="flex items-center gap-4 mb-6 relative z-10">
+                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
+                    <span class="material-icons-round">psychology</span>
+                </div>
+                <h2 class="text-lg font-bold">Memory Palace</h2>
+           </div>
+           <p id="result-palace" class="text-gray-300 leading-relaxed relative z-10 text-lg"></p>
+        </div>
+      </div>
+      
+       <!-- Scientific Method Badge -->
+        <div class="flex justify-center mt-12 mb-12">
+            <div class="bg-gray-200/50 px-8 py-4 rounded-2xl text-center">
+                <p class="font-bold text-dark text-sm mb-0.5">Scientific Method Used:</p>
+                <p class="text-gray-500 text-sm">Active Recall & Spaced Repetition</p>
+            </div>
+        </div>
+        
+    </div>
+
+      <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  </main>
+
+  <script>
+    // --- CONFIGURATION ---
+    // Dynamic URL detection - use relative path for production, explicit localhost for dev
+    const getApiUrl = () => {
+      // If localhost, 127.0.0.1, OR file protocol (empty hostname), use explicit backend URL
+      const host = window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1' || host === '') {
+        return 'http://127.0.0.1:3000/api/generate-plan';
+      }
+      return '/api/generate-plan';
+    };
+    const API_URL = getApiUrl();
+     // DEBUG: Remove after fixing
+    console.log("API URL configured as:", API_URL);
+
+    // --- DOM ELEMENTS ---
+    const fileInput = document.getElementById('file-input');
+    const uploadSection = document.getElementById('upload-section');
+      const loadingSection = document.getElementById('loading-section');
+    const resultsSection = document.getElementById('results-section');
+    const validationError = document.getElementById('validation-error');
+    
+    // Global data store for export
+    let currentData = null;
+
+    // --- EXPORT FUNCTIONS ---
+    function exportMarkdown() {
+        if (!currentData) return;
+        const md = `# Study Plan\n\n## Summary\n${currentData.summary}\n\n## Quiz\n${currentData.active_recall.map((q,i)=>`${i+1}. ${q.question}\nA: ${q.answer}`).join('\n\n')}\n\n## Schedule\n${currentData.spaced_repetition.map(s=>`- **${s.day}**: ${s.topic}`).join('\n')}\n\n## Memory Palace\n${currentData.memory_palace}`;
+        
+        const blob = new Blob([md], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'study-plan.md';
+        a.click();
+    }
+
+    function exportPDF() {
+        const element = document.getElementById('results-section'); // Capture whole section
+        const opt = {
+          margin:       0.5,
+          filename:     'my-study-plan.pdf',
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        // Temporarily show full content if needed or just snapshot
+        html2pdf().set(opt).from(element).save();
+    }
+    
+    // Toggle Answers logic
+    let answersVisible = false;
+    function toggleAnswers() {
+        answersVisible = !answersVisible;
+        const answers = document.querySelectorAll('.quiz-answer');
+        answers.forEach(a => {
+            if (answersVisible) {
+                a.classList.remove('opacity-0', 'h-0', 'overflow-hidden');
+            } else {
+                a.classList.add('opacity-0', 'h-0', 'overflow-hidden');
+            }
+        });
+    }
+
+    // --- RESET FUNCTION ---
+    function resetUI() {
+        fileInput.value = ''; // Clear file
+        uploadSection.style.display = 'flex';
+        loadingSection.style.display = 'none';
+        resultsSection.style.display = 'none';
+        validationError.classList.add('hidden');
+    }
+
+    // --- MAIN LOGIC ---
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // 1. CLIENT-SIDE VALIDATION
+      validationError.classList.add('hidden');
+      
+      // Check Size (5MB limit)
+      const MAX_FILE_SIZE = 5 * 1024 * 1024;
+      if (file.size > MAX_FILE_SIZE) {
+          showError(`File is too large (${(file.size / 1024 / 1024).toFixed(2)}MB). Maximum size is 5MB.`);
+          fileInput.value = '';
+          return;
+      }
+
+      // Check Type (MIME validation)
+      const validMimes = [
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain'
+      ];
+      if (!validMimes.includes(file.type)) {
+          showError(`Invalid file type: ${file.type || 'unknown'}. Please upload PDF, DOCX, or TXT.`);
+          fileInput.value = '';
+          return;
+      }
+
+      // 2. UI TRANSITION
+      uploadSection.style.display = 'none';
+      loadingSection.style.display = 'flex';
+      loadingSection.style.display = 'flex';
+      loadingSection.classList.remove('hidden');
+      
+      // Visual Status
+      const statusP = loadingSection.querySelector('p');
+      statusP.textContent = "Consulting AI... (Init)";
+
+      const formData = new FormData();
+      formData.append('document', file);
+
+      try {
+        console.log(`Sending to: ${API_URL}`);
+        
+        // DEBUG: Alert before fetch
+        // alert(`Starting upload to: ${API_URL}`);
+
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          body: formData
+        });
+        
+        statusP.textContent = "AI Responded. processing data...";
+
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            // DEBUG: Alert on error
+            alert(`Server Error: ${response.status} - ${JSON.stringify(errData)}`);
+            throw new Error(errData.error || `Server Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // DEBUG: Alert on success data
+        console.log("Data received:", data);
+        // alert("Data received! Check console.");
+        
+        renderDashboard(data);
+
+      } catch (err) {
+        console.error('Upload error:', err);
+        // Securely display error using DOM methods (No innerHTML XSS risk)
+        loadingSection.innerHTML = '';
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = "text-red-500 p-8";
+        
+        const h3 = document.createElement('h3');
+        h3.className = "text-xl font-bold";
+        h3.textContent = "Analysis Failed";
+        
+        const p = document.createElement('p');
+        p.className = "mt-2 mb-4 text-sm";
+        p.textContent = err.message;
+
+        const btn = document.createElement('button');
+        btn.textContent = "Try Again";
+        btn.className = "mt-4 bg-gray-200 px-4 py-2 rounded font-bold hover:bg-gray-300 text-dark transition-colors";
+        btn.onclick = resetUI;
+
+        wrapper.appendChild(h3);
+        wrapper.appendChild(p);
+        wrapper.appendChild(btn);
+        
+        loadingSection.appendChild(wrapper);
+      }
+    });
+
+    function showError(msg) {
+        validationError.textContent = msg;
+        validationError.classList.remove('hidden');
+    }
+
+    function renderDashboard(data) {
+      currentData = data; // Store for export
+      try {
+          loadingSection.style.display = 'none';
+          resultsSection.style.display = 'block';
+          resultsSection.classList.remove('hidden');
+    
+          // Use safe text assignment (innerText) to prevent XSS
+          if (!data.summary) console.warn("Missing summary in data:", data);
+          document.getElementById('result-summary').innerText = data.summary || "No summary available.";
+          document.getElementById('result-palace').innerText = data.memory_palace || "No memory palace available.";
+    
+          // Render Quiz
+          const quizDiv = document.getElementById('result-quiz');
+          quizDiv.innerHTML = ''; // Clear previous
+          
+          const questions = data.active_recall || [];
+          if (questions.length === 0) {
+            quizDiv.textContent = "No quiz generated.";
+          } else {
+             // ... rendering continues ...
+             renderQuizItems(quizDiv, questions);
+          }
+    
+          // Render Schedule
+          const schedDiv = document.getElementById('result-schedule');
+          schedDiv.innerHTML = ''; // Clear previous
+          
+          const schedule = data.spaced_repetition || [];
+          if (schedule.length === 0) {
+            schedDiv.textContent = "No schedule generated.";
+          } else {
+              renderScheduleItems(schedDiv, schedule);
+          }
+    
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+          
+          // Reset answers visibility
+          answersVisible = false;
+          
+      } catch (renderError) {
+          console.error("Rendering crashed:", renderError);
+          alert("Rendering failed: " + renderError.message);
+      }
+    }
+
+    // New helper to keep main function clean
+    function renderQuizItems(container, questions) {
+        questions.forEach((q, i) => {
+            const div = document.createElement('div');
+            div.className = "mb-4 pb-1 last:border-0";
+            
+            const qTitle = document.createElement('p');
+            qTitle.className = "font-semibold text-gray-800 mb-1 leading-snug";
+            qTitle.innerHTML = `<span class="text-green-600 font-bold mr-2">${i+1}.</span> ${q.question}`;
+            
+            const qAns = document.createElement('p');
+            // Transition classes for toggle visibility
+            qAns.className = "quiz-answer text-sm text-gray-500 font-medium ml-6 opacity-0 h-0 overflow-hidden transition-all duration-300 ease-out";
+            qAns.textContent = `${q.answer}`;
+
+            div.appendChild(qTitle);
+            div.appendChild(qAns);
+            container.appendChild(div);
+        });
+    }
+
+    function renderScheduleItems(container, schedule) {
+        schedule.forEach(s => {
+            const div = document.createElement('div');
+            div.className = "flex gap-4 mb-4 items-start";
+
+            const badge = document.createElement('span');
+             // Map styles depending on day text
+            let bgClass = "bg-orange-100/80 text-orange-600"; 
+             
+            badge.className = `${bgClass} text-[10px] font-extrabold px-2 py-1 rounded-md min-w-[50px] text-center uppercase tracking-wide mt-0.5`;
+            badge.textContent = s.day || 'Day';
+
+            const text = document.createElement('span');
+            text.className = "text-sm text-gray-600 font-medium leading-relaxed";
+            text.textContent = s.topic || 'Topic';
+
+            div.appendChild(badge);
+            div.appendChild(text);
+            container.appendChild(div);
+        });
+    }
+  </script>
+</body>
+</html>

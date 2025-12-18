@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>About Us - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF",
+            secondary: "#F5F5F7",
+            dark: "#1D1D1F"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+</head>
+
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased">
+
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+        <img src="/assets/nabv-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/pricing/">Pricing</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 mt-32 mb-20">
+
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-8">
+      We are building the <br>
+      <span class="text-primary">calculator for your brain.</span>
+    </h1>
+
+    <div class="prose prose-lg prose-gray mb-16">
+      <p>
+        In 1970, the electronic calculator freed people from manual arithmetic so they could focus on real problem-solving.
+        <br><br>
+        <strong>GoStudy!</strong> is an attempt to do the same for studying.
+        <br><br>
+        Summarizing notes, creating flashcards, and organizing material is necessary work, but it is not learning.
+        Learning happens when concepts connect.
+        <br><br>
+        GoStudy! is being built to automate the mechanical parts of studying so students can focus on understanding, not formatting.
+      </p>
+    </div>
+
+    <!-- REAL STATS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 border-y border-gray-200 py-12">
+      <div>
+        <div class="text-3xl font-bold">Dec 2025</div>
+        <div class="text-sm text-gray-500">Founded</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold">0</div>
+        <div class="text-sm text-gray-500">Users (early stage)</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold">Remote</div>
+        <div class="text-sm text-gray-500">Based</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold">Self-funded</div>
+        <div class="text-sm text-gray-500">Funding</div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <h2 class="text-2xl font-bold mb-8">The Team</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 text-center md:col-span-1">
+        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
+        <h3 class="font-bold">Founder</h3>
+        <p class="text-sm text-primary">Product · Engineering · Everything Else</p>
+        <p class="text-sm text-gray-500 mt-3">
+          GoStudy! is currently developed and maintained by a single founder,
+          from product design to code to strategy.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            An intelligent study companion, currently in early development.
+          </p>
+        </div>
+
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="text-primary font-bold">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/backend/js/auth.js"></script>
+</body>
+</html>

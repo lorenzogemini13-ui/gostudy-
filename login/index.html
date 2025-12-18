@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <!-- Config & Styles -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F" },
+          fontFamily: { sans: ["Inter", "-apple-system", "sans-serif"] },
+          boxShadow: { 'subtle': '0 2px 10px rgba(0,0,0,0.03)', 'card': '0 20px 40px -10px rgba(0,0,0,0.05)' },
+        },
+      },
+    };
+  </script>
+  <style>
+    .hero-blob { background: radial-gradient(circle at 80% 20%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 60%); pointer-events: none; }
+    .hidden-state { display: none; opacity: 0; transform: translateY(10px); }
+    .visible-state { display: block; animation: fadeIn 0.4s forwards; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+  </style>
+    <!-- Favicon and touch icon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+</head>
+
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+         <img src="/assets/nabv-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/pricing/">Pricing</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
+
+  <a href="index.html" class="absolute top-6 left-6 md:top-10 md:left-10 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-dark transition-colors z-20">
+    <span class="material-icons-round text-lg">arrow_back</span> Back to Home
+  </a>
+
+  <main class="w-full max-w-[1000px] bg-white rounded-[2rem] shadow-card border border-gray-100 overflow-hidden relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[600px]">
+
+    <!-- LEFT COLUMN -->
+    <div class="hidden md:flex flex-col justify-between bg-[#F5F5F7] p-12 relative overflow-hidden">
+      <div class="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] bg-gradient-to-br from-blue-50 via-transparent to-transparent opacity-70 pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-2 mb-8">
+          <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm">G</div>
+          <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+        </div>
+        <h2 class="text-3xl font-bold text-dark leading-tight mb-4">Turn your notes into <br> <span class="text-primary">superpowers.</span></h2>
+        <p class="text-gray-500">Join 10,000+ students mastering their subjects with Active Recall AI.</p>
+      </div>
+      <div class="relative z-10 bg-white p-6 rounded-2xl shadow-subtle border border-gray-100/50 mt-12">
+        <div class="flex gap-1 text-yellow-400 mb-3">
+          <span class="material-icons-round text-base">star</span><span class="material-icons-round text-base">star</span><span class="material-icons-round text-base">star</span><span class="material-icons-round text-base">star</span><span class="material-icons-round text-base">star</span>
+        </div>
+        <p class="text-sm font-medium text-dark leading-relaxed mb-4">"I uploaded my History thesis and got a full memory palace in 30 seconds."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold text-xs">DL</div>
+          <div><p class="text-xs font-bold text-dark">David L.</p><p class="text-[10px] text-gray-400 font-mono">Oxford University</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="p-8 md:p-12 flex flex-col justify-center bg-white">
+      
+      <div class="flex bg-secondary p-1 rounded-lg mb-8 mx-auto w-full max-w-xs">
+        <button id="tab-login" onclick="switchTab('login')" class="flex-1 py-1.5 text-sm font-medium rounded-md shadow-sm bg-white text-dark transition-all">Log In</button>
+        <button id="tab-register" onclick="switchTab('register')" class="flex-1 py-1.5 text-sm font-medium rounded-md text-gray-500 hover:text-dark transition-all">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="form-login" class="visible-state max-w-xs mx-auto w-full">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-dark tracking-tight">Welcome back</h3>
+          <p class="text-sm text-gray-500 mt-2">Enter your details to access your study plans.</p>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1 ml-1">Email</label>
+            <input id="login-email" type="email" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:border-primary/30 focus:ring-0 text-sm transition-all" placeholder="student@university.edu" />
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-1 ml-1">
+              <label class="block text-xs font-semibold text-gray-700">Password</label>
+              <a href="#" class="text-xs text-primary font-medium hover:underline">Forgot?</a>
+            </div>
+            <input id="login-password" type="password" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:border-primary/30 focus:ring-0 text-sm transition-all" placeholder="••••••••" />
+          </div>
+          <button id="login-submit-btn" type="submit" class="w-full bg-dark text-white font-bold py-3.5 rounded-xl hover:bg-black active:scale-[0.98] transition-all shadow-lg shadow-gray-200 mt-2 flex items-center justify-center gap-2">
+            Sign In
+          </button>
+        </form>
+
+        <div class="relative my-8">
+          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-100"></div></div>
+          <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-gray-400">Or continue with</span></div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+          <button id="google-btn" type="button" class="flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+            <span class="text-sm font-medium text-gray-600">Google</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="form-register" class="hidden-state max-w-xs mx-auto w-full">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-dark tracking-tight">Create account</h3>
+          <p class="text-sm text-gray-500 mt-2">Get started with your free 10 uploads.</p>
+        </div>
+
+        <form id="register-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1 ml-1">Full Name</label>
+            <input id="reg-name" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:border-primary/30 focus:ring-0 text-sm transition-all" placeholder="John Doe" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1 ml-1">Email</label>
+            <input id="reg-email" type="email" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:border-primary/30 focus:ring-0 text-sm transition-all" placeholder="student@university.edu" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1 ml-1">Password</label>
+            <input id="reg-password" type="password" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:border-primary/30 focus:ring-0 text-sm transition-all" placeholder="Create a strong password" />
+          </div>
+          <button id="reg-submit-btn" type="submit" class="w-full bg-primary text-white font-bold py-3.5 rounded-xl hover:bg-blue-600 active:scale-[0.98] transition-all shadow-lg shadow-blue-500/20 mt-2 flex items-center justify-center gap-2">
+            Create Account
+          </button>
+        </form>
+
+        <p class="text-xs text-center text-gray-400 mt-6 leading-relaxed">
+          By clicking Create Account, you agree to our <a href="#" class="underline hover:text-dark">Terms</a> and <a href="privacy.html" class="underline hover:text-dark">Privacy Policy</a>.
+        </p>
+      </div>
+
+    </div>
+    
+  </main>
+
+
+  <!-- FIREBASE AUTH SCRIPT -->
+  <script type="module" src="/backend/js/auth.js"></script>
+
+  <script>
+    function switchTab(tab) {
+      const loginForm = document.getElementById('form-login');
+      const registerForm = document.getElementById('form-register');
+      const loginBtn = document.getElementById('tab-login');
+      const registerBtn = document.getElementById('tab-register');
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden-state');
+        loginForm.classList.add('visible-state');
+        registerForm.classList.remove('visible-state');
+        registerForm.classList.add('hidden-state');
+        loginBtn.classList.add('bg-white', 'shadow-sm', 'text-dark');
+        loginBtn.classList.remove('text-gray-500');
+        registerBtn.classList.remove('bg-white', 'shadow-sm', 'text-dark');
+        registerBtn.classList.add('text-gray-500');
+      } else {
+        registerForm.classList.remove('hidden-state');
+        registerForm.classList.add('visible-state');
+        loginForm.classList.remove('visible-state');
+        loginForm.classList.add('hidden-state');
+        registerBtn.classList.add('bg-white', 'shadow-sm', 'text-dark');
+        registerBtn.classList.remove('text-gray-500');
+        loginBtn.classList.remove('bg-white', 'shadow-sm', 'text-dark');
+        loginBtn.classList.add('text-gray-500');
+      }
+    }
+  </script>
+</body>
+</html>

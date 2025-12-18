@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F" }, fontFamily: { sans: ["Inter", "sans-serif"] } } }
+    };
+  </script>
+    <!-- Favicon and touch icon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+</head>
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased">
+
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+         <img src="/assets/nabv-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/articles/">Articles</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/pricing/">Pricing</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 mt-32 mb-20">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">The Study Log</h1>
+      <p class="text-gray-500 text-lg">Science-backed tips to hack your brain.</p>
+    </div>
+
+    <!-- Articles Grid -->
+    <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- JS WILL INJECT CONTENT HERE -->
+    </div>
+  </main>
+
+    <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="text-primary font-bold">Articles</a></li>
+              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/pricing/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCALABLE BACKEND LOGIC -->
+  <script>
+    // --- ADD NEW ARTICLES HERE ---
+    const articles = [
+      {
+        category: "Science",
+        date: "Oct 12, 2025",
+        title: "The Forgetting Curve: Why you lose 80% of what you read",
+        excerpt: "Hermann Ebbinghaus discovered that memory decay is exponential. Here is the mathematical formula to stop it.",
+        image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80",
+        link: "#"
+      },
+      {
+        category: "Technique",
+        date: "Oct 08, 2025",
+        title: "Active Recall vs. Passive Reading",
+        excerpt: "Stop highlighting. It feels like work, but it's not learning. Discover why testing yourself is 3x more effective.",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=500&q=80",
+        link: "#"
+      },
+      {
+        category: "Productivity",
+        date: "Sep 29, 2025",
+        title: "The Pomodoro Technique 2.0",
+        excerpt: "25 minutes might be too short for deep work. We analyzed data from 5,000 students to find the perfect ratio.",
+        image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=500&q=80",
+        link: "#"
+      },
+      {
+        category: "Mental Health",
+        date: "Sep 15, 2025",
+        title: "Exam Anxiety is Biological",
+        excerpt: "Your cortisol levels spike before a test. Here are 3 breathing exercises to hijack your nervous system.",
+        image: "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=500&q=80",
+        link: "#"
+      }
+    ];
+
+    // RENDER FUNCTION
+    const grid = document.getElementById('articles-grid');
+    
+    articles.forEach(art => {
+      const card = `
+        <a href="${art.link}" class="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="h-48 overflow-hidden">
+            <img src="${art.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${art.title}">
+          </div>
+          <div class="p-8">
+            <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider mb-3">
+              <span class="text-primary">${art.category}</span>
+              <span class="text-gray-300">•</span>
+              <span class="text-gray-400">${art.date}</span>
+            </div>
+            <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-primary transition-colors">${art.title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-6">${art.excerpt}</p>
+            <span class="text-sm font-semibold text-dark flex items-center gap-1 group-hover:gap-2 transition-all">
+              Read Article <span class="material-icons-round text-base">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+      `;
+      grid.innerHTML += card;
+    });
+  </script>
+
+  <script type="module" src="js/auth.js"></script>
+
+</body>
+</html>

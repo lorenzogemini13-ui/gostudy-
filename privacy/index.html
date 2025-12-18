@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Privacy Policy - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F" }, fontFamily: { sans: ["Inter", "sans-serif"] } } } };
+  </script>
+    <!-- Favicon and touch icon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+</head>
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased">
+  <!-- NAV -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+         <img src="/assets/nabv-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/pricing/">Pricing</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="max-w-3xl mx-auto px-6 py-20">
+    <a href="index.html" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary mb-8">
+      &larr; Back to Home
+    </a>
+
+    <h1 class="text-4xl font-bold mb-2">Privacy Policy</h1>
+    <p class="text-gray-500 mb-12">Last updated: December 14, 2025</p>
+
+    <!-- The 'prose' class automatically styles h2, p, ul, etc. inside -->
+    <div class="prose prose-lg prose-blue max-w-none">
+      <p>
+        At GoStudy!, accessible from gostudy.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by GoStudy! and how we use it.
+      </p>
+
+      <h2>1. Information we collect</h2>
+      <p>
+        The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.
+      </p>
+      <ul>
+        <li>Account Information (Name, Email)</li>
+        <li>Study Documents (PDFs, Notes) - Encrypted</li>
+        <li>Usage Data (Time spent studying)</li>
+      </ul>
+
+      <h2>2. How we use your files</h2>
+      <p>
+        <strong>Crucially:</strong> We do not use your private uploads to train our public AI models. Your Biology notes remain yours. We use them solely to generate your summaries and quizzes, after which they are stored in an encrypted state.
+      </p>
+
+      <h2>3. Third Party Processors</h2>
+      <p>
+        We use Google Firebase for authentication and database services. You can find their privacy policy <a href="https://firebase.google.com/support/privacy/">here</a>.
+      </p>
+
+      <h2>4. Contact Us</h2>
+      <p>
+        If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at support@gostudy.com.
+      </p>
+    </div>
+  </div>
+
+    <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="privacy.html" class="text-primary font-bold">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
