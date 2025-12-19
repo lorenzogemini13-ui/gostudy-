@@ -13,6 +13,7 @@
   <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
+  <script type="module" src="/backend/js/auth.js"></script>
 </head>
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased">
   <!-- NAV -->
@@ -25,7 +26,7 @@
       <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/pricing/">Pricing</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/index.html#pricing">Pricing</a>
       </div>
       <div id="nav-cta">
         <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
@@ -90,7 +91,7 @@
             <h4 class="font-bold text-dark mb-6">Product</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
             </ul>
           </div>
           <div>

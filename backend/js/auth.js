@@ -127,11 +127,15 @@ onAuthStateChanged(auth, (user) => {
     const display = document.getElementById('user-name-display');
     if (display) display.innerText = user.displayName || user.email.split('@')[0];
     if (isLoginPage) window.location.href = "/dashboard/";
-    // Update navbar CTA to Dashboard when signed in
+    // Update navbar CTA to Profile when signed in
     try {
       const navCta = document.getElementById('nav-cta');
       if (navCta) {
-        navCta.innerHTML = `<a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/dashboard/">Dashboard</a>`;
+        navCta.innerHTML = `<a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/profile/">Profile</a>`;
+      }
+      const dashLink = document.getElementById('nav-dashboard-link');
+      if (dashLink) {
+        dashLink.href = '/dashboard/';
       }
     } catch (e) {
       // ignore if DOM not present
@@ -142,7 +146,11 @@ onAuthStateChanged(auth, (user) => {
     try {
       const navCta = document.getElementById('nav-cta');
       if (navCta) {
-        navCta.innerHTML = `<a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>`;
+        navCta.innerHTML = `<a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/login/">Get Started</a>`;
+      }
+      const dashLink = document.getElementById('nav-dashboard-link');
+      if (dashLink) {
+        dashLink.href = '/login/';
       }
     } catch (e) {
       // ignore if DOM not present

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script type="module" src="/backend/js/auth.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - GoStudy!</title>
@@ -26,21 +27,29 @@
 
   <!-- NAV -->
   <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <nav class="bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-sm rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-4xl">
-      <span class="font-bold text-lg tracking-tight text-dark flex items-center gap-2">
-         GoStudy!
-      </span>
-      <a class="bg-dark text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-black transition-colors" href="/index.html">Log Out</a>
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="index.html">
+         <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+       <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
     </nav>
   </div>
 
   <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-6 py-12 pt-40">
+  <main class="max-w-6xl mx-auto px-6 py-12 pt-40 pb-32">
     <h1 class="text-3xl font-bold mb-2">My Library</h1>
     <p class="text-gray-500 mb-8">Upload a document (Max 5MB) to generate a study plan.</p>
 
     <!-- 1. UPLOAD BOX -->
-    <div id="upload-section" class="bg-white border text-center transition-all p-12 rounded-[2rem] shadow-sm max-w-2xl mx-auto mt-20">
+    <div id="upload-section" class="bg-white border text-center transition-all p-12 rounded-[2rem] shadow-sm max-w-2xl mx-auto mt-20 mb-20 pb-20">
       <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 mx-auto">
         <span class="material-icons-round text-3xl">cloud_upload</span>
       </div>
@@ -190,7 +199,7 @@
             <h4 class="font-bold text-dark mb-6">Product</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/pricing/" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
             </ul>
           </div>
           <div>

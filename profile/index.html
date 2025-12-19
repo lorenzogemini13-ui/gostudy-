@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - GoStudy!</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F", danger: "#FF3B30" }, fontFamily: { sans: ["Inter", "sans-serif"] } } } };
+  </script>
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <script type="module" src="/backend/js/auth.js"></script>
+</head>
+<body class="bg-[#F5F5F7] text-dark font-sans antialiased min-h-screen">
+
+  <!-- Nav -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-sm rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="/index.html">
+         <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="max-w-3xl mx-auto px-6 py-32">
+    
+    <h1 class="text-3xl font-bold mb-8 text-dark">Settings</h1>
+
+    <!-- Profile Section -->
+    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
+      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <span class="material-icons-round text-gray-400">person</span>
+        Profile
+      </h2>
+      
+      <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
+        <div class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 border-4 border-white shadow-sm">
+          JS
+        </div>
+        <div class="flex-grow text-center md:text-left">
+          <h3 class="text-lg font-bold">John Student</h3>
+          <p class="text-gray-500">student@university.edu</p>
+        </div>
+        <button class="px-5 py-2 border border-gray-200 rounded-full font-medium text-sm hover:bg-gray-50 transition-colors">
+          Edit Profile
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Display Name</label>
+          <input type="text" value="John Student" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary" readonly>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Email</label>
+          <input type="email" value="student@university.edu" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary" readonly>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscription Section -->
+    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8 overflow-hidden relative">
+      <div class="absolute top-0 right-0 bg-gray-100 text-gray-500 text-xs font-bold px-4 py-1 rounded-bl-xl">CURRENT PLAN</div>
+      
+      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <span class="material-icons-round text-gray-400">credit_card</span>
+        Subscription
+      </h2>
+
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+          <div class="text-2xl font-bold text-dark mb-1">Free Plan</div>
+          <p class="text-gray-500 text-sm">You have 10 free uploads remaining this month.</p>
+        </div>
+        <a href="/index.html#pricing" class="bg-dark text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-black transition-colors flex items-center gap-2">
+          <span class="material-icons-round text-sm">star</span>
+          Upgrade to Pro
+        </a>
+      </div>
+    </div>
+
+    <!-- Preferences Section -->
+    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
+      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <span class="material-icons-round text-gray-400">tune</span>
+        Preferences
+      </h2>
+
+      <div class="space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-medium text-dark">Dark Mode</div>
+            <div class="text-xs text-gray-500">Switch between light and dark themes.</div>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        
+        <hr class="border-gray-100">
+
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-medium text-dark">Email Notifications</div>
+            <div class="text-xs text-gray-500">Receive weekly study progress reports.</div>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="bg-red-50 rounded-3xl p-8 border border-red-100 opacity-80 hover:opacity-100 transition-opacity">
+       <h2 class="text-lg font-bold text-danger mb-4">Danger Zone</h2>
+       <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+         <p class="text-sm text-red-800">Once you delete your account, there is no going back. Please be certain.</p>
+         <button class="text-red-600 border border-red-200 bg-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-all">
+           Delete Account
+         </button>
+       </div>
+    </div>
+
+  </main>
+
+  <footer class="text-center py-8 text-gray-400 text-sm">
+    &copy; 2025 GoStudy Inc.
+  </footer>
+
+</body>
+</html>
