@@ -58,15 +58,35 @@
       </button>
     </div>
 
-    <div id="loading-section" class="hidden border border-gray-100 rounded-3xl p-16 flex flex-col items-center justify-center text-center bg-white">
-      <!-- The Spinner -->
-      <svg class="h-12 w-12 animate-spin text-primary mb-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      <h3 class="text-xl font-bold mb-2">Processing your document...</h3>
-      <p class="text-gray-400">This may take 30-60 seconds on first upload (server waking up)</p>
-      <p class="text-gray-500 text-sm mt-2">Subsequent uploads will be much faster ⚡</p>
+    <div id="loading-section" class="hidden border border-gray-100 rounded-3xl p-16 flex flex-col items-center justify-center text-center bg-white shadow-xl relative overflow-hidden">
+      <!-- Animated Background Pulse -->
+      <div class="absolute inset-0 bg-blue-50/30 animate-pulse -z-10"></div>
+      
+      <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-8">
+        <span class="material-icons-round text-3xl animate-bounce">psychology</span>
+      </div>
+
+      <h3 id="loading-title" class="text-2xl font-bold mb-3 tracking-tight">AI is reading your document...</h3>
+      <p id="loading-status" class="text-gray-500 mb-8 max-w-sm mx-auto leading-relaxed">
+        Our AI is analyzing the complexity and structure to build your optimized plan.
+      </p>
+
+      <!-- Loading Bar Container -->
+      <div class="w-full max-w-md bg-gray-100 h-3 rounded-full overflow-hidden mb-4 relative">
+        <div id="loading-bar" class="h-full bg-gradient-to-r from-primary to-blue-400 w-0 transition-all duration-700 ease-out rounded-full shadow-[0_0_12px_rgba(0,122,255,0.3)]"></div>
+      </div>
+      
+      <div class="flex justify-between w-full max-w-md text-[10px] font-bold uppercase tracking-widest text-gray-400">
+        <span>Processing</span>
+        <span id="loading-percent">0%</span>
+      </div>
+
+      <div class="mt-8 p-4 bg-orange-50 border border-orange-100 rounded-2xl max-w-xs">
+        <p class="text-xs text-orange-700 flex items-center gap-2 justify-center font-medium">
+          <span class="material-icons-round text-sm">bolt</span>
+          First upload? Server may take 30s to wake up.
+        </p>
+      </div>
     </div>
 
     <!-- 3. RESULTS AREA -->
@@ -205,9 +225,13 @@
     // --- DOM ELEMENTS ---
     const fileInput = document.getElementById('file-input');
     const uploadSection = document.getElementById('upload-section');
-      const loadingSection = document.getElementById('loading-section');
+    const loadingSection = document.getElementById('loading-section');
     const resultsSection = document.getElementById('results-section');
     const validationError = document.getElementById('validation-error');
+    
+    // Loading Bar Elements
+    const loadingBar = document.getElementById('loading-bar');
+    const loadingPercent = document.getElementById('loading-percent');
     
     // Global data store for export
     let currentData = null;
@@ -291,13 +315,22 @@
 
       // 2. UI TRANSITION
       uploadSection.style.display = 'none';
-      loadingSection.style.display = 'flex';
-      loadingSection.style.display = 'flex';
       loadingSection.classList.remove('hidden');
+      loadingSection.style.display = 'flex';
       
-      // Visual Status
-      const statusP = loadingSection.querySelector('p');
-      statusP.textContent = "Consulting AI... (Init)";
+      // Reset & Start Loading Bar Animation
+      let progress = 0;
+      loadingBar.style.width = '0%';
+      loadingPercent.textContent = '0%';
+      
+      const progressInterval = setInterval(() => {
+        if (progress < 90) {
+          progress += Math.random() * 2;
+          const displayProgress = Math.min(Math.round(progress), 90);
+          loadingBar.style.width = `${displayProgress}%`;
+          loadingPercent.textContent = `${displayProgress}%`;
+        }
+      }, 500);
 
       const formData = new FormData();
       formData.append('document', file);
@@ -305,15 +338,15 @@
       try {
         console.log(`Sending to: ${API_URL}`);
         
-        // DEBUG: Alert before fetch
-        // alert(`Starting upload to: ${API_URL}`);
-
         const response = await fetch(API_URL, {
           method: 'POST',
           body: formData
         });
         
-        statusP.textContent = "AI Responded. processing data...";
+        // Complete the bar
+        clearInterval(progressInterval);
+        loadingBar.style.width = '100%';
+        loadingPercent.textContent = '100%';
 
         if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
@@ -330,6 +363,7 @@
         renderDashboard(data);
 
       } catch (err) {
+        clearInterval(progressInterval);
         console.error('Upload error:', err);
         // Securely display error using DOM methods (No innerHTML XSS risk)
         loadingSection.innerHTML = '';
