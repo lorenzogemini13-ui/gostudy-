@@ -3,6 +3,7 @@ node_modules/
 uploads/
 /tmp/
 TO-DO.md
+COMMANDS.md
 
 # OS specific
 .DS_Store
