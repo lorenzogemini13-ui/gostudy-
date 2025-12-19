@@ -66,7 +66,7 @@ if (registerForm) {
       
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
-      window.location.href = "/dashboard/";
+      window.location.href = "/onboarding/";
     } catch (error) {
       btn.disabled = false;
       btn.innerHTML = "Create Account";

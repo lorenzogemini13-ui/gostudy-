@@ -1,65 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <script type="module" src="/backend/js/auth.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Articles - GoStudy!</title>
+  <title>The Study Log - GoStudy!</title>
+  
+  <!-- Tailwind & Fonts -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  
+  <!-- Config -->
   <script>
     tailwind.config = {
-      theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F" }, fontFamily: { sans: ["Inter", "sans-serif"] } } }
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Outfit", "sans-serif"],
+          },
+          colors: {
+            primary: "#007AFF",
+            secondary: "#F5F5F7",
+            dark: "#1D1D1F",
+            "dark-secondary": "#151516"
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'slide-up': 'slideUp 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
     };
   </script>
-    <!-- Favicon and touch icon -->
-  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
-  <meta name="theme-color" content="#007AFF" />
-</head>
-<body class="bg-[#FBFBFD] text-dark font-sans antialiased">
 
-  <!-- NAV -->
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+</head>
+<body class="bg-[#FAFAFA] text-dark antialiased">
+
+  <!-- NAVIGATION -->
   <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
-      <a class="flex items-center gap-2" href="index.html">
-         <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
-        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+    <nav class="bg-white/80 backdrop-blur-2xl border border-white/40 ring-1 ring-black/5 shadow-sm rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2 group" href="/index.html">
+         <img src="/assets/go-logo.png" class="w-8 h-8 object-cover transition-transform group-hover:scale-110" alt="Logo">
+        <span class="font-display font-bold text-lg tracking-tight text-dark">GoStudy!</span>
       </a>
-      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm text-dark transition-all" href="/articles/">Articles</a>
-       <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/50 rounded-full px-1 py-1">
+        <a class="px-5 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-dark hover:bg-white/50 transition-all" href="/index.html">Home</a>
+        <a class="px-5 py-2 rounded-full text-sm font-medium bg-white shadow-sm ring-1 ring-black/5  ring-1 ring-black/5 text-dark" href="/articles/">Articles</a>
+        <a id="nav-dashboard-link" class="px-5 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-dark hover:bg-white/50 transition-all" href="/dashboard/">Dashboard</a>
       </div>
       <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+        <a class="bg-dark hover:bg-black text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg hover:shadow-dark/20" href="/login/">Get Started</a>
       </div>
     </nav>
   </div>
 
-  <main class="max-w-6xl mx-auto px-6 mt-32 mb-20">
-    <!-- Header -->
-    <div class="text-center mb-16">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">The Study Log</h1>
-      <p class="text-gray-500 text-lg">Science-backed tips to hack your brain.</p>
-    </div>
+  <!-- MAIN CONTENT -->
+  <main class="w-full min-h-screen pt-40 pb-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- HERO SECTION -->
+      <div class="text-center mb-20 animate-slide-up">
+        <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-primary text-xs font-bold tracking-wide uppercase mb-4 border border-blue-100">The GoStudy! Journal</span>
+        <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight text-dark mb-6">
+          Upgrade Your <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">BrainOS</span>
+        </h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
+          Science-backed protocols to learn faster, focus deeper, and optimize your cognitive performance.
+        </p>
 
-    <!-- Articles Grid -->
-    <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- JS WILL INJECT CONTENT HERE -->
+        <!-- Search & Filter -->
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+          <div class="relative w-full">
+            <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            <input type="text" id="search-input" placeholder="Search for active recall, pomodoro, focus..." 
+                   class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all text-dark placeholder-gray-400 outline-none">
+          </div>
+        </div>
+        
+        <!-- Category Chips -->
+        <div class="flex flex-wrap justify-center gap-2 mt-6">
+            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-dark text-white border border-transparent shadow-md" data-category="All">All</button>
+            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Science">Science</button>
+            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Technique">Technique</button>
+            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Productivity">Productivity</button>
+            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Mental Health">Mental Health</button>
+        </div>
+      </div>
+
+      <!-- ARTICLES GRID -->
+      <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.2s;">
+        <!-- CONTENT INJECTED BY JS -->
+      </div>
+
     </div>
   </main>
 
-    <!-- FOOTER -->
-  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+  <!-- ARTICLE MODAL -->
+  <div id="article-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-dark/30 backdrop-blur-sm transition-opacity" id="close-modal-overlay"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute inset-0 md:inset-10 lg:inset-y-10 lg:inset-x-40 bg-white rounded-none md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden animate-slide-up">
+      
+      <!-- Close Button (Mobile) -->
+      <button id="close-modal" class="absolute top-4 right-4 z-50 p-2 bg-white/50 backdrop-blur rounded-full hover:bg-white transition-all text-dark md:hidden">
+        <span class="material-icons-round">close</span>
+      </button>
+
+      <!-- Sidebar / Image (Desktop) -->
+      <div class="w-full md:w-1/3 h-48 md:h-full relative bg-gray-100 flex-shrink-0">
+        <img id="modal-img" src="" class="w-full h-full object-cover" alt="Article Cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+           <div class="text-white">
+             <span id="modal-category" class="text-xs font-bold uppercase tracking-wider bg-primary/90 px-2 py-1 rounded mb-2 inline-block">Category</span>
+             <h2 id="modal-title" class="font-display font-bold text-2xl leading-tight">Article Title</h2>
+             <div class="flex items-center gap-2 mt-4 text-sm text-gray-200">
+               <span id="modal-author">Author</span> • <span id="modal-date">Date</span>
+             </div>
+           </div>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="flex-grow flex flex-col h-full bg-white relative">
+        <!-- Toolbar -->
+        <div class="flex items-center justify-between px-8 py-4 border-b border-gray-100 bg-white z-10">
+           <div class="flex gap-2">
+             <button id="btn-print" class="p-2 text-gray-500 hover:text-dark hover:bg-gray-100 rounded-lg transition-all" title="Print / Save PDF">
+               <span class="material-icons-round">print</span>
+             </button>
+             <button id="btn-export-md" class="p-2 text-gray-500 hover:text-dark hover:bg-gray-100 rounded-lg transition-all" title="Export Markdown">
+               <span class="material-icons-round">download</span>
+             </button>
+           </div>
+           
+           <button class="hidden md:flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-dark px-3 py-1.5 hover:bg-gray-100 rounded-lg transition-all" onclick="document.getElementById('close-modal').click()">
+             Close <span class="material-icons-round text-lg">close</span>
+           </button>
+        </div>
+
+        <!-- Scrollable Text -->
+        <div id="modal-body" class="flex-grow overflow-y-auto p-8 prose prose-blue prose-lg max-w-none font-serif leading-loose text-gray-700">
+           <!-- CONTENT INJECTED HERE -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 pt-20 pb-10">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <div class="flex items-center gap-2 mb-6">
+            <img src="/assets/go-logo.png" class="w-8 h-8" alt="Logo">
+            <span class="font-display font-bold text-xl text-dark">GoStudy!</span>
+          </div>
           <p class="text-gray-500 leading-relaxed">
-            The intelligent study companion for high performers.
+            The intelligent study companion for high performers. Replace chaos with clarity.
           </p>
         </div>
         
@@ -69,6 +181,7 @@
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="text-primary font-bold">Articles</a></li>
               <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/dashboard/" class="hover:text-primary transition-colors">Dashboard</a></li>
             </ul>
           </div>
           <div>
@@ -84,79 +197,15 @@
       <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
         <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
         <div class="flex gap-6">
-          <a href="/index.html#pricing" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+          <a href="#" class="hover:text-dark transition-colors">Privacy</a>
+          <a href="#" class="hover:text-dark transition-colors">Terms</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- SCALABLE BACKEND LOGIC -->
-  <script>
-    // --- ADD NEW ARTICLES HERE ---
-    const articles = [
-      {
-        category: "Science",
-        date: "Oct 12, 2025",
-        title: "The Forgetting Curve: Why you lose 80% of what you read",
-        excerpt: "Hermann Ebbinghaus discovered that memory decay is exponential. Here is the mathematical formula to stop it.",
-        image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80",
-        link: "#"
-      },
-      {
-        category: "Technique",
-        date: "Oct 08, 2025",
-        title: "Active Recall vs. Passive Reading",
-        excerpt: "Stop highlighting. It feels like work, but it's not learning. Discover why testing yourself is 3x more effective.",
-        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=500&q=80",
-        link: "#"
-      },
-      {
-        category: "Productivity",
-        date: "Sep 29, 2025",
-        title: "The Pomodoro Technique 2.0",
-        excerpt: "25 minutes might be too short for deep work. We analyzed data from 5,000 students to find the perfect ratio.",
-        image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=500&q=80",
-        link: "#"
-      },
-      {
-        category: "Mental Health",
-        date: "Sep 15, 2025",
-        title: "Exam Anxiety is Biological",
-        excerpt: "Your cortisol levels spike before a test. Here are 3 breathing exercises to hijack your nervous system.",
-        image: "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=500&q=80",
-        link: "#"
-      }
-    ];
-
-    // RENDER FUNCTION
-    const grid = document.getElementById('articles-grid');
-    
-    articles.forEach(art => {
-      const card = `
-        <a href="${art.link}" class="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="h-48 overflow-hidden">
-            <img src="${art.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${art.title}">
-          </div>
-          <div class="p-8">
-            <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider mb-3">
-              <span class="text-primary">${art.category}</span>
-              <span class="text-gray-300">•</span>
-              <span class="text-gray-400">${art.date}</span>
-            </div>
-            <h3 class="text-xl font-bold text-dark mb-3 group-hover:text-primary transition-colors">${art.title}</h3>
-            <p class="text-gray-500 text-sm leading-relaxed mb-6">${art.excerpt}</p>
-            <span class="text-sm font-semibold text-dark flex items-center gap-1 group-hover:gap-2 transition-all">
-              Read Article <span class="material-icons-round text-base">arrow_forward</span>
-            </span>
-          </div>
-        </a>
-      `;
-      grid.innerHTML += card;
-    });
-  </script>
-
-  <script type="module" src="js/auth.js"></script>
-
+  <!-- LOGIC -->
+  <script type="module" src="/backend/js/auth.js"></script>
+  <script type="module" src="logic.js"></script>
 </body>
 </html>
