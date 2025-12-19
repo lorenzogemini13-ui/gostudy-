@@ -25,6 +25,31 @@
   <link rel="icon" href="/assets/go-logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+  </style>
 </head>
 
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased">
@@ -42,67 +67,117 @@
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/pricing/">Pricing</a>
       </div>
       <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/login/">Get Started</a>
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/dashboard/">Dashboard</a>
       </div>
     </nav>
   </div>
 
-  <main class="max-w-4xl mx-auto px-6 mt-32 mb-20">
+  <main class="max-w-6xl mx-auto px-6 mt-32 mb-20 text-center">
 
-    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-8">
-      We are building the <br>
-      <span class="text-primary">calculator for your brain.</span>
-    </h1>
+    <!-- HERO -->
+    <div class="fade-in-up">
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-8 text-black">
+        We are building the <br>
+        <span class="text-primary">calculator for your brain.</span>
+      </h1>
 
-    <div class="prose prose-lg prose-gray mb-16">
-      <p>
-        In 1970, the electronic calculator freed people from manual arithmetic so they could focus on real problem-solving.
-        <br><br>
-        <strong>GoStudy!</strong> is an attempt to do the same for studying.
-        <br><br>
-        Summarizing notes, creating flashcards, and organizing material is necessary work, but it is not learning.
-        Learning happens when concepts connect.
-        <br><br>
-        GoStudy! is being built to automate the mechanical parts of studying so students can focus on understanding, not formatting.
-      </p>
-    </div>
-
-    <!-- REAL STATS -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 border-y border-gray-200 py-12">
-      <div>
-        <div class="text-3xl font-bold">Dec 2025</div>
-        <div class="text-sm text-gray-500">Founded</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold">0</div>
-        <div class="text-sm text-gray-500">Users (early stage)</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold">Remote</div>
-        <div class="text-sm text-gray-500">Based</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold">Self-funded</div>
-        <div class="text-sm text-gray-500">Funding</div>
-      </div>
-    </div>
-
-    <!-- TEAM -->
-    <h2 class="text-2xl font-bold mb-8">The Team</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-white p-6 rounded-3xl border border-gray-100 text-center md:col-span-1">
-        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
-        <h3 class="font-bold">Founder</h3>
-        <p class="text-sm text-primary">Product · Engineering · Everything Else</p>
-        <p class="text-sm text-gray-500 mt-3">
-          GoStudy! is currently developed and maintained by a single founder,
-          from product design to code to strategy.
+      <div class="prose prose-xl prose-gray mb-16 mx-auto leading-relaxed max-w-2xl text-gray-500 font-medium">
+        <p>
+          The electronic calculator freed people from manual arithmetic.
+          <br>
+          GoStudy! does the same for learning.
         </p>
       </div>
     </div>
 
+    <!-- MISSION QUOTE -->
+    <div class="py-24 fade-in-up delay-100">
+      <h2 class="text-3xl md:text-5xl font-semibold tracking-tight leading-tight max-w-4xl mx-auto text-dark">
+        "We believe that learning should be as intuitive as breathing. 
+        Focus on <span class="text-primary">understanding</span>, not formatting."
+      </h2>
+    </div>
+
+    <!-- VALUES BENTO GRID -->
+    <div class="mb-32 fade-in-up delay-200">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-10">Our Values</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
+        
+        <!-- Value 1 -->
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100  transition-shadow duration-300">
+          <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 text-dark">
+            <i data-lucide="layout" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2 text-dark">Simplicity</h4>
+          <p class="text-gray-500 leading-relaxed">Design that disappears. No learning curve, just learning.</p>
+        </div>
+
+        <!-- Value 2 -->
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100  transition-shadow duration-300">
+          <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 text-dark">
+            <i data-lucide="zap" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2 text-dark">Speed</h4>
+          <p class="text-gray-500 leading-relaxed">Answers in mostly real-time. Don't lose your flow state.</p>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100  transition-shadow duration-300">
+          <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 text-dark">
+            <i data-lucide="lock" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2 text-dark">Privacy</h4>
+          <p class="text-gray-500 leading-relaxed">Your data stays yours. We don't sell your study habits.</p>
+        </div>
+
+        <!-- Value 4 -->
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100  transition-shadow duration-300">
+          <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 text-dark">
+            <i data-lucide="sparkles" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2 text-dark">Intelligence</h4>
+          <p class="text-gray-500 leading-relaxed">AI that actually helps, summarizing complexity into clarity.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto border-t border-gray-200/50 mb-24"></div>
+
+    <!-- TEAM -->
+    <div class="fade-in-up delay-300">
+      <h2 class="text-4xl font-bold mb-12 text-center text-dark tracking-tight">The Team</h2>
+
+      <div class="flex justify-center">
+        <div class="glass-card p-12 rounded-[2.5rem] text-center w-full max-w-2xl shadow-lg relative overflow-hidden group">
+          
+          <!-- Background Decoration -->
+          <div class="absolute top-0 left-0 w-full h-2 bg-blue-500"></div>
+
+          <div class="w-32 h-32 bg-gray-100 rounded-full mx-auto mb-8 flex items-center justify-center relative z-10">
+             <i data-lucide="user" class="w-12 h-12 text-gray-400"></i>
+          </div>
+          
+          <h3 class="text-3xl font-bold mb-2 tracking-tight">Founder</h3>
+          <p class="text-sm font-semibold tracking-wide text-primary uppercase mb-8">Engineering & Design</p>
+          
+          <p class="text-xl text-gray-600 mb-10 max-w-lg mx-auto leading-relaxed">
+            GoStudy! is built with passion significantly by a single developer.
+          </p>
+
+          <a href="mailto:contact@gostudy.com" class="inline-flex items-center gap-2 bg-dark hover:bg-black text-white font-medium px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>Contact Me</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
   </main>
+  
+  <script>
+    lucide.createIcons();
+  </script>
 
   <!-- FOOTER -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
