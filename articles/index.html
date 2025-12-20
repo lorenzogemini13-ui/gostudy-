@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Study Log - GoStudy!</title>
   
-  <!-- Tailwind & Fonts -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
@@ -67,11 +67,11 @@
     </nav>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="w-full min-h-screen pt-40 pb-20 px-6">
     <div class="max-w-7xl mx-auto">
       
-      <!-- HERO SECTION -->
+      <!-- HERO -->
       <div class="text-center mb-20 animate-slide-up">
         <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-primary text-xs font-bold tracking-wide uppercase mb-4 border border-blue-100">The GoStudy! Journal</span>
         <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight text-dark mb-6">
@@ -81,7 +81,7 @@
           Science-backed protocols to learn faster, focus deeper, and optimize your cognitive performance.
         </p>
 
-        <!-- Search & Filter -->
+        <!-- Search -->
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
           <div class="relative w-full">
             <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
@@ -90,7 +90,7 @@
           </div>
         </div>
         
-        <!-- Category Chips -->
+        <!-- Category -->
         <div class="flex flex-wrap justify-center gap-2 mt-6">
             <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-dark text-white border border-transparent shadow-md" data-category="All">All</button>
             <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Science">Science</button>
@@ -100,28 +100,28 @@
         </div>
       </div>
 
-      <!-- ARTICLES GRID -->
+      <!-- ARTICLES -->
       <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.2s;">
-        <!-- CONTENT INJECTED BY JS -->
+
       </div>
 
     </div>
   </main>
 
-  <!-- ARTICLE MODAL -->
+  <!-- ARTICLE -->
   <div id="article-modal" class="fixed inset-0 z-[100] hidden">
-    <!-- Overlay -->
+    
     <div class="absolute inset-0 bg-dark/30 backdrop-blur-sm transition-opacity" id="close-modal-overlay"></div>
     
-    <!-- Modal Content -->
+    <!-- Modal -->
     <div class="absolute inset-0 md:inset-10 lg:inset-y-10 lg:inset-x-40 bg-white rounded-none md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden animate-slide-up">
       
-      <!-- Close Button (Mobile) -->
+      <!-- Close Button -->
       <button id="close-modal" class="absolute top-4 right-4 z-50 p-2 bg-white/50 backdrop-blur rounded-full hover:bg-white transition-all text-dark md:hidden">
         <span class="material-icons-round">close</span>
       </button>
 
-      <!-- Sidebar / Image (Desktop) -->
+      <!-- Sidebar -->
       <div class="w-full md:w-1/3 h-48 md:h-full relative bg-gray-100 flex-shrink-0">
         <img id="modal-img" src="" class="w-full h-full object-cover" alt="Article Cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
@@ -135,7 +135,7 @@
         </div>
       </div>
 
-      <!-- Content Area -->
+      <!-- Content -->
       <div class="flex-grow flex flex-col h-full bg-white relative">
         <!-- Toolbar -->
         <div class="flex items-center justify-between px-8 py-4 border-b border-gray-100 bg-white z-10">
@@ -155,7 +155,7 @@
 
         <!-- Scrollable Text -->
         <div id="modal-body" class="flex-grow overflow-y-auto p-8 prose prose-blue prose-lg max-w-none font-serif leading-loose text-gray-700">
-           <!-- CONTENT INJECTED HERE -->
+          
         </div>
       </div>
     </div>
