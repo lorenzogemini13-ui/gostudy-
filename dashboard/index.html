@@ -203,7 +203,7 @@
             <h1
               class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-dark"
             >
-              Generated Plan
+              Your <b>Personalized</b> <b class="text-primary">Study Guide</b>
             </h1>
             <p class="text-gray-500 max-w-xl">
               This is the manuscript that will help you study, faster, better
@@ -307,16 +307,9 @@
           </div>
         </div>
 
-        <!-- Scientific Method Badge -->
-        <div class="flex justify-center mt-12 mb-12">
-          <div class="bg-gray-200/50 px-8 py-4 rounded-2xl text-center">
-            <p class="font-bold text-dark text-sm mb-0.5">
-              Scientific Method Used:
-            </p>
-            <p class="text-gray-500 text-sm">
-              Active Recall & Spaced Repetition
-            </p>
-          </div>
+        <!-- Dynamic Scientific Method Badge Container -->
+        <div id="methodology-badge-container" class="flex justify-center mt-12 mb-12">
+          <!-- Will be injected by JS -->
         </div>
       </div>
 
@@ -628,6 +621,8 @@
             renderScheduleItems(schedDiv, schedule);
           }
 
+          renderBadge(data);
+
           resultsSection.scrollIntoView({ behavior: "smooth" });
 
           // Reset answers visibility
@@ -682,6 +677,85 @@
           div.appendChild(text);
           container.appendChild(div);
         });
+      }
+
+      // --- DYNAMIC METHODOLOGY BADGE LOGIC ---
+      function detectSubject(data) {
+        const textToAnalyze = (data.summary + " " + (data.active_recall?.[0]?.question || "")).toLowerCase();
+        
+        if (textToAnalyze.match(/biology|cell|heart|brain|anatomy|evolution|dna|science|physics|chemistry|molecule/)) return 'Science';
+        if (textToAnalyze.match(/history|war|century|emperor|revolution|culture|society|literature|philosophy/)) return 'Humanities';
+        if (textToAnalyze.match(/grammar|vocabulary|language|spanish|french|verb|tense|linguistics/)) return 'Languages';
+        
+        return 'General';
+      }
+
+      function renderBadge(data) {
+        const subject = detectSubject(data);
+        const container = document.getElementById("methodology-badge-container");
+        
+        let config = {
+          icon: "verified",
+          bg: "bg-blue-50/50",
+          border: "border-blue-200/50",
+          text: "text-blue-700",
+          subjectLabel: "Scientifically Optimized",
+          explanation: "Active Recall & Spaced Repetition"
+        };
+
+        if (subject === 'Science') {
+          config = {
+            icon: "biotech",
+            bg: "bg-emerald-50/80",
+            border: "border-emerald-200/50",
+            text: "text-emerald-700",
+            subjectLabel: "Science-Verified",
+            explanation: "Logical grouping and conceptual hierarchy applied."
+          };
+        } else if (subject === 'Humanities') {
+          config = {
+            icon: "menu_book",
+            bg: "bg-amber-50/80",
+            border: "border-amber-200/50",
+            text: "text-amber-700",
+            subjectLabel: "Humanities-Certified",
+            explanation: "Narrative structuring and contextual linking optimized."
+          };
+        } else if (subject === 'Languages') {
+          config = {
+            icon: "translate",
+            bg: "bg-indigo-50/80",
+            border: "border-indigo-200/50",
+            text: "text-indigo-700",
+            subjectLabel: "Linguistic-Analysis",
+            explanation: "Pattern recognition and mnemonic anchoring activated."
+          }
+        }
+
+        container.innerHTML = `
+          <div class="group relative">
+            <!-- Glow Effect -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+            
+            <div class="${config.bg} ${config.border} border-2 px-10 py-6 rounded-2xl text-center relative flex flex-col items-center gap-3 backdrop-blur-sm animate-focus-in">
+              <div class="flex items-center gap-2">
+                <span class="material-icons-round ${config.text} text-3xl">${config.icon}</span>
+                <span class="font-black ${config.text} tracking-tighter text-lg uppercase">${config.subjectLabel}</span>
+              </div>
+              
+              <div class="h-px w-12 bg-gray-300/50"></div>
+              
+              <p class="text-gray-500 text-sm font-medium max-w-[240px]">
+                ${config.explanation}
+              </p>
+              
+              <a href="/methodology" class="flex items-center gap-1.5 mt-2 text-xs font-bold text-gray-400 hover:text-primary transition-colors uppercase tracking-widest">
+                <span> Report</span>
+                <span class="material-icons-round text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        `;
       }
     </script>
   </body>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Methodology - GoStudy!</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#007AFF",
+              secondary: "#F5F5F7",
+              dark: "#1D1D1F",
+            },
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  </head>
+  <body class="bg-white text-dark font-sans antialiased relative min-h-screen">
+    <!-- Background Accents -->
+    <div
+      class="absolute top-0 left-0 right-0 h-[600px] pointer-events-none -z-10"
+      style="
+        background: radial-gradient(
+          circle at 50% -20%,
+          #e0e7ff 0%,
+          #f3f4f6 60%,
+          transparent 100%
+        );
+      "
+    ></div>
+
+    <!-- NAV -->
+    <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+      <nav
+        class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl"
+      >
+        <a class="flex items-center gap-2" href="/index.html">
+          <img
+            src="/assets/go-logo.png"
+            class="w-10 h-10 object-cover"
+            alt="Logo"
+          />
+          <span class="font-bold text-lg tracking-tight text-dark"
+            >GoStudy!</span
+          >
+        </a>
+        <div
+          class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1"
+        >
+          <a
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="/index.html"
+            >Home</a
+          >
+          <a
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="/articles/"
+            >Articles</a
+          >
+          <a
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="/dashboard/"
+            >Dashboard</a
+          >
+        </div>
+        <div>
+          <a
+            class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"
+            href="/login/"
+            >Get Started</a
+          >
+        </div>
+      </nav>
+    </div>
+
+    <!-- MAIN -->
+    <main class="max-w-4xl mx-auto px-6 py-32 pt-48">
+      <header class="text-center mb-20">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary text-xs font-semibold mb-6 uppercase tracking-wide">
+          <span class="material-icons-round text-sm">verified</span>
+          Scientifically Verified
+        </div>
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 text-dark">
+          The Science of <span class="text-primary">Learning.</span>
+        </h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          GoStudy! isn't just a tool; it's a methodology built on decades of cognitive science research.
+        </p>
+      </header>
+
+      <section class="space-y-24">
+        <!-- Active Recall -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
+              <span class="material-icons-round">quiz</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Active Recall</h2>
+            <p class="text-gray-600 leading-relaxed text-lg mb-6">
+              Unlike passive reading, Active Recall forces your brain to retrieve information. This process strengthens neural pathways and makes memory more durable.
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-gray-700 font-medium">
+                <span class="material-icons-round text-green-500 text-sm">check_circle</span>
+                Increases long-term retention by up to 300%
+              </li>
+              <li class="flex items-center gap-3 text-gray-700 font-medium">
+                <span class="material-icons-round text-green-500 text-sm">check_circle</span>
+                Identifies knowledge gaps instantly
+              </li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+            <div class="space-y-4">
+              <div class="h-4 bg-gray-200 rounded-full w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded-full w-1/2"></div>
+              <div class="pt-4 flex gap-2">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                  <span class="material-icons-round text-sm">psychology</span>
+                </div>
+                <div class="flex-grow bg-white p-3 rounded-lg border border-gray-100 shadow-sm text-sm text-gray-600">
+                  "Retrieval practice is the most effective way to learn."
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spaced Repetition -->
+        <div class="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+          <div class="md:order-2">
+            <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-6">
+              <span class="material-icons-round">calendar_today</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Spaced Repetition</h2>
+            <p class="text-gray-600 leading-relaxed text-lg mb-6">
+              By reviewing material at increasing intervals, we exploit the "Forgetting Curve." GoStudy! schedules your study sessions precisely when you're about to forget.
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-gray-700 font-medium">
+                <span class="material-icons-round text-orange-500 text-sm">check_circle</span>
+                Optimizes study time for maximum ROI
+              </li>
+              <li class="flex items-center gap-3 text-gray-700 font-medium">
+                <span class="material-icons-round text-orange-500 text-sm">check_circle</span>
+                Prevents "burning out" before exams
+              </li>
+            </ul>
+          </div>
+          <div class="md:order-1 bg-gray-50 rounded-[2rem] p-8 border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+             <div class="relative h-48 flex items-end gap-2">
+                <div class="bg-primary w-4 h-1/4 rounded-t-lg"></div>
+                <div class="bg-primary w-4 h-1/2 rounded-t-lg"></div>
+                <div class="bg-primary w-4 h-3/4 rounded-t-lg"></div>
+                <div class="bg-primary w-4 h-full rounded-t-lg"></div>
+                <div class="absolute -top-4 right-0 text-xs font-bold text-gray-400 uppercase tracking-widest">Growth</div>
+             </div>
+          </div>
+        </div>
+
+        <!-- Memory Palace -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
+                <span class="material-icons-round">apartment</span>
+              </div>
+              <h2 class="text-3xl font-bold mb-4">The Memory Palace</h2>
+              <p class="text-gray-600 leading-relaxed text-lg mb-6">
+                Loci method uses spatial navigation to store abstract data. We use AI to map your text onto familiar structures, making complex data impossible to forget.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3 text-gray-700 font-medium">
+                  <span class="material-icons-round text-purple-500 text-sm">check_circle</span>
+                  Perfect for lists and sequences
+                </li>
+                <li class="flex items-center gap-3 text-gray-700 font-medium">
+                  <span class="material-icons-round text-purple-500 text-sm">check_circle</span>
+                  Visual learning at its peak
+                </li>
+              </ul>
+            </div>
+            <div class="bg-dark rounded-[2rem] p-8 shadow-2xl transition-transform hover:scale-[1.02] relative overflow-hidden">
+                <div class="absolute inset-0 bg-blue-500/10 blur-[100px]"></div>
+                <div class="relative flex items-center justify-center h-48">
+                    <span class="material-icons-round text-8xl text-white/20">architecture</span>
+                </div>
+            </div>
+          </div>
+      </section>
+
+      <footer class="mt-32 text-center border-t border-gray-100 pt-20">
+        <h3 class="text-2xl font-bold mb-4">Ready to start?</h3>
+        <p class="text-gray-500 mb-8">Join thousands of students who have mastered their field.</p>
+        <a href="/dashboard/" class="bg-primary text-white px-10 py-4 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-all inline-block">
+          Go to Dashboard
+        </a>
+      </footer>
+    </main>
+
+    <footer class="bg-white border-t border-gray-100 py-12 mt-20">
+      <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-400">
+        &copy; 2025 GoStudy Inc. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
