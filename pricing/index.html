@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - GoStudy!</title>
+
+  <!-- tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- ggl fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- favicon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+
+  <script src="/backend/js/auth.js"></script>
+
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF", 
+            secondary: "#F5F5F7", 
+            dark: "#1D1D1F",
+            success: "#34C759",
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          boxShadow: {
+            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <script type="module" src="/backend/js/auth.js"></script>
+  <style>
+    /* Smooth reveal styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hero-blob {
+      background: radial-gradient(circle at 50% 45%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+    }
+
+    /* Custom Accordion Details */
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] summary ~ * {
+      animation: sweep .3s ease-in-out;
+    }
+    @keyframes sweep {
+      0%    {opacity: 0; transform: translateY(-10px)}
+      100%  {opacity: 1; transform: translateY(0)}
+    }
+
+    /* --- ANIMATION FIX --- */
+    /* We use cubic-bezier for a sharp "snap" into focus */
+    .animate-focus-in {
+      opacity: 0;
+      filter: blur(12px);
+      animation: focusIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    /* Keyframes to transition blur and opacity */
+    @keyframes focusIn {
+      0% {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translateY(10px) scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+
+</head>
+
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+
+  <!-- navbar -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="/index.html">
+        <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm ring-1 ring-black/5  text-dark transition-all" href="index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+<main class="w-full mx-auto mt-20 min-h-screen bg-[#fafafa] text-[#1d1d1f] font-sans">
+
+  <!-- HERO SECTION -->
+  <section class="pt-24 pb-12 px-6 text-center">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6">
+        Simple <span class="text-blue-600">Plans.</span><br>Better <span class="text-blue-600">Grades.</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-500 font-medium mb-10">
+        Invest in your <b>brain</b>. Choose the path to <b>mastery</b>.
+      </p>
+      
+      <!-- BILLING TOGGLE -->
+      <div class="flex items-center justify-center gap-4 mb-12">
+        <span class="text-sm font-bold">Monthly</span>
+        <button class="w-14 h-8 bg-blue-600 rounded-full p-1 flex items-center justify-end">
+          <div class="w-6 h-6 bg-white rounded-full shadow-sm"></div>
+        </button>
+        <span class="text-sm font-bold text-gray-400">Yearly <span class="text-blue-600 text-xs">(Save 20%)</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN PRICING GRID -->
+  <section class="max-w-6xl mx-auto px-6 pb-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+      
+      <!-- STARTER -->
+      <div class="group p-10 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
+        <h3 class="text-2xl font-bold mb-1">Starter</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-black">$0</span>
+        </div>
+        <p class="text-gray-500 font-medium mb-8 leading-snug">
+          Perfect for <b>test-driving</b> the methodology.
+        </p>
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check</span> 10 Uploads / month
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check</span> Standard Summaries
+          </li>
+        </ul>
+        <button class="w-full py-4 rounded-2xl border-2 border-gray-100 font-black hover:bg-gray-50 transition-all">
+          GET STARTED
+        </button>
+      </div>
+
+      <!-- PRO (THE HERO CARD) -->
+      <div class="group p-10 bg-white rounded-[2.5rem] border-4 border-blue-600 shadow-2xl relative transform md:scale-110 z-10 transition-all duration-500">
+        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-black px-6 py-2 rounded-full tracking-widest">
+          MOST POPULAR
+        </div>
+        <h3 class="text-2xl font-bold mb-1">Pro Student</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-black text-blue-600">$9.99</span>
+          <span class="text-gray-400 font-bold">/mo</span>
+        </div>
+        <p class="text-gray-500 font-medium mb-8 leading-snug">
+          For <b>elite</b> students who need <b>unlimited</b> focus.
+        </p>
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">bolt</span> Unlimited Everything
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">bolt</span> Memory Palace Mode
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">bolt</span> AI Voice Notes
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">bolt</span> Priority Processing
+          </li>
+        </ul>
+        <button class="w-full py-5 rounded-2xl bg-blue-600 text-white font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all">
+          START FREE TRIAL
+        </button>
+      </div>
+
+      <!-- INSTITUTION -->
+      <div class="group p-10 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
+        <h3 class="text-2xl font-bold mb-1">Institution</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-black">Custom</span>
+        </div>
+        <p class="text-gray-500 font-medium mb-8 leading-snug">
+          Scaling <b>efficiency</b> for entire <b>campuses</b>.
+        </p>
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">hub</span> Admin Dashboard
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">hub</span> SSO Integration
+          </li>
+        </ul>
+        <button class="w-full py-4 rounded-2xl border-2 border-gray-100 font-black hover:bg-gray-50 transition-all">
+          CONTACT SALES
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DETAILED FEATURE COMPARISON -->
+  <section class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-black tracking-tighter mb-16 text-center">Compare <span class="text-blue-600">Features.</span></h2>
+      
+      <div class="overflow-hidden border-t border-gray-100">
+        <!-- Row 1 -->
+        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
+          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Processing</div>
+          <div class="text-sm font-bold">Standard</div>
+          <div class="text-sm font-bold text-blue-600">Ultra-Fast</div>
+        </div>
+        <!-- Row 2 -->
+        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
+          <div class="text-sm font-black uppercase tracking-widest text-gray-400">File Limits</div>
+          <div class="text-sm font-bold">10MB / file</div>
+          <div class="text-sm font-bold text-blue-600">500MB / file</div>
+        </div>
+        <!-- Row 3 -->
+        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
+          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Retention Tools</div>
+          <div class="text-sm font-bold text-gray-300">—</div>
+          <div class="text-sm font-bold">Memory Palace & Spaced Rep.</div>
+        </div>
+        <!-- Row 4 -->
+        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
+          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Offline Mode</div>
+          <div class="text-sm font-bold text-gray-300">—</div>
+          <div class="text-sm font-bold">Full Access</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="py-24 max-w-3xl mx-auto px-6">
+    <h2 class="text-4xl font-black tracking-tighter mb-12">Common <span class="text-blue-600">Questions.</span></h2>
+    <div class="space-y-8">
+      <div>
+        <h4 class="text-xl font-black mb-2">Can I cancel anytime?</h4>
+        <p class="text-gray-500 font-medium">Yes. No contracts, no hidden fees. One click to unsubscribe.</p>
+      </div>
+      <div class="pt-8 border-t border-gray-100">
+        <h4 class="text-xl font-black mb-2">Is there a student discount?</h4>
+        <p class="text-gray-500 font-medium">The <b>Pro Student</b> plan is already discounted specifically for individual learners.</p>
+      </div>
+      <div class="pt-8 border-t border-gray-100">
+        <h4 class="text-xl font-black mb-2">What formats are supported?</h4>
+        <p class="text-gray-500 font-medium">PDF, DOCX, PPTX, and all major image formats (JPG/PNG) for handwritten notes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-24 bg-blue-600 text-white text-center rounded-[3rem] mx-6 mb-20 shadow-2xl shadow-blue-300">
+    <h2 class="text-5xl font-black tracking-tighter mb-6">Master your curriculum today.</h2>
+    <p class="text-xl font-medium mb-10 opacity-80">Join 50,000+ students studying smarter.</p>
+    <a href="/login" class="inline-block bg-white text-blue-600 px-12 py-5 rounded-full text-xl font-black hover:scale-105 transition-all">
+      Start Your Free Trial
+    </a>
+  </section>
+
+</main>
+
+<style>
+  body {
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.03em;
+  }
+</style>
+ <!-- footer -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
+              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
+              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+</html>

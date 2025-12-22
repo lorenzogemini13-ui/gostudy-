@@ -14,9 +14,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 
   <!-- Favicon -->
-  <link rel="icon" href="assets/go-logo.png" type="image/png" />
-  <link rel="shortcut icon" href="assets/go-logo.png" type="image/png" />
-  <link rel="apple-touch-icon" href="assets/go-logo.png" />
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
 
   <script>
@@ -88,148 +88,196 @@
     </nav>
   </div>
 
-  <main class="w-full mx-auto mt-20 min-h-screen">
+<main class="w-full mx-auto mt-20 min-h-screen">
 
-    <!-- HERO -->
-    <section class="relative pt-24 pb-20 px-6 max-w-3xl mx-auto text-center reveal active">
-      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-8 text-dark leading-tight">
-        <span class="inline-block animate-focus-in" style="animation-delay: 0.1s">Supporting</span>
-        <span class="inline-block animate-focus-in" style="animation-delay: 0.2s">independent</span>
-        <span class="inline-block animate-focus-in" style="animation-delay: 0.3s">learning.</span>
-      </h1>
-      <p class="text-lg md:text-xl text-gray-500 leading-relaxed font-light reveal" style="transition-delay: 0.4s">
-        GoStudy! is designed to help students organize their materials, not to do the work for them. A transparent look at our philosophy.
+  <!-- HERO -->
+  <section class="relative pt-24 pb-20 px-6 max-w-3xl mx-auto text-center reveal active">
+    <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-6 text-dark leading-tight">
+      Supporting <span class="text-blue-500">independent learning</span>.
+    </h1>
+    <p class="text-lg md:text-xl text-gray-500 leading-relaxed font-light">
+      GoStudy! helps students <strong>understand and organize</strong> what they already learn at school.
+      <br class="hidden md:block" />
+      <strong>It supports studying. It does not replace it.</strong>
+    </p>
+    <p class="text-sm text-gray-400 mt-6">
+      Built for students. <span class="text-blue-500 font-medium">Designed with parents in mind.</span>
+    </p>
+  </section>
+
+  <!-- WHAT IT IS / ISN'T -->
+  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+    <div class="border-t border-gray-100 pt-12">
+      <h2 class="text-2xl font-semibold text-dark mb-8">
+        What GoStudy! <span class="text-blue-500">does</span> and <span class="text-gray-400">does not</span> do
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+        <div class="bg-blue-50/40 rounded-xl p-6">
+          <h3 class="font-medium text-dark mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            Helps with
+          </h3>
+          <ul class="space-y-3 text-gray-600 text-sm">
+            <li><strong>Organizing</strong> students’ own notes and PDFs</li>
+            <li><strong>Highlighting</strong> key concepts from class</li>
+            <li><strong>Reviewing</strong> material in a clear structure</li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-6">
+          <h3 class="font-medium text-dark mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+            Does not do
+          </h3>
+          <ul class="space-y-3 text-gray-600 text-sm">
+            <li>Write essays or assignments</li>
+            <li>Solve homework automatically</li>
+            <li>Replace teachers or textbooks</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HABITS -->
+  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+    <div class="border-t border-gray-100 pt-12">
+      <h2 class="text-2xl font-semibold text-dark mb-10">
+        Building <span class="text-blue-500">better study habits</span>
+      </h2>
+
+      <div class="space-y-10">
+
+        <div class="flex gap-6">
+          <span class="material-icons-round text-blue-500 mt-1">filter_list</span>
+          <div>
+            <h3 class="text-lg font-medium text-dark mb-1">Less overload, more focus</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              Students face too much material. GoStudy! helps them
+              <strong>focus on what matters</strong> instead of rereading everything.
+            </p>
+            <p class="text-xs text-gray-400 mt-1">
+              Result: shorter, calmer study sessions.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <span class="material-icons-round text-blue-500 mt-1">psychology</span>
+          <div>
+            <h3 class="text-lg font-medium text-dark mb-1">Active recall, not passive reading</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              GoStudy! creates short quizzes from the student’s notes,
+              encouraging <strong>self-testing</strong> instead of memorizing blindly.
+            </p>
+            <p class="text-xs text-gray-400 mt-1">
+              Students check what they actually understand.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASE -->
+  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+    <div class="bg-secondary/50 rounded-2xl p-8 md:p-10">
+      <h2 class="text-xl font-semibold text-dark mb-8">
+        A <span class="text-blue-500">typical use</span>
+      </h2>
+
+      <ol class="relative border-l border-gray-200 ml-3 space-y-8">
+
+        <li class="pl-8 relative">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+          <p class="text-dark font-medium">After class</p>
+          <p class="text-sm text-gray-500">
+            Upload notes or a school PDF.
+          </p>
+          <p class="text-xs text-gray-400">2–3 minutes</p>
+        </li>
+
+        <li class="pl-8 relative">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+          <p class="text-dark font-medium">Organization</p>
+          <p class="text-sm text-gray-500">
+            Content is structured automatically.
+          </p>
+          <p class="text-xs text-gray-400">No effort required</p>
+        </li>
+
+        <li class="pl-8 relative">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+          <p class="text-dark font-medium">Review</p>
+          <p class="text-sm text-gray-500">
+            Short quiz to verify understanding.
+          </p>
+          <p class="text-xs text-gray-400">~10 minutes</p>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
+    <div class="border-t border-gray-100 pt-12">
+      <h2 class="text-2xl font-semibold text-dark mb-10">
+        Common <span class="text-blue-500">parent questions</span>
+      </h2>
+
+      <div class="space-y-8">
+
+        <div>
+          <h3 class="text-base font-bold text-dark mb-1">Is this cheating?</h3>
+          <p class="text-gray-500 text-sm">
+            No. GoStudy! works with <strong>the student’s own material</strong> and supports studying, like a tutor.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-bold text-dark mb-1">Does it replace teachers?</h3>
+          <p class="text-gray-500 text-sm">
+            No. Teachers remain the <strong>primary source</strong>. GoStudy! works after class.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-bold text-dark mb-1">Is the data private?</h3>
+          <p class="text-gray-500 text-sm">
+            Yes. All notes are <strong>encrypted</strong>. No ads. No data selling.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-base font-bold text-dark mb-1">Is it always accurate?</h3>
+          <p class="text-gray-500 text-sm">
+            It only uses uploaded content. It’s a <strong>study companion</strong>, not a replacement.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-3xl mx-auto px-6 pb-32 text-center reveal">
+    <div class="border-t border-gray-100 pt-12">
+      <p class="text-gray-500 mb-6">
+        Transparency matters. <strong>See exactly what your child sees.</strong>
       </p>
-    </section>
+      <a href="/how-it-works/" class="text-blue-500 font-semibold hover:text-dark transition-colors inline-flex items-center gap-1">
+        Walk through a real example <span class="material-icons-round text-sm">arrow_forward</span>
+      </a>
+    </div>
+  </section>
 
-    <!-- SECTION 1: DEFINITION -->
-    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-      <div class="border-t border-gray-100 pt-12">
-        <h2 class="text-2xl font-semibold text-dark mb-6">What GoStudy! is (and isn't)</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          
-          <div>
-            <h3 class="font-medium text-dark mb-3 flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-blue-500"></span> It is an organizer
-            </h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              Students upload their own messy lecture notes, PDFs, and handouts. Our system structures this information into clean summaries and study guides. It encourages students to review material they have already been taught.
-            </p>
-          </div>
+</main>
 
-          <div>
-            <h3 class="font-medium text-dark mb-3 flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-gray-300"></span> It is not a homework generator
-            </h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              We do not write essays from scratch. We do not solve math problems without context. GoStudy! requires the student to provide the source material, ensuring they are engaging with their actual curriculum.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: PEDAGOGY -->
-    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-      <div class="border-t border-gray-100 pt-12">
-        <h2 class="text-2xl font-semibold text-dark mb-8">Building better habits</h2>
-        
-        <div class="space-y-12">
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 mt-1">
-              <span class="material-icons-round text-gray-400">filter_list</span>
-            </div>
-            <div>
-              <h3 class="text-lg font-medium text-dark mb-2">Reducing Cognitive Overload</h3>
-              <p class="text-gray-500 leading-relaxed">
-                Modern students often face hundreds of pages of reading per week. By identifying the key concepts automatically, we help students focus their energy on <em>understanding</em> the core material rather than just trying to get through the reading list.
-              </p>
-            </div>
-          </div>
-
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 mt-1">
-              <span class="material-icons-round text-gray-400">psychology</span>
-            </div>
-            <div>
-              <h3 class="text-lg font-medium text-dark mb-2">Active Recall over Passive Reading</h3>
-              <p class="text-gray-500 leading-relaxed">
-                Scientific research shows that testing yourself (Active Recall) is more effective than re-reading notes. GoStudy! automatically generates practice quizzes from the student's notes, prompting them to test their knowledge immediately.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: DAILY USAGE -->
-    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-      <div class="bg-secondary/50 rounded-2xl p-8 md:p-10">
-        <h2 class="text-xl font-semibold text-dark mb-6">A typical use case</h2>
-        <ol class="relative border-l border-gray-200 ml-3 space-y-8">
-          <li class="pl-8 relative">
-            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
-            <p class="text-dark font-medium mb-1">After Class</p>
-            <p class="text-sm text-gray-500">The student uploads a photo of their handwritten history notes or a PDF of a biology chapter.</p>
-          </li>
-          <li class="pl-8 relative">
-            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
-            <p class="text-dark font-medium mb-1">Processing</p>
-            <p class="text-sm text-gray-500">GoStudy! organizes the notes into a structured timeline and creates a set of key definitions.</p>
-          </li>
-          <li class="pl-8 relative">
-            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
-            <p class="text-dark font-medium mb-1">Review</p>
-            <p class="text-sm text-gray-500">The student takes a 10-question generated quiz to verify they understood the lecture.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- SECTION 4: ADDRESSING CONCERNS -->
-    <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
-      <div class="border-t border-gray-100 pt-12">
-        <h2 class="text-2xl font-semibold text-dark mb-8">Common Questions</h2>
-        
-        <div class="space-y-8">
-          <div>
-            <h3 class="text-base font-bold text-dark mb-2">Is using AI considered cheating?</h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              Using AI to write an essay for you is academic dishonesty. Using AI to organize your own notes, create flashcards, or explain a difficult concept is a study aid, similar to a tutor or a study guide. We encourage responsible use and our tools are built to support retention, not generation.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="text-base font-bold text-dark mb-2">Is the data private?</h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              Yes. We understand that students upload personal notes and school materials. All data is encrypted, and we do not sell user data to advertisers or third parties. 
-            </p>
-          </div>
-
-          <div>
-            <h3 class="text-base font-bold text-dark mb-2">Is it accurate?</h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              GoStudy! works strictly with the material provided by the student. It does not browse the internet to "invent" facts. However, like any digital tool, it should be used as a companion to the textbook, not a replacement.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="max-w-3xl mx-auto px-6 pb-32 text-center reveal">
-      <div class="border-t border-gray-100 pt-12">
-        <p class="text-gray-500 mb-6">
-          See exactly how the platform processes information.
-        </p>
-        <a href="/how-it-works/" class="text-primary font-semibold hover:text-dark transition-colors inline-flex items-center gap-1">
-          Explore the platform logic <span class="material-icons-round text-sm">arrow_forward</span>
-        </a>
-      </div>
-    </section>
-
-  </main>
 
    <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
@@ -247,7 +295,7 @@
             <h4 class="font-bold text-dark mb-6">Product</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
               <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
               <li><a href="/parents/" class="text-primary font-bold">Parents</a></li>
             </ul>
