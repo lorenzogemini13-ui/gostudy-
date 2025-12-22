@@ -45,82 +45,62 @@
       </h2>
       
       <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
-        <div class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 border-4 border-white shadow-sm">
-          JS
+        <div id="profile-pfp-container" class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 border-4 border-white shadow-sm overflow-hidden">
+          <span id="profile-initials">JS</span>
+          <img id="profile-img-display" src="" class="hidden w-full h-full object-cover" alt="Profile">
         </div>
         <div class="flex-grow text-center md:text-left">
-          <h3 class="text-lg font-bold">John Student</h3>
-          <p class="text-gray-500">student@university.edu</p>
+          <h3 id="profile-display-name-text" class="text-lg font-bold">John Student</h3>
+          <p id="profile-email-text" class="text-gray-500">student@university.edu</p>
         </div>
-        <button class="px-5 py-2 border border-gray-200 rounded-full font-medium text-sm hover:bg-gray-50 transition-colors">
-          Edit Profile
+        <button id="edit-profile-btn" class="px-5 py-2 border border-gray-200 rounded-full font-medium text-sm hover:bg-gray-50 transition-colors">
+          Update Profile
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Display Name</label>
-          <input type="text" value="John Student" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary" readonly>
+          <input type="text" id="profile-name" placeholder="Full Name" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
         </div>
         <div>
           <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Email</label>
-          <input type="email" value="student@university.edu" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary" readonly>
+          <input type="email" id="profile-email" placeholder="Email" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
         </div>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Profile Picture URL</label>
+        <input type="text" id="profile-pfp-url" placeholder="https://example.com/photo.jpg" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
       </div>
     </div>
 
-    <!-- Subscription Section -->
-    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8 overflow-hidden relative">
-      <div class="absolute top-0 right-0 bg-gray-100 text-gray-500 text-xs font-bold px-4 py-1 rounded-bl-xl">CURRENT PLAN</div>
-      
-      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <span class="material-icons-round text-gray-400">credit_card</span>
-        Subscription
-      </h2>
-
-      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-        <div>
-          <div class="text-2xl font-bold text-dark mb-1">Free Plan</div>
-          <p class="text-gray-500 text-sm">You have 10 free uploads remaining this month.</p>
-        </div>
-        <a href="/index.html#pricing" class="bg-dark text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-black transition-colors flex items-center gap-2">
-          <span class="material-icons-round text-sm">star</span>
-          Upgrade to Pro
-        </a>
-      </div>
-    </div>
-
-    <!-- Preferences Section -->
+    <!-- Security Section -->
     <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
       <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <span class="material-icons-round text-gray-400">tune</span>
-        Preferences
+        <span class="material-icons-round text-gray-400">security</span>
+        Security
       </h2>
-
-      <div class="space-y-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="font-medium text-dark">Dark Mode</div>
-            <div class="text-xs text-gray-500">Switch between light and dark themes.</div>
-          </div>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="sr-only peer">
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-          </label>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">New Password</label>
+          <input type="password" id="profile-password" placeholder="••••••••" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
         </div>
-        
-        <hr class="border-gray-100">
-
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="font-medium text-dark">Email Notifications</div>
-            <div class="text-xs text-gray-500">Receive weekly study progress reports.</div>
-          </div>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="sr-only peer" checked>
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-          </label>
+        <div class="flex justify-end">
+          <button id="logout-btn" class="text-gray-500 text-sm font-medium hover:text-dark flex items-center gap-1">
+             <span class="material-icons-round text-sm">logout</span> Logout
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- History Section -->
+    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
+      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <span class="material-icons-round text-gray-400">history</span>
+        Study History
+      </h2>
+      <div id="history-container" class="space-y-4">
+        <p class="text-gray-400 text-sm text-center py-8">Loading history...</p>
       </div>
     </div>
 
@@ -129,7 +109,7 @@
        <h2 class="text-lg font-bold text-danger mb-4">Danger Zone</h2>
        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
          <p class="text-sm text-red-800">Once you delete your account, there is no going back. Please be certain.</p>
-         <button class="text-red-600 border border-red-200 bg-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-all">
+         <button id="delete-account-btn" class="text-red-600 border border-red-200 bg-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-all">
            Delete Account
          </button>
        </div>
@@ -179,7 +159,135 @@
       </div>
     </div>
   </footer>
-  <script type="module" src="/backend/js/auth.js"></script>
+  <script type="module">
+    import { 
+      auth, 
+      onAuthStateChanged, 
+      signOut, 
+      updateProfile, 
+      updateEmail, 
+      updatePassword, 
+      deleteUser,
+      reauthenticate
+    } from "/backend/js/auth.js";
 
+    const API_BASE = "https://go-study-backend.onrender.com"; // Change if local
+
+    async function loadHistory(idToken) {
+        const container = document.getElementById('history-container');
+        try {
+            const res = await fetch(`${API_BASE}/api/generations`, {
+                headers: { 'Authorization': `Bearer ${idToken}` }
+            });
+            if (!res.ok) throw new Error("Failed to fetch history");
+            const data = await res.json();
+            
+            if (data.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-sm text-center py-8">No past generations found.</p>`;
+                return;
+            }
+
+            container.innerHTML = data.map((item, index) => `
+                <div class="history-item p-4 rounded-2xl border border-gray-100 hover:border-primary/20 hover:bg-primary/[0.02] transition-all group cursor-pointer" data-index="${index}">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-dark">${item.fileName || "Untitled Document"}</div>
+                            <div class="text-xs text-gray-400">${new Date(item.createdAt?._seconds * 1000 || Date.now()).toLocaleDateString()}</div>
+                        </div>
+                        <span class="material-icons-round text-gray-300 group-hover:text-primary transition-colors">visibility</span>
+                    </div>
+                    <div id="plan-details-${index}" class="hidden mt-4 pt-4 border-t border-gray-100 animate-fade-in">
+                        <p class="text-sm text-gray-600 leading-relaxed">${item.studyPlan?.summary || "No summary available."}</p>
+                        <div class="mt-4 flex gap-2">
+                            <button onclick="event.stopPropagation(); window.location.href='/dashboard/'" class="text-xs font-bold text-primary">Open in Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add Click Handlers
+            document.querySelectorAll('.history-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = item.getAttribute('data-index');
+                    const details = document.getElementById(`plan-details-${idx}`);
+                    details.classList.toggle('hidden');
+                });
+            });
+        } catch (e) {
+            container.innerHTML = `<p class="text-red-400 text-sm text-center py-8">Error loading history.</p>`;
+        }
+    }
+
+    // --- Profile Updates ---
+    document.getElementById('edit-profile-btn')?.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const name = document.getElementById('profile-name').value;
+        const email = document.getElementById('profile-email').value;
+        const photoURL = document.getElementById('profile-pfp-url').value;
+        const password = document.getElementById('profile-password').value;
+
+        try {
+            const btn = document.getElementById('edit-profile-btn');
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.innerText = "Updating...";
+
+            // Update Name and PFP
+            if (name !== user.displayName || photoURL !== user.photoURL) {
+                await updateProfile(user, { displayName: name, photoURL: photoURL });
+            }
+
+            // Update Email/Password (Requires Re-auth)
+            if (email !== user.email || password) {
+                const currentPassword = prompt("Please enter your current password to update email or password:");
+                if (currentPassword) {
+                    await reauthenticate(currentPassword);
+                    if (email !== user.email) await updateEmail(user, email);
+                    if (password) await updatePassword(user, password);
+                } else {
+                    throw new Error("Password required for email/password changes.");
+                }
+            }
+
+            btn.disabled = false;
+            btn.innerText = originalText;
+            alert("Profile updated successfully!");
+            window.location.reload();
+        } catch (e) {
+            console.error(e);
+            alert("Update failed: " + e.message);
+            window.location.reload();
+        }
+    });
+
+    // --- Delete Account ---
+    document.getElementById('delete-account-btn')?.addEventListener('click', async () => {
+        if (!confirm("Are you SURE you want to delete your account? This cannot be undone.")) return;
+        
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+            const currentPassword = prompt("Please enter your password to confirm account deletion:");
+            if (currentPassword) {
+                await reauthenticate(currentPassword);
+                await deleteUser(user);
+                window.location.href = "/index.html";
+            }
+        } catch (e) {
+            alert("Deletion failed: " + e.message);
+        }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const token = await user.getIdToken();
+            loadHistory(token);
+        }
+    });
+
+  </script>
 </body>
 </html>

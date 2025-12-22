@@ -118,15 +118,27 @@ if (logoutBtn) {
 }
 
 // --- 5. AUTH PROTECTION ---
+export { auth, onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword, deleteUser };
+
+import { 
+  updateEmail, 
+  updatePassword, 
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
 onAuthStateChanged(auth, (user) => {
   const path = window.location.pathname;
   const isLoginPage = path.includes('/login/');
   const isDashboard = path.includes('/dashboard/');
+  const isProfilePage = path.includes('/profile/');
 
   if (user) {
     const display = document.getElementById('user-name-display');
     if (display) display.innerText = user.displayName || user.email.split('@')[0];
     if (isLoginPage) window.location.href = "/dashboard/";
+    
     // Update navbar CTA to Profile when signed in
     try {
       const navCta = document.getElementById('nav-cta');
@@ -140,8 +152,35 @@ onAuthStateChanged(auth, (user) => {
     } catch (e) {
       // ignore if DOM not present
     }
+
+    // If on profile page, populate fields
+    if (isProfilePage) {
+        const nameInput = document.getElementById('profile-name');
+        const emailInput = document.getElementById('profile-email');
+        const profileImg = document.getElementById('profile-img-display');
+        const profileInitials = document.getElementById('profile-initials');
+
+        if (nameInput) nameInput.value = user.displayName || "";
+        if (emailInput) emailInput.value = user.email || "";
+        
+        if (user.photoURL) {
+            if (profileImg) {
+                profileImg.src = user.photoURL;
+                profileImg.classList.remove('hidden');
+            }
+            if (profileInitials) profileInitials.classList.add('hidden');
+        } else {
+            if (profileInitials) {
+                const initials = (user.displayName || user.email || "??").split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                profileInitials.innerText = initials;
+                profileInitials.classList.remove('hidden');
+            }
+            if (profileImg) profileImg.classList.add('hidden');
+        }
+    }
+
   } else {
-    if (isDashboard) window.location.href = "/login/";
+    if (isDashboard || isProfilePage) window.location.href = "/login/";
     // Update navbar CTA to Get Started when signed out
     try {
       const navCta = document.getElementById('nav-cta');
@@ -157,3 +196,14 @@ onAuthStateChanged(auth, (user) => {
     }
   }
 });
+
+// Helper for re-authentication (required for sensitive operations like email/password update)
+export async function reauthenticate(currentPassword) {
+    const user = auth.currentUser;
+    if (!user || !user.email) return;
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+    return reauthenticateWithCredential(user, credential);
+}
+
+// Global error handler for this module
+window.showError = showError;

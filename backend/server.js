@@ -22,6 +22,49 @@ const app = express();
 app.use(cors({ origin: '*' })); 
 app.use(express.json());
 
+// --- 3. FIREBASE ADMIN INITIALIZATION ---
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin via environment variable or default
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    try {
+        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+        });
+        console.log("Firebase Admin initialized via FIREBASE_SERVICE_ACCOUNT");
+    } catch (e) {
+        console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:", e);
+    }
+} else {
+    try {
+        admin.initializeApp();
+        console.log("Firebase Admin initialized via default credentials");
+    } catch (e) {
+        console.warn("Firebase Admin NOT initialized. Auth features will be disabled.");
+    }
+}
+
+const db = admin.apps.length ? admin.firestore() : null;
+
+// Middleware to verify Firebase ID Token
+const authenticate = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Unauthorized: No token provided' });
+    }
+
+    const idToken = authHeader.split('Bearer ')[1];
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        req.user = decodedToken;
+        next();
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    }
+};
+
 // Limit upload size to 5MB to prevent memory exhaustion
 const upload = multer({ 
     dest: '/tmp/',
@@ -162,6 +205,27 @@ SCHEMA:
         }
 
         console.log('✅ Plan generated successfully!');
+
+        // 6. Save to Firestore if user is authenticated
+        if (req.headers.authorization && db) {
+            try {
+                const authHeader = req.headers.authorization;
+                const idToken = authHeader.split('Bearer ')[1];
+                const decodedToken = await admin.auth().verifyIdToken(idToken);
+                
+                await db.collection('generations').add({
+                    userId: decodedToken.uid,
+                    fileName: req.file.originalname,
+                    studyPlan: studyPlan,
+                    createdAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+                console.log('💾 Plan saved to Firestore for user:', decodedToken.uid);
+            } catch (authError) {
+                console.error('Failed to save to Firestore (possibly invalid token):', authError.message);
+                // We still return the plan to the user even if saving fails
+            }
+        }
+
         res.json(studyPlan);
 
     } catch (error) {
@@ -179,6 +243,32 @@ SCHEMA:
             });
         }
 
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// --- 5. HISTORY ROUTE ---
+
+app.get('/api/generations', authenticate, async (req, res) => {
+    if (!db) {
+        return res.status(500).json({ error: 'Firestore not initialized' });
+    }
+
+    try {
+        const snapshot = await db.collection('generations')
+            .where('userId', '==', req.user.uid)
+            .orderBy('createdAt', 'desc')
+            .limit(20)
+            .get();
+
+        const generations = [];
+        snapshot.forEach(doc => {
+            generations.push({ id: doc.id, ...doc.data() });
+        });
+
+        res.json(generations);
+    } catch (error) {
+        console.error('Error fetching generations:', error);
         res.status(500).json({ error: error.message });
     }
 });

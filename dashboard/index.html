@@ -329,8 +329,8 @@
     </div>
   </footer>
     </main>
-
-    <script>
+    <script type="module">
+      import { auth } from "/backend/js/auth.js";
       // --- CONFIGURATION ---
       // Updated: 2025-12-18 16:11 - Force cache bust
       const API_URL = "https://go-study-backend.onrender.com/api/generate-plan";
@@ -351,7 +351,7 @@
       let currentData = null;
 
       // --- EXPORT FUNCTIONS ---
-      function exportMarkdown() {
+      window.exportMarkdown = function exportMarkdown() {
         if (!currentData) return;
         const md = `# Study Plan\n\n## Summary\n${
           currentData.summary
@@ -360,7 +360,7 @@
           .join("\n\n")}\n\n## Schedule\n${currentData.spaced_repetition
           .map((s) => `- **${s.day}**: ${s.topic}`)
           .join("\n")}\n\n## Memory Palace\n${currentData.memory_palace}`;
-
+ 
         const blob = new Blob([md], { type: "text/markdown" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -369,7 +369,7 @@
         a.click();
       }
 
-      function exportPDF() {
+      window.exportPDF = function exportPDF() {
         const element = document.getElementById("results-section"); // Capture whole section
         const opt = {
           margin: 0.5,
@@ -384,7 +384,7 @@
 
       // Toggle Answers logic
       let answersVisible = false;
-      function toggleAnswers() {
+      window.toggleAnswers = function toggleAnswers() {
         answersVisible = !answersVisible;
         const answers = document.querySelectorAll(".quiz-answer");
         answers.forEach((a) => {
@@ -397,7 +397,7 @@
       }
 
       // --- RESET FUNCTION ---
-      function resetUI() {
+      window.resetUI = function resetUI() {
         fileInput.value = ""; // Clear file
         uploadSection.style.display = "flex";
         loadingSection.style.display = "none";
@@ -466,9 +466,16 @@
         try {
           console.log(`Sending to: ${API_URL}`);
 
+          const headers = {};
+          if (auth.currentUser) {
+            const token = await auth.currentUser.getIdToken();
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+
           const response = await fetch(API_URL, {
             method: "POST",
             body: formData,
+            headers: headers
           });
 
           // Complete the bar
