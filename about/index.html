@@ -54,7 +54,7 @@
 
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased">
 
-  <!-- NAV -->
+  <!-- navbar -->
   <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
     <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
       <a class="flex items-center gap-2" href="/index.html">
@@ -62,12 +62,12 @@
         <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
       </a>
       <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm ring-1 ring-black/5  text-dark transition-all" href="index.html">Home</a>
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
-       <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
       </div>
       <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/dashboard/">Dashboard</a>
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
       </div>
     </nav>
   </div>
@@ -179,23 +179,25 @@
     lucide.createIcons();
   </script>
 
-  <!-- FOOTER -->
+  <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
           <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
           <p class="text-gray-500 leading-relaxed">
-            An intelligent study companion, currently in early development.
+            The intelligent study companion for high performers.
           </p>
         </div>
-
+        
         <div class="flex gap-12 md:gap-24">
           <div>
             <h4 class="font-bold text-dark mb-6">Product</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
               <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
+              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
             </ul>
           </div>
           <div>
@@ -203,13 +205,15 @@
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/about/" class="text-primary font-bold">About</a></li>
               <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
+              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy. All rights reserved.</div>
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
         <div class="flex gap-6">
           <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
           <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>

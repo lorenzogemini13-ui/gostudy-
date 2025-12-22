@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How it Works - GoStudy!</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF", 
+            secondary: "#F5F5F7", 
+            dark: "#1D1D1F",
+            success: "#34C759",
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          boxShadow: {
+            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <script type="module" src="js/auth.js"></script>
+  <style>
+    /* Smooth reveal styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-blob {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.04) 0%, rgba(255, 255, 255, 0) 60%);
+      pointer-events: none;
+    }
+
+    /* Focus Animation */
+    .animate-focus-in {
+      opacity: 0;
+      filter: blur(12px);
+      animation: focusIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes focusIn {
+      0% {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translateY(10px) scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+
+     <!-- navbar -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="/index.html">
+        <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="w-full mx-auto mt-20 min-h-screen">
+
+    <!-- HERO -->
+    <section class="relative pt-24 pb-20 px-6 text-center reveal active">
+      <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
+      
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-8 text-dark leading-tight">
+          <span class="inline-block animate-focus-in" style="animation-delay: 0.1s">A</span>
+          <span class="inline-block animate-focus-in" style="animation-delay: 0.2s">transparent</span>
+          <span class="inline-block animate-focus-in" style="animation-delay: 0.3s">process.</span>
+        </h1>
+        <p class="text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto font-light reveal" style="transition-delay: 0.4s">
+          We do not replace studying. We remove the clutter so you can focus on the learning.
+        </p>
+      </div>
+    </section>
+
+    <!-- STEPS CONTAINER -->
+    <section class="max-w-3xl mx-auto px-6 pb-32">
+      
+      <div class="relative border-l border-gray-100 ml-6 md:ml-10 space-y-24">
+        
+        <!-- STEP 1 -->
+        <div class="relative pl-12 md:pl-20 reveal">
+          <!-- Icon Marker -->
+          <div class="absolute -left-[20px] top-0 w-10 h-10 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-subtle z-10">
+            <span class="material-icons-round text-gray-400 text-lg">upload_file</span>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <h2 class="text-3xl font-bold text-dark tracking-tight">1. You upload your material</h2>
+            <p class="text-lg text-gray-500 leading-relaxed max-w-xl">
+              Upload your raw lecture slides (PDF), essays (Word), or even photos of loose handwritten notes. 
+              <br><br>
+              We support the formats schools actually use. You do not need to format or clean the data beforehand; just provide the source.
+            </p>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="relative pl-12 md:pl-20 reveal">
+          <!-- Icon Marker -->
+          <div class="absolute -left-[20px] top-0 w-10 h-10 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-subtle z-10">
+            <span class="material-icons-round text-gray-400 text-lg">sort</span>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <h2 class="text-3xl font-bold text-dark tracking-tight">2. We identify the concepts</h2>
+            <p class="text-lg text-gray-500 leading-relaxed max-w-xl">
+              GoStudy! analyzes the document to find the core learning objectives. It separates critical information from filler text.
+              <br><br>
+              This is not just summarizing; it is structuring. We map out connections between topics to ensure nothing important is missed during the reduction process.
+            </p>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="relative pl-12 md:pl-20 reveal">
+          <!-- Icon Marker -->
+          <div class="absolute -left-[20px] top-0 w-10 h-10 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-subtle z-10">
+            <span class="material-icons-round text-gray-400 text-lg">inventory_2</span>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <h2 class="text-3xl font-bold text-dark tracking-tight">3. You get a clear plan</h2>
+            <p class="text-lg text-gray-500 leading-relaxed max-w-xl">
+              Within seconds, you receive a clean, printable summary and a set of Active Recall questions.
+              <br><br>
+              Instead of re-reading 50 pages of passive text, you get a direct list of what you need to know, formatted for easy memorization.
+            </p>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="relative pl-12 md:pl-20 reveal">
+          <!-- Icon Marker -->
+          <div class="absolute -left-[20px] top-0 w-10 h-10 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-subtle z-10">
+            <span class="material-icons-round text-gray-400 text-lg">school</span>
+          </div>
+          
+          <div class="flex flex-col gap-4">
+            <h2 class="text-3xl font-bold text-dark tracking-tight">4. You learn efficiently</h2>
+            <p class="text-lg text-gray-500 leading-relaxed max-w-xl">
+              Use the generated quizzes for daily 10-minute reviews, or use the memory palace hints for long-term retention.
+              <br><br>
+              This fits into your existing routine—whether you are cramming the night before or studying steadily throughout the semester.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 bg-secondary/30 border-t border-gray-100 reveal">
+      <div class="max-w-xl mx-auto text-center px-6">
+        <h2 class="text-2xl font-bold text-dark mb-6">Ready to focus?</h2>
+        <a href="login.html" class="inline-block bg-dark text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl">
+          Start studying smarter
+        </a>
+        <p class="mt-6 text-sm text-gray-400">
+          No credit card required for the starter plan.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- footer -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
+              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
+              <li><a href="/how-it-works/" class="text-primary font-bold">How It Works</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+  <script type="module" src="/backend/js/auth.js"></script>
+</body>
+</html>

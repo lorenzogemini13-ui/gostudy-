@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Parents - GoStudy!</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/go-logo.png" />
+  <meta name="theme-color" content="#007AFF" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF", 
+            secondary: "#F5F5F7", 
+            dark: "#1D1D1F",
+            success: "#34C759",
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          boxShadow: {
+            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <script type="module" src="js/auth.js"></script>
+  <style>
+    /* Smooth reveal styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle Focus Animation */
+    .animate-focus-in {
+      opacity: 0;
+      filter: blur(8px);
+      animation: focusIn 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+    }
+
+    @keyframes focusIn {
+      0% { opacity: 0; filter: blur(8px); transform: translateY(5px); }
+      100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-dark font-sans antialiased selection:bg-gray-100 selection:text-dark overflow-x-hidden">
+
+      <!-- navbar -->
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
+      <a class="flex items-center gap-2" href="/index.html">
+        <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
+        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
+        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+      </div>
+      <div id="nav-cta">
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="w-full mx-auto mt-20 min-h-screen">
+
+    <!-- HERO -->
+    <section class="relative pt-24 pb-20 px-6 max-w-3xl mx-auto text-center reveal active">
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-8 text-dark leading-tight">
+        <span class="inline-block animate-focus-in" style="animation-delay: 0.1s">Supporting</span>
+        <span class="inline-block animate-focus-in" style="animation-delay: 0.2s">independent</span>
+        <span class="inline-block animate-focus-in" style="animation-delay: 0.3s">learning.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-500 leading-relaxed font-light reveal" style="transition-delay: 0.4s">
+        GoStudy! is designed to help students organize their materials, not to do the work for them. A transparent look at our philosophy.
+      </p>
+    </section>
+
+    <!-- SECTION 1: DEFINITION -->
+    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+      <div class="border-t border-gray-100 pt-12">
+        <h2 class="text-2xl font-semibold text-dark mb-6">What GoStudy! is (and isn't)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          
+          <div>
+            <h3 class="font-medium text-dark mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span> It is an organizer
+            </h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              Students upload their own messy lecture notes, PDFs, and handouts. Our system structures this information into clean summaries and study guides. It encourages students to review material they have already been taught.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-medium text-dark mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-gray-300"></span> It is not a homework generator
+            </h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              We do not write essays from scratch. We do not solve math problems without context. GoStudy! requires the student to provide the source material, ensuring they are engaging with their actual curriculum.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PEDAGOGY -->
+    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+      <div class="border-t border-gray-100 pt-12">
+        <h2 class="text-2xl font-semibold text-dark mb-8">Building better habits</h2>
+        
+        <div class="space-y-12">
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 mt-1">
+              <span class="material-icons-round text-gray-400">filter_list</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-medium text-dark mb-2">Reducing Cognitive Overload</h3>
+              <p class="text-gray-500 leading-relaxed">
+                Modern students often face hundreds of pages of reading per week. By identifying the key concepts automatically, we help students focus their energy on <em>understanding</em> the core material rather than just trying to get through the reading list.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 mt-1">
+              <span class="material-icons-round text-gray-400">psychology</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-medium text-dark mb-2">Active Recall over Passive Reading</h3>
+              <p class="text-gray-500 leading-relaxed">
+                Scientific research shows that testing yourself (Active Recall) is more effective than re-reading notes. GoStudy! automatically generates practice quizzes from the student's notes, prompting them to test their knowledge immediately.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: DAILY USAGE -->
+    <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
+      <div class="bg-secondary/50 rounded-2xl p-8 md:p-10">
+        <h2 class="text-xl font-semibold text-dark mb-6">A typical use case</h2>
+        <ol class="relative border-l border-gray-200 ml-3 space-y-8">
+          <li class="pl-8 relative">
+            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
+            <p class="text-dark font-medium mb-1">After Class</p>
+            <p class="text-sm text-gray-500">The student uploads a photo of their handwritten history notes or a PDF of a biology chapter.</p>
+          </li>
+          <li class="pl-8 relative">
+            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
+            <p class="text-dark font-medium mb-1">Processing</p>
+            <p class="text-sm text-gray-500">GoStudy! organizes the notes into a structured timeline and creates a set of key definitions.</p>
+          </li>
+          <li class="pl-8 relative">
+            <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-white border-2 border-gray-300"></span>
+            <p class="text-dark font-medium mb-1">Review</p>
+            <p class="text-sm text-gray-500">The student takes a 10-question generated quiz to verify they understood the lecture.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ADDRESSING CONCERNS -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
+      <div class="border-t border-gray-100 pt-12">
+        <h2 class="text-2xl font-semibold text-dark mb-8">Common Questions</h2>
+        
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-base font-bold text-dark mb-2">Is using AI considered cheating?</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              Using AI to write an essay for you is academic dishonesty. Using AI to organize your own notes, create flashcards, or explain a difficult concept is a study aid, similar to a tutor or a study guide. We encourage responsible use and our tools are built to support retention, not generation.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-dark mb-2">Is the data private?</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              Yes. We understand that students upload personal notes and school materials. All data is encrypted, and we do not sell user data to advertisers or third parties. 
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-dark mb-2">Is it accurate?</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">
+              GoStudy! works strictly with the material provided by the student. It does not browse the internet to "invent" facts. However, like any digital tool, it should be used as a companion to the textbook, not a replacement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="max-w-3xl mx-auto px-6 pb-32 text-center reveal">
+      <div class="border-t border-gray-100 pt-12">
+        <p class="text-gray-500 mb-6">
+          See exactly how the platform processes information.
+        </p>
+        <a href="/how-it-works/" class="text-primary font-semibold hover:text-dark transition-colors inline-flex items-center gap-1">
+          Explore the platform logic <span class="material-icons-round text-sm">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+   <!-- footer -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        <div class="max-w-sm">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
+            The intelligent study companion for high performers.
+          </p>
+        </div>
+        
+        <div class="flex gap-12 md:gap-24">
+          <div>
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+              <li><a href="/index.html#pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
+              <li><a href="/parents/" class="text-primary font-bold">Parents</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
+              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
+              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+        <div class="flex gap-6">
+          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+  <script type="module" src="/backend/js/auth.js"></script>
+</body>
+</html>
