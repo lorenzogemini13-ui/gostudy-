@@ -1,222 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings - GoStudy!</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <script>
-    tailwind.config = { theme: { extend: { colors: { primary: "#007AFF", secondary: "#F5F5F7", dark: "#1D1D1F", danger: "#FF3B30" }, fontFamily: { sans: ["Inter", "sans-serif"] } } } };
-  </script>
-  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-  <script type="module" src="/backend/js/auth.js"></script>
-</head>
-<body class="bg-[#F5F5F7] text-dark font-sans antialiased min-h-screen">
-
-     <!-- navbar -->
-  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
-      <a class="flex items-center gap-2" href="/index.html">
-        <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
-        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
-      </a>
-      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
-        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
-      </div>
-      <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
-      </div>
-    </nav>
-  </div>
-
-  <main class="max-w-3xl mx-auto px-6 py-32">
-    
-    <h1 class="text-3xl font-bold mb-8 text-dark">Settings</h1>
-
-    <!-- Profile Section -->
-    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
-      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <span class="material-icons-round text-gray-400">person</span>
-        Profile
-      </h2>
-      
-      <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
-        <div id="profile-pfp-container" class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 border-4 border-white shadow-sm overflow-hidden">
-          <span id="profile-initials">JS</span>
-          <img id="profile-img-display" src="" class="hidden w-full h-full object-cover" alt="Profile">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - GoStudy!</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#007AFF",
+              secondary: "#F5F5F7",
+              dark: "#1D1D1F",
+              danger: "#FF3B30",
+            },
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+    <script type="module" src="/backend/js/auth.js"></script>
+  </head>
+  <body class="bg-[#F5F5F7] text-dark font-sans antialiased min-h-screen">
+    <!-- navbar -->
+    <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+      <nav
+        class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl"
+      >
+        <a class="flex items-center gap-2" href="/index.html">
+          <img
+            src="/assets/go-logo.png"
+            class="w-10 h-10 object-cover"
+            alt="Logo"
+          />
+          <span class="font-bold text-lg tracking-tight text-dark"
+            >GoStudy!</span
+          >
+        </a>
+        <div
+          class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1"
+        >
+          <a
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="index.html"
+            >Home</a
+          >
+          <a
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="/articles/"
+            >Articles</a
+          >
+          <a
+            id="nav-dashboard-link"
+            class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
+            href="/dashboard/"
+            >Dashboard</a
+          >
         </div>
-        <div class="flex-grow text-center md:text-left">
-          <h3 id="profile-display-name-text" class="text-lg font-bold">John Student</h3>
-          <p id="profile-email-text" class="text-gray-500">student@university.edu</p>
+        <div id="nav-cta">
+          <a
+            class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"
+            href="/login/"
+            >Get Started</a
+          >
         </div>
-        <button id="edit-profile-btn" class="px-5 py-2 border border-gray-200 rounded-full font-medium text-sm hover:bg-gray-50 transition-colors">
-          Update Profile
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div>
-          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Display Name</label>
-          <input type="text" id="profile-name" placeholder="Full Name" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Email</label>
-          <input type="email" id="profile-email" placeholder="Email" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
-        </div>
-      </div>
-      <div>
-        <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Profile Picture URL</label>
-        <input type="text" id="profile-pfp-url" placeholder="https://example.com/photo.jpg" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
-      </div>
+      </nav>
     </div>
 
-    <!-- Security Section -->
-    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
-      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <span class="material-icons-round text-gray-400">security</span>
-        Security
-      </h2>
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">New Password</label>
-          <input type="password" id="profile-password" placeholder="••••••••" class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary">
+    <main class="max-w-3xl mx-auto px-6 py-32">
+      <h1 class="text-3xl font-bold mb-8 text-dark">Settings</h1>
+
+      <!-- Profile Section -->
+      <div
+        class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8"
+      >
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+          <span class="material-icons-round text-gray-400">person</span>
+          Profile
+        </h2>
+
+        <div class="flex flex-col md:flex-row items-center gap-6 mb-8">
+          <div
+            id="profile-pfp-container"
+            class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-400 border-4 border-white shadow-sm overflow-hidden"
+          >
+            <span id="profile-initials">JS</span>
+            <img
+              id="profile-img-display"
+              src=""
+              class="hidden w-full h-full object-cover"
+              alt="Profile"
+            />
+          </div>
+          <div class="flex-grow text-center md:text-left">
+            <h3 id="profile-display-name-text" class="text-lg font-bold">
+              John Student
+            </h3>
+            <p id="profile-email-text" class="text-gray-500">
+              student@university.edu
+            </p>
+          </div>
+          <button
+            id="edit-profile-btn"
+            class="px-5 py-2 border border-gray-200 rounded-full font-medium text-sm hover:bg-gray-50 transition-colors"
+          >
+            Update Profile
+          </button>
         </div>
-        <div class="flex justify-end">
-          <button id="logout-btn" class="text-gray-500 text-sm font-medium hover:text-dark flex items-center gap-1">
-             <span class="material-icons-round text-sm">logout</span> Logout
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label
+              class="block text-xs font-semibold text-gray-500 uppercase mb-2"
+              >Display Name</label
+            >
+            <input
+              type="text"
+              id="profile-name"
+              placeholder="Full Name"
+              class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary"
+            />
+          </div>
+          <div>
+            <label
+              class="block text-xs font-semibold text-gray-500 uppercase mb-2"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="profile-email"
+              placeholder="Email"
+              class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary"
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-xs font-semibold text-gray-500 uppercase mb-2"
+            >Profile Picture URL</label
+          >
+          <input
+            type="text"
+            id="profile-pfp-url"
+            placeholder="https://example.com/photo.jpg"
+            class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary"
+          />
+        </div>
+      </div>
+
+      <!-- Security Section -->
+      <div
+        class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8"
+      >
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+          <span class="material-icons-round text-gray-400">security</span>
+          Security
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label
+              class="block text-xs font-semibold text-gray-500 uppercase mb-2"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="profile-password"
+              placeholder="••••••••"
+              class="w-full rounded-xl border-gray-200 bg-gray-50 text-gray-700 focus:border-primary focus:ring-primary"
+            />
+          </div>
+          <div class="flex justify-end">
+            <button
+              id="logout-btn"
+              class="text-gray-500 text-sm font-medium hover:text-dark flex items-center gap-1"
+            >
+              <span class="material-icons-round text-sm">logout</span> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      <div
+        class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8"
+      >
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+          <span class="material-icons-round text-gray-400">history</span>
+          Study History
+        </h2>
+        <div id="history-container" class="space-y-4">
+          <p class="text-gray-400 text-sm text-center py-8">
+            Loading history...
+          </p>
+        </div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div
+        class="bg-red-50 rounded-3xl p-8 border border-red-100 opacity-80 hover:opacity-100 transition-opacity"
+      >
+        <h2 class="text-lg font-bold text-danger mb-4">Danger Zone</h2>
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p class="text-sm text-red-800">
+            Once you delete your account, there is no going back. Please be
+            certain.
+          </p>
+          <button
+            id="delete-account-btn"
+            class="text-red-600 border border-red-200 bg-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-all"
+          >
+            Delete Account
           </button>
         </div>
       </div>
-    </div>
+    </main>
 
-    <!-- History Section -->
-    <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-200 mb-8">
-      <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-        <span class="material-icons-round text-gray-400">history</span>
-        Study History
-      </h2>
-      <div id="history-container" class="space-y-4">
-        <p class="text-gray-400 text-sm text-center py-8">Loading history...</p>
-      </div>
-    </div>
-
-    <!-- Danger Zone -->
-    <div class="bg-red-50 rounded-3xl p-8 border border-red-100 opacity-80 hover:opacity-100 transition-opacity">
-       <h2 class="text-lg font-bold text-danger mb-4">Danger Zone</h2>
-       <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-         <p class="text-sm text-red-800">Once you delete your account, there is no going back. Please be certain.</p>
-         <button id="delete-account-btn" class="text-red-600 border border-red-200 bg-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-all">
-           Delete Account
-         </button>
-       </div>
-    </div>
-
-  </main>
-
-  <!-- footer -->
-  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
-          <p class="text-gray-500 leading-relaxed">
-            The intelligent study companion for high performers.
-          </p>
-        </div>
-        
-        <div class="flex gap-12 md:gap-24">
-          <div>
-            <h4 class="font-bold text-dark mb-6">Product</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
-              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
-              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
-            </ul>
+    <!-- footer -->
+    <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+          <div class="max-w-sm">
+            <a
+              class="font-bold text-2xl text-dark tracking-tight mb-4 block"
+              href="index.html"
+              >GoStudy!</a
+            >
+            <p class="text-gray-500 leading-relaxed">
+              The intelligent study companion for high performers.
+            </p>
           </div>
-          <div>
-            <h4 class="font-bold text-dark mb-6">Company</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
-              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
-            </ul>
+
+          <div class="flex gap-12 md:gap-24">
+            <div>
+              <h4 class="font-bold text-dark mb-6">Product</h4>
+              <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                <li>
+                  <a
+                    href="/articles/"
+                    class="hover:text-primary transition-colors"
+                    >Articles</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/pricing"
+                    class="hover:text-primary transition-colors"
+                    >Pricing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/onboarding/"
+                    class="hover:text-primary transition-colors"
+                    >Onboarding</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/parents/"
+                    class="hover:text-primary transition-colors"
+                    >Parents</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold text-dark mb-6">Company</h4>
+              <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                <li>
+                  <a href="/about/" class="hover:text-primary transition-colors"
+                    >About</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/contact/"
+                    class="hover:text-primary transition-colors"
+                    >Contact</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/methodology/"
+                    class="hover:text-primary transition-colors"
+                    >Methodology</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/how-it-works/"
+                    class="hover:text-primary transition-colors"
+                    >How It Works</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400"
+        >
+          <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+          <div class="flex gap-6">
+            <a href="/privacy/" class="hover:text-dark transition-colors"
+              >Privacy Policy</a
+            >
+            <a href="/terms/" class="hover:text-dark transition-colors"
+              >Terms</a
+            >
           </div>
         </div>
       </div>
+    </footer>
+    <script type="module">
+      import {
+        auth,
+        onAuthStateChanged,
+        signOut,
+        updateProfile,
+        updateEmail,
+        updatePassword,
+        deleteUser,
+        reauthenticate,
+      } from "/backend/js/auth.js";
 
-      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
-        <div class="flex gap-6">
-          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <script type="module">
-    import { 
-      auth, 
-      onAuthStateChanged, 
-      signOut, 
-      updateProfile, 
-      updateEmail, 
-      updatePassword, 
-      deleteUser,
-      reauthenticate
-    } from "/backend/js/auth.js";
+      
+      const API_BASE = "https://go-study-backend.onrender.com";
 
-    const API_BASE = "https://go-study-backend.onrender.com"; // Change if local
-
-    async function loadHistory(idToken) {
-        const container = document.getElementById('history-container');
+      async function loadHistory(idToken) {
+        const container = document.getElementById("history-container");
         try {
-            const res = await fetch(`${API_BASE}/api/generations`, {
-                headers: { 'Authorization': `Bearer ${idToken}` }
-            });
-            if (!res.ok) throw new Error("Failed to fetch history");
-            const data = await res.json();
-            
-            if (data.length === 0) {
-                container.innerHTML = `<p class="text-gray-400 text-sm text-center py-8">No past generations found.</p>`;
-                return;
-            }
+          const res = await fetch(`${API_BASE}/api/generations`, {
+            headers: { Authorization: `Bearer ${idToken}` },
+          });
+          if (!res.ok) throw new Error("Failed to fetch history");
+          const data = await res.json();
 
-            container.innerHTML = data.map((item, index) => `
+          if (data.length === 0) {
+            container.innerHTML = `<p class="text-gray-400 text-sm text-center py-8">No past generations found.</p>`;
+            return;
+          }
+
+          container.innerHTML = data
+            .map(
+              (item, index) => `
                 <div class="history-item p-4 rounded-2xl border border-gray-100 hover:border-primary/20 hover:bg-primary/[0.02] transition-all group cursor-pointer" data-index="${index}">
                     <div class="flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-dark">${item.fileName || "Untitled Document"}</div>
-                            <div class="text-xs text-gray-400">${new Date(item.createdAt?._seconds * 1000 || Date.now()).toLocaleDateString()}</div>
+                            <div class="font-bold text-dark">${
+                              item.fileName || "Untitled Document"
+                            }</div>
+                            <div class="text-xs text-gray-400">${new Date(
+                              item.createdAt?._seconds * 1000 || Date.now()
+                            ).toLocaleDateString()}</div>
                         </div>
                         <span class="material-icons-round text-gray-300 group-hover:text-primary transition-colors">visibility</span>
                     </div>
                     <div id="plan-details-${index}" class="hidden mt-4 pt-4 border-t border-gray-100 animate-fade-in">
-                        <p class="text-sm text-gray-600 leading-relaxed">${item.studyPlan?.summary || "No summary available."}</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">${
+                          item.studyPlan?.summary || "No summary available."
+                        }</p>
                         <div class="mt-4 flex gap-2">
                             <button onclick="event.stopPropagation(); window.location.href='/dashboard/'" class="text-xs font-bold text-primary">Open in Dashboard</button>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `
+            )
+            .join("");
 
-            // Add Click Handlers
-            document.querySelectorAll('.history-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const idx = item.getAttribute('data-index');
-                    const details = document.getElementById(`plan-details-${idx}`);
-                    details.classList.toggle('hidden');
-                });
+          // Add Click Handlers
+          document.querySelectorAll(".history-item").forEach((item) => {
+            item.addEventListener("click", () => {
+              const idx = item.getAttribute("data-index");
+              const details = document.getElementById(`plan-details-${idx}`);
+              details.classList.toggle("hidden");
             });
+          });
         } catch (e) {
-            container.innerHTML = `<p class="text-red-400 text-sm text-center py-8">Error loading history.</p>`;
+          container.innerHTML = `<p class="text-red-400 text-sm text-center py-8">Error loading history.</p>`;
         }
-    }
+      }
 
     // --- Profile Updates ---
     document.getElementById('edit-profile-btn')?.addEventListener('click', async () => {
@@ -228,24 +405,51 @@
         const photoURL = document.getElementById('profile-pfp-url').value;
         const password = document.getElementById('profile-password').value;
 
-        try {
-            const btn = document.getElementById('edit-profile-btn');
-            const originalText = btn.innerText;
-            btn.disabled = true;
-            btn.innerText = "Updating...";
+        const btn = document.getElementById('edit-profile-btn');
+        const originalText = btn.innerText;
+        btn.disabled = true;
+        btn.innerText = "Updating...";
 
-            // Update Name and PFP
+        try {
+            const token = await user.getIdToken();
+
+            // 1. Update Profile Info (Name, PFP)
             if (name !== user.displayName || photoURL !== user.photoURL) {
-                await updateProfile(user, { displayName: name, photoURL: photoURL });
+                const res = await fetch(`${API_BASE}/api/profile`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ displayName: name, photoURL: photoURL })
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error || "Failed to update profile");
+                }
             }
 
-            // Update Email/Password (Requires Re-auth)
-            if (email !== user.email || password) {
+            // 2. Update Sensitive Info (Email, Password)
+            if ((email && email !== user.email) || password) {
                 const currentPassword = prompt("Please enter your current password to update email or password:");
                 if (currentPassword) {
+                    // Client-side re-auth for security check before calling backend
                     await reauthenticate(currentPassword);
-                    if (email !== user.email) await updateEmail(user, email);
-                    if (password) await updatePassword(user, password);
+                    
+                    const res = await fetch(`${API_BASE}/api/account`, {
+                        method: 'PUT',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Token usually stays valid
+                        },
+                        body: JSON.stringify({ email: email, password: password })
+                    });
+
+                    if (!res.ok) {
+                        const error = await res.json();
+                        throw new Error(error.error || "Failed to update account credentials");
+                    }
                 } else {
                     throw new Error("Password required for email/password changes.");
                 }
@@ -258,7 +462,8 @@
         } catch (e) {
             console.error(e);
             alert("Update failed: " + e.message);
-            window.location.reload();
+            btn.disabled = false;
+            btn.innerText = originalText;
         }
     });
 
@@ -272,22 +477,37 @@
         try {
             const currentPassword = prompt("Please enter your password to confirm account deletion:");
             if (currentPassword) {
+                // Client-side re-auth for security check
                 await reauthenticate(currentPassword);
-                await deleteUser(user);
+                
+                const token = await user.getIdToken();
+                const res = await fetch(`${API_BASE}/api/account`, {
+                    method: 'DELETE',
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.error || "Failed to delete account");
+                }
+                
+                await signOut(auth);
                 window.location.href = "/index.html";
             }
         } catch (e) {
+            console.error(e);
             alert("Deletion failed: " + e.message);
         }
     });
 
-    onAuthStateChanged(auth, async (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
-            const token = await user.getIdToken();
-            loadHistory(token);
+          const token = await user.getIdToken();
+          loadHistory(token);
         }
-    });
-
-  </script>
-</body>
+      });
+    </script>
+  </body>
 </html>

@@ -38,8 +38,11 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT) {
     }
 } else {
     try {
-        admin.initializeApp();
-        console.log("Firebase Admin initialized via default credentials");
+        // Explicitly set Project ID for local dev (allows verifyIdToken to work without key file)
+        admin.initializeApp({
+            projectId: "gostudy-7334c"
+        });
+        console.log("Firebase Admin initialized via default credentials with Project ID");
     } catch (e) {
         console.warn("Firebase Admin NOT initialized. Auth features will be disabled.");
     }
@@ -269,6 +272,74 @@ app.get('/api/generations', authenticate, async (req, res) => {
         res.json(generations);
     } catch (error) {
         console.error('Error fetching generations:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// --- 6. PROFILE & ACCOUNT MANAGEMENT ---
+
+// Update Profile (Display Name, Photo URL)
+app.put('/api/profile', authenticate, async (req, res) => {
+    try {
+        const { displayName, photoURL } = req.body;
+        const updates = {};
+        if (displayName !== undefined) updates.displayName = displayName;
+        if (photoURL !== undefined) updates.photoURL = photoURL;
+
+        if (Object.keys(updates).length === 0) {
+            return res.status(400).json({ error: 'No fields to update' });
+        }
+
+        await admin.auth().updateUser(req.user.uid, updates);
+        console.log(`Updated profile for user: ${req.user.uid}`);
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Update Account (Email, Password) - Requires sensitive actions to be verified on client first
+app.put('/api/account', authenticate, async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const updates = {};
+        if (email) updates.email = email;
+        if (password) updates.password = password;
+
+        if (Object.keys(updates).length === 0) {
+            return res.status(400).json({ error: 'No fields to update' });
+        }
+
+        await admin.auth().updateUser(req.user.uid, updates);
+        console.log(`Updated account credentials for user: ${req.user.uid}`);
+        res.json({ message: 'Account updated successfully' });
+    } catch (error) {
+        console.error('Error updating account:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Delete Account
+app.delete('/api/account', authenticate, async (req, res) => {
+    try {
+        await admin.auth().deleteUser(req.user.uid);
+        
+        // Optional: Delete user data from Firestore
+        if (db) {
+             const batch = db.batch();
+             const snapshot = await db.collection('generations').where('userId', '==', req.user.uid).get();
+             snapshot.forEach(doc => {
+                 batch.delete(doc.ref);
+             });
+             await batch.commit();
+             console.log(`Deleted user data for: ${req.user.uid}`);
+        }
+
+        console.log(`Deleted user: ${req.user.uid}`);
+        res.json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting account:', error);
         res.status(500).json({ error: error.message });
     }
 });
