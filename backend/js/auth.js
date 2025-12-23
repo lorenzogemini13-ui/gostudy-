@@ -134,9 +134,11 @@ import {
 
 onAuthStateChanged(auth, (user) => {
   const path = window.location.pathname;
-  const isLoginPage = path.includes('/login/');
-  const isDashboard = path.includes('/dashboard/');
-  const isProfilePage = path.includes('/profile/');
+  const isLoginPage = path.includes('/login');
+  const isDashboard = path.includes('/dashboard');
+  const isProfilePage = path.includes('/profile');
+
+  console.log(`[AUTH] State changed. User: ${user ? user.email : 'None'}. Path: ${path} (Profile: ${isProfilePage})`);
 
   if (user) {
     const display = document.getElementById('user-name-display');
