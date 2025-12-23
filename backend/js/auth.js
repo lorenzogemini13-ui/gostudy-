@@ -161,11 +161,15 @@ onAuthStateChanged(auth, (user) => {
     if (isProfilePage) {
         const nameInput = document.getElementById('profile-name');
         const emailInput = document.getElementById('profile-email');
+        const nameText = document.getElementById('profile-display-name-text');
+        const emailText = document.getElementById('profile-email-text');
         const profileImg = document.getElementById('profile-img-display');
         const profileInitials = document.getElementById('profile-initials');
 
         if (nameInput) nameInput.value = user.displayName || "";
         if (emailInput) emailInput.value = user.email || "";
+        if (nameText) nameText.innerText = user.displayName || user.email.split('@')[0];
+        if (emailText) emailText.innerText = user.email || "";
         
         if (user.photoURL) {
             if (profileImg) {
