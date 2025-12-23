@@ -213,10 +213,10 @@
 
     <!-- LOGIC -->
     <script type="module">
-      import { auth } from "/backend/js/auth.js";
+      import { auth, API_BASE } from "/backend/js/auth.js";
 
       // --- CONFIG & STATE ---
-      const API_URL = "https://go-study-backend.onrender.com/api/generate-plan";
+      const API_URL = `${API_BASE}/api/generate-plan`;
       let selectedDifficulty = "High School";
       let currentData = null;
       let answersVisible = false;

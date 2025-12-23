@@ -12,6 +12,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 // YOUR SPECIFIC CONFIGURATION
+export const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3000'
+  : 'https://go-study-backend.onrender.com';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDWjdgDTwK-WFxaWoLZbVzGFHxqmociHaI",
   authDomain: "gostudy-7334c.firebaseapp.com",
