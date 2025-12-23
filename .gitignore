@@ -2,11 +2,8 @@ node_modules/
 .env*
 uploads/
 /tmp/
-GOSTUDY_OVERVIEW.md
-COMMANDS.md
 TO-DO.md
-NEW_METHODS.md
-METRICS.md
+LOGS.md
 
 # OS specific
 .DS_Store
