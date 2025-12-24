@@ -1,49 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Methodology - GoStudy!</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#007AFF",
-              secondary: "#F5F5F7",
-              dark: "#1D1D1F",
-            },
-            fontFamily: { sans: ["Inter", "sans-serif"] },
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methodology - GoStudy!</title>
+
+  <!-- tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- ggl fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- favicon -->
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007AFF", 
+            secondary: "#F5F5F7", 
+            dark: "#1D1D1F",
+            success: "#34C759",
+          },
+          fontFamily: {
+            sans: ["Inter", "-apple-system", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
           },
         },
-      };
-    </script>
-    <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-  </head>
-  <body class="bg-white text-dark font-sans antialiased relative min-h-screen">
-    <!-- Background Accents -->
-    <div
-      class="absolute top-0 left-0 right-0 h-[600px] pointer-events-none -z-10"
-      style="
-        background: radial-gradient(
-          circle at 50% -20%,
-          #e0e7ff 0%,
-          #f3f4f6 60%,
-          transparent 100%
-        );
-      "
-    ></div>
+      },
+    };
+  </script>
 
-     <!-- navbar -->
+  <style>
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Forgetting Curve Animation */
+    @keyframes curveDraw {
+      from { stroke-dashoffset: 100; }
+      to { stroke-dashoffset: 0; }
+    }
+    .animate-curve {
+      stroke-dasharray: 100;
+      animation: curveDraw 2s ease-out forwards;
+    }
+
+    html::-webkit-scrollbar { display: none; }
+    html { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+
+  <!-- navbar -->
   <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
     <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
       <a class="flex items-center gap-2" href="/index.html">
@@ -51,146 +73,195 @@
         <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
       </a>
       <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
+        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
         <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
       </div>
       <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="/login/">Get Started</a>
       </div>
     </nav>
   </div>
 
-    <!-- MAIN -->
-    <main class="max-w-4xl mx-auto px-6 py-32 pt-48">
-      <header class="text-center mb-20">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary text-xs font-semibold mb-6 uppercase tracking-wide">
-          <span class="material-icons-round text-sm">verified</span>
-          Scientifically Verified
+  <main class="w-full mx-auto">
+    
+    <!-- Hero Section -->
+    <section class="relative pt-48 pb-32 px-6 overflow-hidden">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-blue-50/50 to-transparent -z-10"></div>
+      
+      <div class="max-w-4xl mx-auto text-center reveal active">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary text-xs font-bold mb-8 uppercase tracking-widest">
+          <span class="material-icons-round text-sm">science</span>
+          Evidence-Based Learning
         </div>
-        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 text-dark">
-          The Science of <span class="text-primary">Learning.</span>
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-dark leading-[1.1]">
+          The Science of <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">Mastery.</span>
         </h1>
-        <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-          GoStudy! isn't just a tool; it's a methodology built on decades of cognitive science research.
+        <p class="text-xl md:text-2xl text-gray-500 leading-relaxed max-w-2xl mx-auto">
+          We don't just organize notes. We use neuroscientific protocols to rewire how your brain encodes and retrieves information.
         </p>
-      </header>
+      </div>
+    </section>
 
-      <section class="space-y-24">
-        <!-- Active Recall -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+    <!-- The 3 Pillars -->
+    <section class="py-24 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Pillar 1: Active Recall -->
+        <div class="grid md:grid-cols-2 gap-20 items-center mb-40 reveal">
           <div>
-            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
-              <span class="material-icons-round">quiz</span>
-            </div>
-            <h2 class="text-3xl font-bold mb-4">Active Recall</h2>
-            <p class="text-gray-600 leading-relaxed text-lg mb-6">
-              Unlike passive reading, Active Recall forces your brain to retrieve information. This process strengthens neural pathways and makes memory more durable.
+            <span class="text-primary font-mono font-bold tracking-tighter text-sm mb-4 block uppercase">Protocol 01</span>
+            <h2 class="text-4xl font-bold mb-6">Active Recall: <br>Testing as Learning</h2>
+            <p class="text-gray-600 text-lg leading-relaxed mb-8">
+              Passive reading creates an "illusion of competence." GoStudy! forces the brain to reconstruct information from scratch, a process known as <b>Retrieval Practice</b>.
             </p>
-            <ul class="space-y-3">
-              <li class="flex items-center gap-3 text-gray-700 font-medium">
-                <span class="material-icons-round text-green-500 text-sm">check_circle</span>
-                Increases long-term retention by up to 300%
-              </li>
-              <li class="flex items-center gap-3 text-gray-700 font-medium">
-                <span class="material-icons-round text-green-500 text-sm">check_circle</span>
-                Identifies knowledge gaps instantly
-              </li>
-            </ul>
-          </div>
-          <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
             <div class="space-y-4">
-              <div class="h-4 bg-gray-200 rounded-full w-3/4"></div>
-              <div class="h-4 bg-gray-200 rounded-full w-1/2"></div>
-              <div class="pt-4 flex gap-2">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                  <span class="material-icons-round text-sm">psychology</span>
-                </div>
-                <div class="flex-grow bg-white p-3 rounded-lg border border-gray-100 shadow-sm text-sm text-gray-600">
-                  "Retrieval practice is the most effective way to learn."
-                </div>
+              <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <span class="material-icons-round text-primary">psychology</span>
+                <p class="text-sm text-gray-600">Strengthens synaptic connections through "desirable difficulty."</p>
+              </div>
+              <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <span class="material-icons-round text-primary">insights</span>
+                <p class="text-sm text-gray-600">Identifies "Meta-Cognitive Gaps" instantly.</p>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="bg-secondary rounded-[3rem] p-8 aspect-square flex flex-col justify-center gap-4 relative overflow-hidden group">
+              <!-- Mock UI Flashcard -->
+              <div class="bg-white p-6 rounded-2xl shadow-xl transform group-hover:-translate-y-2 transition-transform duration-500">
+                <p class="text-xs font-bold text-primary mb-2 uppercase">Question</p>
+                <p class="text-gray-800 font-medium">Explain the Second Law of Thermodynamics.</p>
+              </div>
+              <div class="bg-primary/10 p-6 rounded-2xl border border-primary/20 blur-[2px] hover:blur-0 transition-all cursor-pointer">
+                <p class="text-xs font-bold text-primary mb-2 uppercase">Your Answer (Retrieving...)</p>
+                <div class="h-2 bg-primary/20 rounded-full w-3/4 mb-2"></div>
+                <div class="h-2 bg-primary/20 rounded-full w-1/2"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Spaced Repetition -->
-        <div class="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
+        <!-- Pillar 2: Spaced Repetition -->
+        <div class="grid md:grid-cols-2 gap-20 items-center mb-40 reveal">
           <div class="md:order-2">
-            <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-6">
-              <span class="material-icons-round">calendar_today</span>
-            </div>
-            <h2 class="text-3xl font-bold mb-4">Spaced Repetition</h2>
-            <p class="text-gray-600 leading-relaxed text-lg mb-6">
-              By reviewing material at increasing intervals, we exploit the "Forgetting Curve." GoStudy! schedules your study sessions precisely when you're about to forget.
+            <span class="text-orange-500 font-mono font-bold tracking-tighter text-sm mb-4 block uppercase">Protocol 02</span>
+            <h2 class="text-4xl font-bold mb-6">Spaced Repetition: <br>Flattening the Curve</h2>
+            <p class="text-gray-600 text-lg leading-relaxed mb-8">
+              Based on the Ebbinghaus Forgetting Curve, our algorithm calculates the exact moment a memory begins to decay and triggers a review session.
             </p>
-            <ul class="space-y-3">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-6 bg-orange-50 rounded-3xl text-center">
+                <p class="text-3xl font-bold text-orange-600">4x</p>
+                <p class="text-xs font-bold text-orange-400 uppercase mt-2">Retention Increase</p>
+              </div>
+              <div class="p-6 bg-blue-50 rounded-3xl text-center">
+                <p class="text-3xl font-bold text-primary">-60%</p>
+                <p class="text-xs font-bold text-blue-400 uppercase mt-2">Study Time</p>
+              </div>
+            </div>
+          </div>
+
+            <div class="md:order-1 relative aspect-square overflow-hidden rounded-[3rem] bg-dark p-10 flex items-end">
+              <!-- Forgetting Curve Visualization -->
+                <img src="/assets/forgetting-curve.png" alt="Forgetting curve" class="absolute inset-0 h-full w-full object-contain p-10 pointer-events-none"/>
+                <div class="relative z-10">
+                  <p class="text-white text-lg font-semibold leading-tight">
+                    The Forgetting Curve
+                  </p>
+                  <p class="text-gray-400 text-sm">
+                    Algorithmically corrected
+                  </p>
+                </div>
+            </div>
+
+</div>
+
+
+        <!-- Pillar 3: Memory Palace -->
+        <div class="grid md:grid-cols-2 gap-20 items-center reveal">
+          <div>
+            <span class="text-purple-600 font-mono font-bold tracking-tighter text-sm mb-4 block uppercase">Protocol 03</span>
+            <h2 class="text-4xl font-bold mb-6">The Memory Palace: <br>Spatial Encoding</h2>
+            <p class="text-gray-600 text-lg leading-relaxed mb-8">
+              Humans evolved to remember locations, not text. GoStudy! uses AI to map your abstract data onto virtual 3D "loci," making data sequences impossible to forget.
+            </p>
+            <ul class="space-y-4">
               <li class="flex items-center gap-3 text-gray-700 font-medium">
-                <span class="material-icons-round text-orange-500 text-sm">check_circle</span>
-                Optimizes study time for maximum ROI
+                <span class="material-icons-round text-purple-500">layers</span>
+                Multisensory Data Layering
               </li>
               <li class="flex items-center gap-3 text-gray-700 font-medium">
-                <span class="material-icons-round text-orange-500 text-sm">check_circle</span>
-                Prevents "burning out" before exams
+                <span class="material-icons-round text-purple-500">architecture</span>
+                Spatial Anchoring (Method of Loci)
               </li>
             </ul>
           </div>
-          <div class="md:order-1 bg-gray-50 rounded-[2rem] p-8 border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
-             <div class="relative h-48 flex items-end gap-2">
-                <div class="bg-primary w-4 h-1/4 rounded-t-lg"></div>
-                <div class="bg-primary w-4 h-1/2 rounded-t-lg"></div>
-                <div class="bg-primary w-4 h-3/4 rounded-t-lg"></div>
-                <div class="bg-primary w-4 h-full rounded-t-lg"></div>
-                <div class="absolute -top-4 right-0 text-xs font-bold text-gray-400 uppercase tracking-widest">Growth</div>
-             </div>
-          </div>
-        </div>
-
-        <!-- Memory Palace -->
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
-                <span class="material-icons-round">apartment</span>
-              </div>
-              <h2 class="text-3xl font-bold mb-4">The Memory Palace</h2>
-              <p class="text-gray-600 leading-relaxed text-lg mb-6">
-                Loci method uses spatial navigation to store abstract data. We use AI to map your text onto familiar structures, making complex data impossible to forget.
-              </p>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3 text-gray-700 font-medium">
-                  <span class="material-icons-round text-purple-500 text-sm">check_circle</span>
-                  Perfect for lists and sequences
-                </li>
-                <li class="flex items-center gap-3 text-gray-700 font-medium">
-                  <span class="material-icons-round text-purple-500 text-sm">check_circle</span>
-                  Visual learning at its peak
-                </li>
-              </ul>
-            </div>
-            <div class="bg-dark rounded-[2rem] p-8 shadow-2xl transition-transform hover:scale-[1.02] relative overflow-hidden">
-                <div class="absolute inset-0 bg-blue-500/10 blur-[100px]"></div>
-                <div class="relative flex items-center justify-center h-48">
-                    <span class="material-icons-round text-8xl text-white/20">architecture</span>
+          <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-[3rem] aspect-square p-1 relative overflow-hidden group">
+            <div class="bg-dark w-full h-full rounded-[2.8rem] flex items-center justify-center p-8 text-center overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                <div class="relative z-10">
+                    <span class="material-icons-round text-[100px] text-white/20 mb-4 group-hover:scale-110 transition-transform">view_in_ar</span>
+                    <p class="text-white font-bold">Spatial Intelligence Engine</p>
+                    <p class="text-purple-300 text-sm mt-2 font-mono italic">Converting Text → Geometry</p>
                 </div>
             </div>
           </div>
-      </section>
+        </div>
 
-      <footer class="mt-32 text-center border-t border-gray-100 pt-20">
-        <h3 class="text-2xl font-bold mb-4">Ready to start?</h3>
-        <p class="text-gray-500 mb-8">Join thousands of students who have mastered their field.</p>
-        <a href="/dashboard/" class="bg-primary text-white px-10 py-4 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-all inline-block">
-          Go to Dashboard
-        </a>
-      </footer>
-    </main>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-32 px-6 bg-[#FBFBFD] reveal">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-16">Active Learning vs. Traditional Study</h2>
+            <div class="grid md:grid-cols-2 gap-px bg-gray-200 rounded-[2.5rem] overflow-hidden border border-gray-200">
+                <div class="bg-white p-10">
+                    <h3 class="text-gray-400 font-bold uppercase text-xs tracking-widest mb-6">Passive (Old Way)</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 text-gray-500 text-sm italic"><span class="material-icons-round text-red-400 text-sm">close</span> Re-reading notes</li>
+                        <li class="flex gap-3 text-gray-500 text-sm italic"><span class="material-icons-round text-red-400 text-sm">close</span> Highlighting text</li>
+                        <li class="flex gap-3 text-gray-500 text-sm italic"><span class="material-icons-round text-red-400 text-sm">close</span> Studying for 5 hours straight</li>
+                        <li class="flex gap-3 text-gray-500 text-sm italic"><span class="material-icons-round text-red-400 text-sm">close</span> Summary writing</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-10">
+                    <h3 class="text-primary font-bold uppercase text-xs tracking-widest mb-6">GoStudy! (Active)</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 text-gray-800 text-sm font-bold"><span class="material-icons-round text-success text-sm">check</span> Generative retrieval</li>
+                        <li class="flex gap-3 text-gray-800 text-sm font-bold"><span class="material-icons-round text-success text-sm">check</span> Interval spacing</li>
+                        <li class="flex gap-3 text-gray-800 text-sm font-bold"><span class="material-icons-round text-success text-sm">check</span> Cognitive load management</li>
+                        <li class="flex gap-3 text-gray-800 text-sm font-bold"><span class="material-icons-round text-success text-sm">check</span> Mnemonic mapping</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-32 px-6 bg-white reveal">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6">Ready to upgrade your brain?</h2>
+        <p class="text-gray-500 mb-10 text-lg">Don't work harder than the machine. Let the science do the heavy lifting.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/dashboard/" class="bg-primary text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 transition-all">
+            Enter Dashboard
+          </a>
+          <a href="/how-it-works/" class="bg-secondary text-dark px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition-all">
+            How it Works
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
           <p class="text-gray-500 leading-relaxed">
             The intelligent study companion for high performers.
           </p>
@@ -198,7 +269,7 @@
         
         <div class="flex gap-12 md:gap-24">
           <div>
-            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <h4 class="font-bold text-dark mb-6 text-sm uppercase tracking-widest">Product</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
               <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
@@ -207,7 +278,7 @@
             </ul>
           </div>
           <div>
-            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <h4 class="font-bold text-dark mb-6 text-sm uppercase tracking-widest">Company</h4>
             <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
               <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
@@ -227,6 +298,18 @@
       </div>
     </div>
   </footer>
+
   <script type="module" src="/backend/js/auth.js"></script>
-  </body>
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
 </html>

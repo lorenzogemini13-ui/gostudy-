@@ -21,6 +21,15 @@
     };
   </script>
   <style>
+    /* Hide scrollbar while keeping scroll functionality */
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+    html::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
     .hero-blob { background: radial-gradient(circle at 80% 20%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 60%); pointer-events: none; }
     .hidden-state { display: none; opacity: 0; transform: translateY(10px); }
     .visible-state { display: block; animation: fadeIn 0.4s forwards; }
@@ -43,7 +52,7 @@
         <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
       </a>
       <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
+         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
         <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
       </div>
@@ -55,7 +64,7 @@
 
   <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
 
-  <a href="index.html" class="absolute top-6 left-6 md:top-10 md:left-10 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-dark transition-colors z-20">
+  <a href="/index.html" class="absolute top-6 left-6 md:top-10 md:left-10 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-dark transition-colors z-20">
     <span class="material-icons-round text-lg">arrow_back</span> Back to Home
   </a>
 

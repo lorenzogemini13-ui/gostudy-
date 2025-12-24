@@ -47,6 +47,15 @@
   </script>
 
   <style>
+    /* Hide scrollbar while keeping scroll functionality */
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+    html::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
     /* Smooth reveal styles */
     .reveal {
       opacity: 0;
@@ -310,34 +319,28 @@
             <div class="absolute -top-6 left-1/2 -translate-x-1/2 pro-bg-gradient text-white text-sm font-bold px-6 py-2 rounded-full shadow-lg">RECOMMENDED</div>
             
             <div class="p-10">
-              <h3 class="text-2xl font-bold mb-4">Pro Annual</h3>
+              <h3 class="text-2xl font-bold mb-4">Pro</h3>
               <div class="flex items-center justify-center gap-1 mb-6">
                 <span class="text-4xl font-bold">$</span>
-                <span class="text-7xl font-extrabold tracking-tighter">7.99</span>
+                <span class="text-7xl font-extrabold tracking-tighter">9.99</span>
                 <span class="text-xl text-gray-400 font-medium">/mo</span>
               </div>
-              <p class="text-gray-400 text-sm mb-10 italic">Billed annually ($95.88/year)</p>
               
-              <ul class="text-left space-y-5 mb-12">
-                <li class="flex items-center gap-3">
-                  <div class="w-6 h-6 rounded-full pro-bg-gradient flex items-center justify-center text-white text-[10px]">
-                    <span class="material-icons-round scale-75">check</span>
-                  </div>
-                  <span class="font-medium">Everything in Pro Student</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <div class="w-6 h-6 rounded-full pro-bg-gradient flex items-center justify-center text-white text-[10px]">
-                    <span class="material-icons-round scale-75">check</span>
-                  </div>
-                  <span class="font-medium">Save 20% compared to monthly</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <div class="w-6 h-6 rounded-full pro-bg-gradient flex items-center justify-center text-white text-[10px]">
-                    <span class="material-icons-round scale-75">check</span>
-                  </div>
-                  <span class="font-medium">Exclusive Beta access to Live AI Tutors</span>
-                </li>
-              </ul>
+              
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check_circle</span> Unlimited Everything
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check_circle</span> Memory Palace Mode
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check_circle</span> AI Voice Notes
+          </li>
+          <li class="flex items-center gap-3 font-semibold text-sm">
+            <span class="material-icons-round text-blue-600">check_circle</span> Priority Processing
+          </li>
+        </ul>
 
               <div id="paypal-button-container-P-67G68648B35652948NFFQ7BA" class="mt-8"></div>
               
@@ -382,7 +385,7 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
           <p class="text-gray-500 leading-relaxed">
             The intelligent study companion for high performers.
           </p>

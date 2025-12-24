@@ -30,6 +30,17 @@
     </script>
     <link rel="icon" href="/assets/go-logo.png" type="image/png" />
     <script type="module" src="/backend/js/auth.js"></script>
+
+    <style>
+      /* Hide scrollbar while keeping scroll functionality */
+      html {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+      }
+      html::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+    </style>
   </head>
   <body class="bg-[#F5F5F7] text-dark font-sans antialiased min-h-screen">
     <!-- navbar -->
@@ -52,7 +63,7 @@
         >
           <a
             class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all"
-            href="index.html"
+            href="/index.html"
             >Home</a
           >
           <a
@@ -234,7 +245,7 @@
           <div class="max-w-sm">
             <a
               class="font-bold text-2xl text-dark tracking-tight mb-4 block"
-              href="index.html"
+              href="/index.html"
               >GoStudy!</a
             >
             <p class="text-gray-500 leading-relaxed">

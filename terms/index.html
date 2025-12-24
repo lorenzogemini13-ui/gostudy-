@@ -14,6 +14,17 @@
   <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
   <script type="module" src="/backend/js/auth.js"></script>
+
+  <style>
+    /* Hide scrollbar while keeping scroll functionality */
+    html {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+    html::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  </style>
 </head>
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased">
       <!-- navbar -->
@@ -24,7 +35,7 @@
         <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
       </a>
       <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="index.html">Home</a>
+         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
         <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
       </div>
@@ -101,7 +112,7 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="index.html">GoStudy!</a>
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
           <p class="text-gray-500 leading-relaxed">
             The intelligent study companion for high performers.
           </p>
