@@ -32,13 +32,15 @@
             secondary: "#F5F5F7", 
             dark: "#1D1D1F",
             success: "#34C759",
+            'surface': "#FBFBFD",
           },
           fontFamily: {
             sans: ["Inter", "-apple-system", "sans-serif"],
             mono: ["JetBrains Mono", "monospace"],
           },
           boxShadow: {
-            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+            'apple': '0 4px 24px rgba(0,0,0,0.06)',
+            'apple-hover': '0 8px 32px rgba(0,0,0,0.12)',
           },
         },
       },
@@ -49,73 +51,54 @@
   <style>
     /* Hide scrollbar while keeping scroll functionality */
     html {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
-
-    /* Smooth reveal styles */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+      display: none;
     }
     
-    .hero-blob {
-      background: radial-gradient(circle at 50% 45%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
-      pointer-events: none;
+    body {
+        background-color: #F5F5F7; /* Apple's off-white background */
     }
 
-    /* Custom Accordion Details */
+    /* Custom Toggles */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #007AFF;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #007AFF;
+    }
+    
+    /* Comparison Table Sticky Header */
+    .sticky-header {
+        position: sticky;
+        top: 80px; /* offset for navbar */
+        z-index: 20;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background-color: rgba(245, 245, 247, 0.85);
+    }
+    
     details > summary {
       list-style: none;
     }
     details > summary::-webkit-details-marker {
       display: none;
     }
-    details[open] summary ~ * {
-      animation: sweep .3s ease-in-out;
-    }
-    @keyframes sweep {
-      0%    {opacity: 0; transform: translateY(-10px)}
-      100%  {opacity: 1; transform: translateY(0)}
-    }
 
-    /* --- ANIMATION FIX --- */
-    /* We use cubic-bezier for a sharp "snap" into focus */
-    .animate-focus-in {
-      opacity: 0;
-      filter: blur(12px);
-      animation: focusIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    /* Keyframes to transition blur and opacity */
-    @keyframes focusIn {
-      0% {
-        opacity: 0;
-        filter: blur(12px);
-        transform: translateY(10px) scale(1.05);
-      }
-      100% {
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateY(0) scale(1);
-      }
+    /* Typography Tweaks */
+    .tracking-tighter-apple {
+        letter-spacing: -0.04em;
     }
   </style>
 
   <link rel="stylesheet" href="/assets/css/navbar.css">
 </head>
 
-<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+<body class="text-[#1D1D1F] font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
 
-  
    <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -139,7 +122,7 @@
           </button>
           
           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
-            <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
+            <div class="bg-white rounded-3xl p-6 shadow-apple border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
                
                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
@@ -205,7 +188,7 @@
           </button>
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+            <div class="bg-white rounded-3xl p-2 shadow-apple border border-gray-100">
                <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
                        <span class="material-icons-round">article</span>
@@ -254,7 +237,7 @@
           </button>
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+            <div class="bg-white rounded-3xl p-2 shadow-apple border border-gray-100">
                <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <span class="font-bold text-dark text-sm ml-2">About Us</span>
                </a>
@@ -321,183 +304,279 @@
   </div>
 
 
-  <main class="w-full mx-auto mt-20 min-h-screen bg-[#fafafa] text-[#1d1d1f] font-sans">
+  <main class="w-full mx-auto mt-20 min-h-screen">
 
-  <!-- HERO SECTION -->
-  <section class="pt-24 pb-12 px-6 text-center">
-    <div class="max-w-3xl mx-auto">
-      <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6">
-        Simple <span class="text-blue-600">Plans.</span><br>Better <span class="text-blue-600">Grades.</span>
-      </h1>
-      <p class="text-xl md:text-2xl text-gray-500 font-medium mb-10">
-        Invest in your <b>brain</b>. Choose the path to <b>mastery</b>.
-      </p>
-      
-      <!-- BILLING TOGGLE -->
-      <div class="flex items-center justify-center gap-4 mb-12">
-        <span class="text-sm font-bold">Monthly</span>
-        <button class="w-14 h-8 bg-blue-600 rounded-full p-1 flex items-center justify-end">
-          <div class="w-6 h-6 bg-white rounded-full shadow-sm"></div>
-        </button>
-        <span class="text-sm font-bold text-gray-400">Yearly <span class="text-blue-600 text-xs">(Save 20%)</span></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAIN PRICING GRID -->
-  <section class="max-w-6xl mx-auto px-6 pb-20">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-      
-      <!-- STARTER -->
-      <div class="group p-10 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
-        <h3 class="text-2xl font-bold mb-1">Starter</h3>
-        <div class="flex items-baseline gap-1 mb-6">
-          <span class="text-5xl font-black">$0</span>
-        </div>
-        <p class="text-gray-500 font-medium mb-8 leading-snug">
-          Perfect for <b>test-driving</b> the methodology.
+    <!-- HERO HEADER -->
+    <section class="pt-28 pb-16 px-6 text-center">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tighter-apple mb-6 text-[#1D1D1F]">
+          Invest in your <span class="text-primary">brain</span>.
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-500 font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+          Unlock your full academic potential with the tools used by top performers. Simple, transparent pricing.
         </p>
-        <ul class="space-y-4 mb-10">
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">check</span> 10 Uploads / month
-          </li>
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">check</span> Standard Summaries
-          </li>
-        </ul>
-        <button class="w-full py-4 rounded-2xl border-2 border-gray-100 font-black hover:bg-gray-50 transition-all">
-          GET STARTED
-        </button>
-      </div>
 
-      <!-- PRO (THE HERO CARD) -->
-      <div class="group p-10 bg-white rounded-[2.5rem] border-4 border-blue-600 shadow-2xl relative transform md:scale-110 z-10 transition-all duration-500">
-        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-black px-6 py-2 rounded-full tracking-widest">
-          MOST POPULAR
-        </div>
-        <h3 class="text-2xl font-bold mb-1">Pro Student</h3>
-        <div class="flex items-baseline gap-1 mb-6">
-          <span class="text-5xl font-black text-blue-600">$9.99</span>
-          <span class="text-gray-400 font-bold">/mo</span>
-        </div>
-        <p class="text-gray-500 font-medium mb-8 leading-snug">
-          For <b>elite</b> students who need <b>unlimited</b> focus.
-        </p>
-        <ul class="space-y-4 mb-10">
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">bolt</span> Unlimited Everything
-          </li>
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">bolt</span> Memory Palace Mode
-          </li>
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">bolt</span> AI Voice Notes
-          </li>
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">bolt</span> Priority Processing
-          </li>
-        </ul>
-        <a href="pro/index.html" class="w-full py-5 rounded-2xl bg-blue-600 text-white font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all inline-block text-center">
-          LEARN MORE ABOUT PRO
-        </a>
-      </div>
-
-      <!-- INSTITUTION -->
-      <div class="group p-10 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
-        <h3 class="text-2xl font-bold mb-1">Institution</h3>
-        <div class="flex items-baseline gap-1 mb-6">
-          <span class="text-5xl font-black">Custom</span>
-        </div>
-        <p class="text-gray-500 font-medium mb-8 leading-snug">
-          Scaling <b>efficiency</b> for entire <b>campuses</b>.
-        </p>
-        <ul class="space-y-4 mb-10">
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">hub</span> Admin Dashboard
-          </li>
-          <li class="flex items-center gap-3 font-semibold text-sm">
-            <span class="material-icons-round text-blue-600">hub</span> SSO Integration
-          </li>
-        </ul>
-        <button class="w-full py-4 rounded-2xl border-2 border-gray-100 font-black hover:bg-gray-50 transition-all">
-          CONTACT SALES
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- DETAILED FEATURE COMPARISON -->
-  <section class="py-24 bg-white">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-4xl font-black tracking-tighter mb-16 text-center">Compare <span class="text-blue-600">Features.</span></h2>
-      
-      <div class="overflow-hidden border-t border-gray-100">
-        <!-- Row 1 -->
-        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
-          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Processing</div>
-          <div class="text-sm font-bold">Standard</div>
-          <div class="text-sm font-bold text-blue-600">Ultra-Fast</div>
-        </div>
-        <!-- Row 2 -->
-        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
-          <div class="text-sm font-black uppercase tracking-widest text-gray-400">File Limits</div>
-          <div class="text-sm font-bold">10MB / file</div>
-          <div class="text-sm font-bold text-blue-600">500MB / file</div>
-        </div>
-        <!-- Row 3 -->
-        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
-          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Retention Tools</div>
-          <div class="text-sm font-bold text-gray-300">—</div>
-          <div class="text-sm font-bold">Memory Palace & Spaced Rep.</div>
-        </div>
-        <!-- Row 4 -->
-        <div class="grid grid-cols-3 py-6 border-b border-gray-50 items-center">
-          <div class="text-sm font-black uppercase tracking-widest text-gray-400">Offline Mode</div>
-          <div class="text-sm font-bold text-gray-300">—</div>
-          <div class="text-sm font-bold">Full Access</div>
+        <!-- Billing Toggle -->
+        <div class="relative inline-flex bg-[#E8E8ED] p-1 rounded-full items-center cursor-pointer select-none">
+           <div class="w-full h-full absolute inset-0 rounded-full bg-transparent"></div>
+           <button id="btn-monthly" class="relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white shadow-sm text-black">
+             Monthly
+           </button>
+           <button id="btn-yearly" class="relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 text-gray-500 hover:text-black">
+             Yearly <span class="text-green-600 text-[10px] ml-1 uppercase tracking-wide">Save 20%</span>
+           </button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ SECTION -->
-  <section class="py-24 max-w-3xl mx-auto px-6">
-    <h2 class="text-4xl font-black tracking-tighter mb-12">Common <span class="text-blue-600">Questions.</span></h2>
-    <div class="space-y-8">
-      <div>
-        <h4 class="text-xl font-black mb-2">Can I cancel anytime?</h4>
-        <p class="text-gray-500 font-medium">Yes. No contracts, no hidden fees. One click to unsubscribe.</p>
+    <!-- PRICING CARDS -->
+    <section class="max-w-7xl mx-auto px-6 pb-24">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        
+        <!-- CARD: STARTER -->
+        <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-white transition-transform hover:-translate-y-1 mt-0 md:mt-8">
+          <div class="h-16 mb-4">
+            <span class="inline-block px-3 py-1 bg-gray-100 text-gray-500 text-[10px] font-bold tracking-widest uppercase rounded-full">Free Tier</span>
+          </div>
+          <h3 class="text-3xl font-bold tracking-tight mb-2">Starter</h3>
+          <p class="text-gray-500 text-sm font-medium mb-6 min-h-[40px]">Perfect for testing the methodology before committing.</p>
+          
+          <div class="mb-8">
+             <span class="text-5xl font-bold tracking-tighter">$0</span>
+          </div>
+
+          <a href="/login" class="block w-full py-3.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] text-center font-semibold text-sm hover:bg-[#E8E8ED] transition-colors">
+            Get Started
+          </a>
+          
+          <div class="mt-8 space-y-4">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Includes</p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> 10 Uploads / mo
+              </li>
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> Standard Summary
+              </li>
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> Basic Flashcards
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD: PRO (HERO) -->
+        <div class="relative bg-white p-10 rounded-[2.5rem] shadow-apple-hover border border-primary/20 z-10 transform md:scale-105">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+             <span class="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-blue-500/30 tracking-wide uppercase">Most Popular</span>
+          </div>
+          
+          <div class="h-16 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-primary flex items-center justify-center">
+               <span class="material-icons-round">bolt</span>
+            </div>
+          </div>
+          
+          <h3 class="text-4xl font-bold tracking-tight mb-2">Pro</h3>
+          <p class="text-gray-500 text-sm font-medium mb-6 min-h-[40px]">For elite students who need unlimited power and AI tools.</p>
+          
+          <div class="mb-8 flex items-baseline gap-1">
+             <span class="text-6xl font-bold tracking-tighter price-display" data-monthly="9.99" data-yearly="7.99">$9.99</span>
+             <span class="text-gray-400 font-medium">/mo</span>
+          </div>
+          <p class="text-xs text-gray-400 mb-6 -mt-6 h-4 billing-subtext">billed monthly</p>
+
+          <a href="pro/index.html" class="block w-full py-4 rounded-full bg-primary text-white text-center font-bold text-sm shadow-lg shadow-blue-500/25 hover:bg-blue-600 transition-all hover:scale-[1.02]">
+            Start Free Trial
+          </a>
+          
+          <div class="mt-10 space-y-4">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Everything in Starter, plus</p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-sm font-bold text-gray-800">
+                <span class="material-icons-round text-primary text-lg">all_inclusive</span> Unlimited Uploads
+              </li>
+              <li class="flex items-center gap-3 text-sm font-bold text-gray-800">
+                <span class="material-icons-round text-primary text-lg">psychology</span> Memory Palace Mode
+              </li>
+              <li class="flex items-center gap-3 text-sm font-bold text-gray-800">
+                <span class="material-icons-round text-primary text-lg">mic</span> AI Voice Notes
+              </li>
+              <li class="flex items-center gap-3 text-sm font-bold text-gray-800">
+                <span class="material-icons-round text-primary text-lg">speed</span> Priority Processing
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD: INSTITUTION -->
+        <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-white transition-transform hover:-translate-y-1 mt-0 md:mt-8">
+          <div class="h-16 mb-4">
+            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 text-[10px] font-bold tracking-widest uppercase rounded-full">For Schools</span>
+          </div>
+          <h3 class="text-3xl font-bold tracking-tight mb-2">Campus</h3>
+          <p class="text-gray-500 text-sm font-medium mb-6 min-h-[40px]">Scale efficiency across your entire department or campus.</p>
+          
+          <div class="mb-8">
+             <span class="text-5xl font-bold tracking-tighter">Custom</span>
+          </div>
+
+          <a href="/contact" class="block w-full py-3.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] text-center font-semibold text-sm hover:bg-[#E8E8ED] transition-colors">
+            Contact Sales
+          </a>
+          
+          <div class="mt-8 space-y-4">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Institution Features</p>
+            <ul class="space-y-3">
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> Admin Dashboard
+              </li>
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> SSO Integration
+              </li>
+              <li class="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <span class="material-icons-round text-primary text-lg">check</span> Advanced Analytics
+              </li>
+            </ul>
+          </div>
+        </div>
+
       </div>
-      <div class="pt-8 border-t border-gray-100">
-        <h4 class="text-xl font-black mb-2">Is there a student discount?</h4>
-        <p class="text-gray-500 font-medium">The <b>Pro Student</b> plan is already discounted specifically for individual learners.</p>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 tracking-tight">Compare Features</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="sticky-header">
+                        <tr>
+                            <th class="py-6 px-4 bg-transparent w-1/3"></th>
+                            <th class="py-6 px-4 text-center text-lg font-bold">Starter</th>
+                            <th class="py-6 px-4 text-center text-lg font-bold text-primary">Pro Student</th>
+                            <th class="py-6 px-4 text-center text-lg font-bold">Campus</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <!-- Section: Core -->
+                        <tr><td colspan="4" class="py-4 px-4 font-bold text-gray-400 text-xs uppercase tracking-widest mt-8">Core Features</td></tr>
+                        
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">File Uploads</td>
+                            <td class="py-4 px-4 text-center text-gray-500">10 / mo</td>
+                            <td class="py-4 px-4 text-center font-bold text-dark">Unlimited</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Unlimited</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">File Size Limit</td>
+                            <td class="py-4 px-4 text-center text-gray-500">15 MB</td>
+                            <td class="py-4 px-4 text-center font-bold text-dark">500 MB</td>
+                            <td class="py-4 px-4 text-center text-gray-500">2 GB</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">Memory Palace</td>
+                            <td class="py-4 px-4 text-center text-gray-300">—</td>
+                            <td class="py-4 px-4 text-center"><span class="material-icons-round text-primary">check_circle</span></td>
+                            <td class="py-4 px-4 text-center"><span class="material-icons-round text-gray-400">check_circle</span></td>
+                        </tr>
+
+                        <!-- Section: AI -->
+                        <tr><td colspan="4" class="py-4 px-4 font-bold text-gray-400 text-xs uppercase tracking-widest pt-10">AI & Intelligence</td></tr>
+
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">AI Voice Notes</td>
+                            <td class="py-4 px-4 text-center text-gray-300">—</td>
+                            <td class="py-4 px-4 text-center"><span class="material-icons-round text-primary">check_circle</span></td>
+                            <td class="py-4 px-4 text-center"><span class="material-icons-round text-gray-400">check_circle</span></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">Smart Flashcards</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Basic</td>
+                            <td class="py-4 px-4 text-center font-bold text-dark">Advanced (Image Gen)</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Advanced</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">Processing Speed</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Standard</td>
+                            <td class="py-4 px-4 text-center font-bold text-dark">Turbo</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Turbo</td>
+                        </tr>
+                        
+                         <!-- Section: Support -->
+                        <tr><td colspan="4" class="py-4 px-4 font-bold text-gray-400 text-xs uppercase tracking-widest pt-10">Support</td></tr>
+                        
+                         <tr class="border-b border-gray-100 group hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 font-medium text-gray-900">Data Privacy</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Standard</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Encrypted</td>
+                            <td class="py-4 px-4 text-center text-gray-500">Enterprise Grade</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl font-bold tracking-tight mb-12 text-center">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        
+        <details class="group bg-white rounded-2xl border border-gray-100 overflow-hidden open:shadow-lg transition-all duration-300">
+          <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-lg select-none">
+            Can I cancel my subscription anytime?
+            <span class="material-icons-round text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="px-6 pb-6 text-gray-500 leading-relaxed">
+            Absolutely. You can manage your subscription directly from your settings dashboard. There are no hidden fees or cancellation penalties.
+          </div>
+        </details>
+
+        <details class="group bg-white rounded-2xl border border-gray-100 overflow-hidden open:shadow-lg transition-all duration-300">
+          <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-lg select-none">
+            What payment methods do you accept?
+            <span class="material-icons-round text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="px-6 pb-6 text-gray-500 leading-relaxed">
+            We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and Apple Pay. Transactions are secured by Stripe.
+          </div>
+        </details>
+
+        <details class="group bg-white rounded-2xl border border-gray-100 overflow-hidden open:shadow-lg transition-all duration-300">
+          <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-lg select-none">
+            Is there a student discount?
+            <span class="material-icons-round text-gray-400 group-open:rotate-180 transition-transform">expand_more</span>
+          </summary>
+          <div class="px-6 pb-6 text-gray-500 leading-relaxed">
+            Our <b>Pro Student</b> plan is already heavily discounted compared to standard enterprise rates to make it accessible for individual learners.
+          </div>
+        </details>
       </div>
-      <div class="pt-8 border-t border-gray-100">
-        <h4 class="text-xl font-black mb-2">What formats are supported?</h4>
-        <p class="text-gray-500 font-medium">PDF, DOCX, PPTX, and all major image formats (JPG/PNG) for handwritten notes.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FINAL CTA -->
-  <section class="py-24 bg-blue-600 text-white text-center rounded-[3rem] mx-6 mb-20 shadow-2xl shadow-blue-300">
-    <h2 class="text-5xl font-black tracking-tighter mb-6">Master your curriculum today.</h2>
-    <p class="text-xl font-medium mb-10 opacity-80">Join 50,000+ students studying smarter.</p>
-    <a href="/login" class="inline-block bg-white text-blue-600 px-12 py-5 rounded-full text-xl font-black hover:scale-105 transition-all">
-      Start Your Free Trial
-    </a>
-  </section>
+    <!-- BOTTOM CTA -->
+    <section class="py-12 px-6">
+        <div class="max-w-5xl mx-auto bg-primary rounded-[2.5rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-blue-900/20">
+            <!-- decorative circles -->
+            <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">Ready to master your curriculum?</h2>
+                <p class="text-blue-100 text-lg mb-10 max-w-xl mx-auto">Join over 50,000 students who have upgraded their study habits.</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="/login" class="px-8 py-4 bg-white text-primary font-bold rounded-full hover:scale-105 transition-transform shadow-lg">Start Free Trial</a>
+                    <a href="/methodology" class="px-8 py-4 bg-transparent border border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-colors">How it Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</main>
+  </main>
 
-<style>
-  body {
-    -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.03em;
-  }
-</style>
- <!-- footer -->
+  <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
@@ -540,7 +619,49 @@
     </div>
   </footer>
 
-
   <script src="/assets/js/navbar.js"></script>
+  
+  <script>
+    // Logic for the Monthly/Yearly toggle
+    const btnMonthly = document.getElementById('btn-monthly');
+    const btnYearly = document.getElementById('btn-yearly');
+    const priceDisplays = document.querySelectorAll('.price-display');
+    const subtextDisplays = document.querySelectorAll('.billing-subtext');
+
+    function setMonthly() {
+      // Style toggle
+      btnMonthly.classList.add('bg-white', 'text-black', 'shadow-sm');
+      btnMonthly.classList.remove('text-gray-500');
+      btnYearly.classList.remove('bg-white', 'text-black', 'shadow-sm');
+      btnYearly.classList.add('text-gray-500');
+
+      // Update Prices
+      priceDisplays.forEach(el => {
+        el.innerText = '$' + el.dataset.monthly;
+      });
+      subtextDisplays.forEach(el => {
+        el.innerText = 'billed monthly';
+      });
+    }
+
+    function setYearly() {
+      // Style toggle
+      btnYearly.classList.add('bg-white', 'text-black', 'shadow-sm');
+      btnYearly.classList.remove('text-gray-500');
+      btnMonthly.classList.remove('bg-white', 'text-black', 'shadow-sm');
+      btnMonthly.classList.add('text-gray-500');
+
+      // Update Prices
+      priceDisplays.forEach(el => {
+        el.innerText = '$' + el.dataset.yearly;
+      });
+      subtextDisplays.forEach(el => {
+        el.innerText = 'billed yearly';
+      });
+    }
+
+    btnMonthly.addEventListener('click', setMonthly);
+    btnYearly.addEventListener('click', setYearly);
+  </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GoStudy! Pro — Master Any Subject Faster</title>
+  <title>GoStudy! Pro — Master Any Subject</title>
 
   <!-- tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
@@ -22,6 +22,8 @@
   <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
   <meta name="theme-color" content="#0071e3" />
 
+  <script src="/backend/js/auth.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -34,21 +36,23 @@
             surface: "#ffffff",
           },
           fontFamily: {
-            sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+            sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
           },
           boxShadow: {
-            'card': '0 4px 24px rgba(0, 0, 0, 0.04)',
-            'card-hover': '0 12px 32px rgba(0, 0, 0, 0.08)',
-            'glow': '0 0 20px rgba(0, 113, 227, 0.4)',
+            'apple': '0 4px 24px rgba(0,0,0,0.06)',
+            'apple-hover': '0 8px 32px rgba(0,0,0,0.12)',
+            'glow': '0 0 40px rgba(0, 113, 227, 0.4)',
           },
           letterSpacing: {
-            tight: '-0.025em',
             tighter: '-0.04em',
+            tight: '-0.025em',
           }
         },
       },
     };
   </script>
+
+  <script type="module" src="/backend/js/auth.js"></script>
 
   <style>
     /* Clean Scrollbar */
@@ -61,7 +65,7 @@
     }
 
     body {
-      background-color: #f5f5f7; /* Apple off-white */
+      background-color: #f5f5f7;
       color: #1d1d1f;
     }
 
@@ -69,7 +73,7 @@
     .reveal {
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Ease out quart */
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal.active {
       opacity: 1;
@@ -80,24 +84,9 @@
     .delay-2 { transition-delay: 0.2s; }
     .delay-3 { transition-delay: 0.3s; }
 
-    /* Custom Electric Blue Button Styling */
-    .btn-primary {
-      background-color: #0071e3;
-      color: white;
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover {
-      background-color: #0077ED;
-      transform: scale(1.02);
-      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
-    }
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    /* Gradient Text for accent */
+    /* Custom Gradient Text */
     .text-gradient {
-      background: linear-gradient(135deg, #3f8cda 50%, #0071e3 100%);
+      background: linear-gradient(135deg, #2b86c5 0%, #0071e3 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -132,7 +121,7 @@
           </button>
           
           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
-            <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
+            <div class="bg-white rounded-3xl p-6 shadow-apple border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
                
                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
@@ -198,7 +187,7 @@
           </button>
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+            <div class="bg-white rounded-3xl p-2 shadow-apple border border-gray-100">
                <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
                        <span class="material-icons-round">article</span>
@@ -247,7 +236,7 @@
           </button>
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+            <div class="bg-white rounded-3xl p-2 shadow-apple border border-gray-100">
                <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <span class="font-bold text-dark text-sm ml-2">About Us</span>
                </a>
@@ -314,158 +303,154 @@
   </div>
 
 
-  <main class="w-full mx-auto mt-40">
+  <main class="w-full mx-auto mt-28">
 
-    <!-- Hero Section -->
-    <section class="relative px-6 pb-20 pt-10 flex flex-col items-center text-center overflow-hidden">
-      <div class="relative z-10 max-w-4xl">
+    <!-- HERO: CENTERED -->
+    <section class="relative px-6 pb-20 pt-10 flex flex-col items-center text-center">
+      <div class="max-w-4xl mx-auto">
         <div class="reveal active">
-          <span class="inline-block text-primary font-semibold text-xs tracking-widest uppercase mb-4">
-            New Pro Experience
-          </span>
+          <h1 class="text-5xl md:text-8xl font-bold tracking-tighter mb-6 leading-tight text-dark">
+            GoStudy! <span class="text-gradient">Pro</span>
+          </h1>
         </div>
         
-        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-6 leading-[1.05] reveal active delay-1 text-dark">
-          Study smarter. <br />
-          <span class="-webkit-text-fill-color text-primary">Not longer.</span>
-        </h1>
-        
-        <p class="text-xl md:text-2xl text-subtle max-w-2xl mx-auto mb-10 leading-relaxed font-normal reveal active delay-2">
-          Turn hours of reading into minutes of mastery with neuro-adaptive AI designed to help you never forget.
+        <p class="reveal active delay-1 text-xl md:text-3xl font-medium text-subtle max-w-2xl mx-auto mb-10 leading-tight">
+          Supercharge your brain with unlimited uploads, AI voice mode, and neuro-adaptive testing.
         </p>
 
-        <div class="flex flex-col sm:row gap-4 justify-center items-center mb-16 reveal active delay-3">
-          <a href="#pricing" class="btn-primary px-8 py-4 rounded-full text-lg font-medium">
-            Get Pro Access
+        <div class="reveal active delay-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a href="#purchase" class="px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-blue-500/30">
+            Upgrade Now
           </a>
-          <span class="text-sm text-subtle mt-2">Starting at $9.99/mo</span>
+          <p class="text-sm font-semibold text-subtle">Starting at $9.99/mo</p>
         </div>
       </div>
     </section>
 
-    <!-- Core Pro Features -->
-    <section class="py-24 px-6 bg-surface">
+    <!-- BENTO GRID FEATURES -->
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+           
+           <!-- Large Card -->
+           <div class="reveal md:col-span-2 bg-white rounded-[2.5rem] p-10 md:p-14 border border-gray-100 shadow-apple hover:shadow-apple-hover transition-all duration-500 overflow-hidden relative group">
+               <div class="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-100 transition-colors duration-700"></div>
+               
+               <div class="relative z-10">
+                   <div class="w-14 h-14 rounded-2xl bg-black text-white flex items-center justify-center mb-6">
+                       <span class="material-icons-round text-3xl">all_inclusive</span>
+                   </div>
+                   <h3 class="text-3xl font-bold tracking-tight mb-4">Unlimited Everything.</h3>
+                   <p class="text-subtle text-lg font-medium max-w-md">
+                       Never hit a limit again. Upload thousands of pages of textbooks, lecture slides, and handwritten notes. Our AI indexes everything instantly.
+                   </p>
+               </div>
+           </div>
+
+           <!-- Tall Card -->
+           <div class="reveal delay-1 md:col-span-1 lg:row-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-apple hover:shadow-apple-hover transition-all duration-500 flex flex-col">
+                <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6">
+                    <span class="material-icons-round text-3xl">psychology</span>
+                </div>
+                <h3 class="text-3xl font-bold tracking-tight mb-4">Memory Palace.</h3>
+                <p class="text-subtle text-lg font-medium mb-8">
+                    Turn boring lists into vivid 3D spaces. Our spatial AI generates mental maps for you to walk through.
+                </p>
+                <div class="flex-1 rounded-2xl bg-gray-50 border border-gray-100 relative overflow-hidden">
+                    <!-- visual representation mockup -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-30">
+                        <span class="material-icons-round text-9xl text-purple-200">view_in_ar</span>
+                    </div>
+                </div>
+           </div>
+
+           <!-- Medium Card -->
+           <div class="reveal delay-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-apple hover:shadow-apple-hover transition-all duration-500">
+               <div class="w-14 h-14 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center mb-6">
+                   <span class="material-icons-round text-3xl">mic</span>
+               </div>
+               <h3 class="text-2xl font-bold tracking-tight mb-2">AI Voice Mode.</h3>
+               <p class="text-subtle font-medium">
+                   Study while you walk. Convert any summary into a conversational podcast.
+               </p>
+           </div>
+
+           <!-- Medium Card -->
+           <div class="reveal delay-3 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-apple hover:shadow-apple-hover transition-all duration-500">
+               <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6">
+                   <span class="material-icons-round text-3xl">bolt</span>
+               </div>
+               <h3 class="text-2xl font-bold tracking-tight mb-2">Turbo Processing.</h3>
+               <p class="text-subtle font-medium">
+                   Skip the queue. Pro files are processed on dedicated high-speed GPU clusters.
+               </p>
+           </div>
+
+       </div>
+    </section>
+
+    <!-- COMPARISON ROW -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto border-t border-gray-200 pt-20">
+            <h3 class="text-center text-3xl font-bold tracking-tight mb-16">The Pro Advantage.</h3>
+            
+            <div class="space-y-6">
+                <!-- Row -->
+                <div class="flex items-center justify-between py-4 border-b border-gray-100 reveal">
+                    <span class="text-lg font-medium text-gray-500">File Limits</span>
+                    <div class="flex gap-12 text-right">
+                        <span class="text-gray-400 font-medium w-24">10 / mo</span>
+                        <span class="text-dark font-bold w-24">Unlimited</span>
+                    </div>
+                </div>
+                <!-- Row -->
+                <div class="flex items-center justify-between py-4 border-b border-gray-100 reveal">
+                    <span class="text-lg font-medium text-gray-500">Max File Size</span>
+                    <div class="flex gap-12 text-right">
+                        <span class="text-gray-400 font-medium w-24">15 MB</span>
+                        <span class="text-dark font-bold w-24">500 MB</span>
+                    </div>
+                </div>
+                <!-- Row -->
+                <div class="flex items-center justify-between py-4 border-b border-gray-100 reveal">
+                    <span class="text-lg font-medium text-gray-500">Generative Flashcards</span>
+                    <div class="flex gap-12 text-right">
+                        <span class="text-gray-400 font-medium w-24">Basic</span>
+                        <span class="text-dark font-bold w-24">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PURCHASE SECTION (Dark Mode Contrast) -->
+    <section id="purchase" class="py-20 px-6">
       <div class="max-w-5xl mx-auto">
-        <div class="mb-16 reveal">
-            <h2 class="text-4xl md:text-5xl font-semibold mb-4 tracking-tight text-dark">The Science of Mastery.</h2>
-            <p class="text-subtle text-xl leading-relaxed max-w-2xl">We didn't just build a study tool; we engineered a cognitive engine based on advanced neuroscience research.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-[#1D1D1F] text-white rounded-[3rem] p-10 md:p-24 text-center relative overflow-hidden shadow-2xl">
           
-          <!-- Feature 1 -->
-          <div class="group relative flex flex-col bg-[#f5f5f7] rounded-[2rem] p-10 transition-all duration-500 hover:scale-[1.01] reveal">
-            <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-primary mb-6 shadow-sm">
-              <span class="material-icons-round text-3xl">psychology</span>
-            </div>
-            <h3 class="text-2xl font-semibold mb-3 text-dark">Memory Palace AI</h3>
-            <p class="text-subtle leading-relaxed text-base">
-              Stop rote memorization. Our AI maps your notes into a virtual 3D space, leveraging your brain's innate spatial memory for superior recall.
-            </p>
-          </div>
+          <!-- Glow -->
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[500px] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none"></div>
 
-          <!-- Feature 2 -->
-          <div class="group relative flex flex-col bg-[#f5f5f7] rounded-[2rem] p-10 transition-all duration-500 hover:scale-[1.01] reveal delay-1">
-            <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-primary mb-6 shadow-sm">
-              <span class="material-icons-round text-3xl">auto_graph</span>
-            </div>
-            <h3 class="text-2xl font-semibold mb-3 text-dark">Biometric Insights</h3>
-            <p class="text-subtle leading-relaxed text-base mb-6">
-              Advanced analytics that detect "Knowledge Gaps" instantly. Receive a personalized roadmap focusing only on what you don't know yet.
-            </p>
-            <div class="mt-auto pt-4 border-t border-gray-200">
-               <span class="text-xs font-semibold uppercase tracking-wide text-primary">Adaptive Pathing Active</span>
-            </div>
-          </div>
+          <div class="relative z-10 max-w-lg mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Invest in your grades.</h2>
+            <p class="text-gray-400 text-lg mb-12">Cancel anytime. No hidden fees. Just smarter studying.</p>
 
-        </div>
-      </div>
-    </section>
-
-    <!-- Table Section -->
-    <section class="py-24 px-6 bg-surface border-t border-gray-100">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16 reveal">
-          <h2 class="text-4xl font-semibold tracking-tight text-dark mb-3">Compare Models.</h2>
-          <p class="text-subtle text-lg">See why Pro is the ultimate upgrade.</p>
-        </div>
-        
-        <div class="reveal">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="border-b border-gray-200">
-                <th class="py-6 text-sm font-medium text-subtle">Feature</th>
-                <th class="py-6 text-lg font-medium text-subtle text-center w-1/4">Basic</th>
-                <th class="py-6 text-lg font-semibold text-primary text-center w-1/4">Pro</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="py-6 font-medium text-dark">Knowledge Ingestion</td>
-                <td class="py-6 text-center text-subtle">10 Files/mo</td>
-                <td class="py-6 text-center font-bold text-dark">Unlimited</td>
-              </tr>
-              <tr>
-                <td class="py-6 font-medium text-dark">AI Brain Mapping</td>
-                <td class="py-6 text-center text-subtle">Standard</td>
-                <td class="py-6 text-center"><span class="material-icons-round text-primary align-middle">check_circle</span></td>
-              </tr>
-              <tr>
-                <td class="py-6 font-medium text-dark">Smart Spaced-Repetition</td>
-                <td class="py-6 text-center text-subtle">Limited</td>
-                <td class="py-6 text-center"><span class="material-icons-round text-primary align-middle">check_circle</span></td>
-              </tr>
-              <tr>
-                <td class="py-6 font-medium text-dark">Priority AI Processing</td>
-                <td class="py-6 text-center text-subtle">—</td>
-                <td class="py-6 text-center"><span class="material-icons-round text-primary align-middle">check_circle</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="py-32 px-6">
-      <div class="max-w-6xl mx-auto">
-        <div class="bg-black text-white rounded-[3rem] p-10 md:p-20 text-center relative overflow-hidden shadow-2xl">
-          <!-- Subtle Glow Effect -->
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none"></div>
-
-          <div class="relative z-10">
-            <h2 class="text-5xl md:text-6xl font-semibold mb-6 tracking-tight">Invest in your future.</h2>
-            <p class="text-gray-400 text-xl mb-12 max-w-xl mx-auto">Skip the coffee for two days. Get the grades that last a lifetime.</p>
-
-            <div class="bg-white/10 backdrop-blur-lg border border-white/10 rounded-[2rem] p-10 max-w-md mx-auto reveal hover:scale-[1.02] transition-transform duration-300">
-              <span class="inline-block bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">Most Popular</span>
-              
-              <div class="flex items-baseline justify-center gap-1 mb-8">
-                <span class="text-3xl font-semibold">$</span>
-                <span class="text-7xl font-bold tracking-tight">9.99</span>
-                <span class="text-lg text-gray-400 font-medium">/mo</span>
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-xl reveal">
+              <div class="flex justify-between items-center mb-8">
+                  <div class="text-left">
+                      <span class="block text-sm font-bold text-gray-400 uppercase tracking-wider">Pro Student</span>
+                      <span class="block text-4xl font-bold tracking-tight text-white mt-1">$9.99<span class="text-base text-gray-500 font-normal">/mo</span></span>
+                  </div>
+                  <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-glow">
+                      <span class="material-icons-round text-white">star</span>
+                  </div>
               </div>
-              
-              <ul class="space-y-4 mb-10 text-left text-gray-200 text-sm font-medium px-4">
-                <li class="flex items-center gap-3">
-                  <span class="material-icons-round text-primary text-lg">check</span> Unlimited AI Generations
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="material-icons-round text-primary text-lg">check</span> Memory Palace 3D Mode
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="material-icons-round text-primary text-lg">check</span> Advanced Analytics
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="material-icons-round text-primary text-lg">check</span> Early Access to Tools
-                </li>
-              </ul>
 
-              <div id="paypal-button-container-P-67G68648B35652948NFFQ7BA" class="w-full"></div>
+              <!-- PayPal Container -->
+              <div id="paypal-button-container-P-67G68648B35652948NFFQ7BA" class="w-full relative z-20"></div>
               
-              <div class="mt-6 flex items-center justify-center gap-2 text-gray-500">
+              <div class="mt-6 flex items-center justify-center gap-2 text-gray-500 text-xs">
                 <span class="material-icons-round text-sm">lock</span>
-                <span class="text-xs font-semibold uppercase tracking-wide">Secure Payment</span>
+                <span>Payments processed securely by PayPal</span>
               </div>
             </div>
           </div>
@@ -475,21 +460,21 @@
 
   </main>
 
- <!-- footer -->
-  <footer class="bg-surface border-t border-gray-100 pt-20 pb-10">
-    <div class="max-w-5xl mx-auto px-6">
+  <!-- footer -->
+  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div class="max-w-sm">
-          <a class="font-bold text-xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
-          <p class="text-subtle text-sm leading-relaxed">
+          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
+          <p class="text-gray-500 leading-relaxed">
             The intelligent study companion for high performers.
           </p>
         </div>
         
         <div class="flex gap-12 md:gap-24">
           <div>
-            <h4 class="font-semibold text-dark text-sm mb-4">Product</h4>
-            <ul class="space-y-3 text-sm text-subtle font-medium">
+            <h4 class="font-bold text-dark mb-6">Product</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
               <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
               <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
@@ -497,8 +482,8 @@
             </ul>
           </div>
           <div>
-            <h4 class="font-semibold text-dark text-sm mb-4">Company</h4>
-            <ul class="space-y-3 text-sm text-subtle font-medium">
+            <h4 class="font-bold text-dark mb-6">Company</h4>
+            <ul class="space-y-4 text-sm text-gray-500 font-medium">
               <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
               <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
               <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
@@ -508,7 +493,7 @@
         </div>
       </div>
 
-      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 font-medium">
+      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
         <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
         <div class="flex gap-6">
           <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
@@ -518,7 +503,10 @@
     </div>
   </footer>
 
+  <script src="/assets/js/navbar.js"></script>
+
   <script>
+    // Reveal Animation Logic
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -543,10 +531,10 @@
           });
         },
         onApprove: function(data, actions) {
+          // You can add a redirect here, e.g., window.location.href = '/dashboard';
           alert('Welcome to Pro! Your account is being upgraded...');
         }
     }).render('#paypal-button-container-P-67G68648B35652948NFFQ7BA');
   </script>
-  <script src="/assets/js/navbar.js"></script>
 </body>
 </html>
