@@ -6,14 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - GoStudy!</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
     <script>
       tailwind.config = {
         theme: {
@@ -100,22 +94,108 @@
         </button>
       </div>
 
-      <!-- 2. LOADING SECTION -->
-      <div id="loading-section" class="hidden border border-gray-100 rounded-3xl p-16 flex flex-col items-center justify-center text-center bg-white shadow-xl relative overflow-hidden">
-        <div class="absolute inset-0 bg-blue-50/30 animate-pulse -z-10"></div>
-        <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-8">
-          <span class="material-icons-round text-3xl animate-bounce">psychology</span>
-        </div>
-        <h3 id="loading-title" class="text-2xl font-bold mb-3 tracking-tight">AI is reading your document...</h3>
-        <p class="text-gray-500 mb-8 max-w-sm mx-auto leading-relaxed">Our AI is analyzing complexity and building your optimized plan.</p>
-        <div class="w-full max-w-md bg-gray-100 h-3 rounded-full overflow-hidden mb-4 relative">
-          <div id="loading-bar" class="h-full bg-gradient-to-r from-primary to-blue-400 w-0 transition-all duration-700 ease-out rounded-full shadow-[0_0_12px_rgba(0,122,255,0.3)]"></div>
-        </div>
-        <div class="flex justify-between w-full max-w-md text-[10px] font-bold uppercase tracking-widest text-gray-400">
-          <span>Processing</span>
-          <span id="loading-percent">0%</span>
-        </div>
+<!-- APPLE-STYLE LOADING SECTION -->
+<div id="loading-section" class="hidden min-h-[400px] w-full max-w-2xl mx-auto border border-white/20 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center bg-white/70 backdrop-blur-2xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-500">
+  
+  <!-- Subtle Background Ambient Glow -->
+  <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -z-10"></div>
+  <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -z-10"></div>
+
+  <!-- Modern Spinner/Icon -->
+  <div class="relative mb-10">
+    <!-- Breathing Ring -->
+    <div class="absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-20"></div>
+    <div class="w-20 h-20 bg-white rounded-[22px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] border border-gray-100 flex items-center justify-center relative z-10">
+      <svg class="w-10 h-10 text-blue-600 animate-[spin_3s_linear_infinite]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2V6M12 18V22M6 12H2M22 12H18M19.07 4.93L16.24 7.76M7.76 16.24L4.93 19.07M19.07 19.07L16.24 16.24M7.76 7.76L4.93 4.93" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="space-y-2 mb-10">
+    <h3 id="loading-title" class="text-[28px] font-semibold tracking-[-0.02em] text-slate-900 transition-all duration-500">
+      Analyzing Document
+    </h3>
+    <p id="loading-subtext" class="text-[17px] text-slate-500 font-medium tracking-tight max-w-[280px] mx-auto leading-snug transition-all duration-500">
+      Our AI is extracting key insights to build your plan.
+    </p>
+  </div>
+
+  <!-- Apple-Style Progress Bar Container -->
+  <div class="w-full max-w-sm">
+    <div class="h-[6px] w-full bg-gray-200/50 rounded-full overflow-hidden relative backdrop-blur-sm">
+      <!-- The Actual Bar -->
+      <div id="loading-bar" 
+           class="h-full bg-[#0071e3] w-0 rounded-full transition-all duration-1000 ease-[cubic-bezier(0.65,0,0.35,1)] relative overflow-hidden"
+           style="box-shadow: 0 0 20px rgba(0, 113, 227, 0.4);">
+        <!-- Shimmer Effect -->
+        <div class="absolute inset-0 w-full h-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"></div>
       </div>
+    </div>
+    
+    <!-- Meta Data -->
+    <div class="flex justify-between mt-4 px-1">
+      <span id="loading-status" class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">
+        Initializing...
+      </span>
+      <span id="loading-percent" class="text-[13px] font-semibold tabular-nums text-blue-600">
+        0%
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+
+  /* Custom Bezier Curve for Apple-like smoothness */
+  .ease-apple {
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+</style>
+
+<script>
+  // Simple Logic to simulate the advanced loading states
+  let progress = 0;
+  const bar = document.getElementById('loading-bar');
+  const percentText = document.getElementById('loading-percent');
+  const title = document.getElementById('loading-title');
+  const status = document.getElementById('loading-status');
+  const subtext = document.getElementById('loading-subtext');
+
+  const states = [
+    { threshold: 0, title: "Analyzing Document", sub: "Reading text and structure...", status: "Parsing" },
+    { threshold: 35, title: "Understanding Context", sub: "Identifying core concepts and themes...", status: "Processing" },
+    { threshold: 70, title: "Building Your Plan", sub: "Optimizing the learning path for you...", status: "Generating" },
+    { threshold: 90, title: "Almost Ready", sub: "Finalizing your custom dashboard...", status: "Completing" }
+  ];
+
+  function simulateLoading() {
+    if (progress < 100) {
+      // Apple logic: Progress starts fast then slows down as it reaches the end
+      let increment = progress > 80 ? Math.random() * 1 : Math.random() * 3;
+      progress = Math.min(progress + increment, 100);
+      
+      bar.style.width = `${progress}%`;
+      percentText.innerText = `${Math.floor(progress)}%`;
+
+      // Update text based on progress
+      const currentState = [...states].reverse().find(s => progress >= s.threshold);
+      if (currentState && title.innerText !== currentState.title) {
+        title.innerText = currentState.title;
+        subtext.innerText = currentState.sub;
+        status.innerText = currentState.status;
+      }
+
+      setTimeout(simulateLoading, 150);
+    }
+  }
+
+  // To trigger: simulateLoading();
+</script>
 
       <!-- 3. RESULTS AREA -->
       <div id="results-section" class="hidden space-y-6 pt-10">
