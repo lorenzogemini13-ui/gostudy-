@@ -25,25 +25,195 @@
       display: none; /* Chrome, Safari, Opera */
     }
   </style>
+  <link rel="stylesheet" href="/assets/css/navbar.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 </head>
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased">
-      <!-- navbar -->
-  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <nav class="bg-white/70 backdrop-blur-xl border border-white/40 ring-1 ring-black/5 rounded-full pl-6 pr-2 py-2 flex items-center justify-between w-full max-w-5xl">
-      <a class="flex items-center gap-2" href="/index.html">
-        <img src="/assets/go-logo.png" class="w-10 h-10 object-cover" alt="Logo">
-        <span class="font-bold text-lg tracking-tight text-dark">GoStudy!</span>
+
+
+  
+  <!-- Navbar -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a class="flex items-center gap-2 group" href="/index.html">
+        <div class="relative w-10 h-10 overflow-hidden rounded-xl">
+            <img src="/assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Logo">
+        </div>
+        <span class="font-bold text-xl tracking-tight text-dark">GoStudy!</span>
       </a>
-      <div class="hidden md:flex items-center gap-1 bg-secondary/80 rounded-full px-1 py-1">
-         <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/index.html">Home</a>
-        <a class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/articles/">Articles</a>
-        <a id="nav-dashboard-link" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 hover:text-dark transition-all" href="/dashboard/">Dashboard</a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-2">
+        
+        <!-- Products Dropdown -->
+        <div class="nav-item relative group px-4 py-3">
+          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
+            Products
+            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
+          </button>
+          
+          <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
+            <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
+               <!-- Decorative Gradient -->
+               <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+               <!-- Left Col -->
+               <div class="space-y-2">
+                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
+                  
+                  <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">psychology</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Active Recall</p>
+                        <p class="text-xs text-gray-500 mt-1">Science-backed testing method.</p>
+                    </div>
+                  </a>
+
+                  <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">account_tree</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Memory Palace</p>
+                        <p class="text-xs text-gray-500 mt-1">AI-generated spatial maps.</p>
+                    </div>
+                  </a>
+               </div>
+
+               <!-- Right Col -->
+               <div class="flex flex-col h-full">
+                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Plans</h4>
+                  <a href="/pricing" class="block bg-dark rounded-2xl p-5 text-white flex-1 hover:shadow-lg transition-all group/card relative overflow-hidden">
+                      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+                      <div class="relative z-10">
+                          <div class="flex justify-between items-start mb-4">
+                              <span class="bg-primary px-2 py-1 rounded text-[10px] font-bold">PRO</span>
+                              <span class="material-icons-round">arrow_forward</span>
+                          </div>
+                          <p class="font-bold text-lg mb-1">Upgrade your <br>Study Game</p>
+                          <p class="text-gray-400 text-xs">Unlock unlimited uploads and advanced spaced repetition.</p>
+                      </div>
+                  </a>
+               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resources Dropdown -->
+        <div class="nav-item relative group px-4 py-3">
+          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
+            Resources
+            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
+          </button>
+          
+           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
+            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+               <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
+                       <span class="material-icons-round">article</span>
+                   </div>
+                   <div class="flex-1">
+                       <p class="font-bold text-dark text-sm">Articles & Guides</p>
+                       <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
+                   </div>
+               </a>
+               <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
+                       <span class="material-icons-round">family_restroom</span>
+                   </div>
+                   <div class="flex-1">
+                       <p class="font-bold text-dark text-sm">For Parents</p>
+                       <p class="text-xs text-gray-500">How to support your student.</p>
+                   </div>
+               </a>
+               <a href="/index.html#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
+                       <span class="material-icons-round">help</span>
+                   </div>
+                   <div class="flex-1">
+                       <p class="font-bold text-dark text-sm">Help Center</p>
+                       <p class="text-xs text-gray-500">FAQs and Support.</p>
+                   </div>
+               </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company Dropdown -->
+        <div class="nav-item relative group px-4 py-3">
+          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
+            Company
+            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
+          </button>
+          
+           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
+            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
+               <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="font-bold text-dark text-sm ml-2">About Us</span>
+               </a>
+               <a href="/contact/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="font-bold text-dark text-sm ml-2">Contact</span>
+               </a>
+               <hr class="border-gray-100 my-1 mx-2">
+               <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
+               </a>
+            </div>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- CTA & Mobile Toggle -->
+      <div class="flex items-center gap-4">
+        <a href="/login/" class="hidden md:inline-flex bg-dark hover:bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-black/5 hover:shadow-black/10 hover:-translate-y-0.5">
+            Launch App
+        </a>
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-dark">
+            <span class="material-icons-round text-2xl">menu</span>
+        </button>
       </div>
-      <div id="nav-cta">
-        <a class="bg-dark hover:bg-black text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all"  href="/login/">Get Started</a>
+
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay (Hidden by default) -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
+      <div class="flex justify-between items-center p-6 border-b border-gray-100">
+          <span class="font-bold text-xl text-dark">GoStudy!</span>
+          <button id="mobile-menu-close" class="p-2 text-dark">
+              <span class="material-icons-round text-2xl">close</span>
+          </button>
       </div>
-    </nav>
+      <div class="p-6 flex-1 overflow-y-auto space-y-6">
+          <!-- Mobile Links -->
+          <div class="space-y-4">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
+              <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
+              <a href="/how-it-works/" class="block text-lg font-semibold text-dark">Memory Palace</a>
+              <a href="/pricing" class="block text-lg font-semibold text-dark">Pricing</a>
+          </div>
+          <div class="space-y-4">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Resources</h4>
+              <a href="/articles/" class="block text-lg font-semibold text-dark">Articles</a>
+              <a href="/parents/" class="block text-lg font-semibold text-dark">For Parents</a>
+              <a href="/index.html#faq" class="block text-lg font-semibold text-dark">Help Center</a>
+          </div>
+           <div class="space-y-4">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Company</h4>
+              <a href="/about/" class="block text-lg font-semibold text-dark">About</a>
+              <a href="/contact/" class="block text-lg font-semibold text-dark">Contact</a>
+          </div>
+      </div>
+      <div class="p-6 border-t border-gray-100">
+          <a href="/login/" class="block w-full text-center bg-primary text-white py-4 rounded-xl font-bold text-lg">Launch App</a>
+      </div>
   </div>
+
 
   <div class="max-w-3xl mx-auto px-6 py-20">
     <a href="/index.html" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary mb-8">
@@ -150,5 +320,6 @@
     </div>
   </footer>
   <script type="module" src="/backend/js/auth.js"></script>
+  <script src="/assets/js/navbar.js"></script>
 </body>
 </html>
