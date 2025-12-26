@@ -32,7 +32,7 @@
 
 
   
-  <!-- Navbar -->
+   <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
@@ -56,7 +56,7 @@
           
           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
             <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
-               <!-- Decorative Gradient -->
+               
                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
                <!-- Left Col -->
@@ -64,7 +64,7 @@
                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
                   
                   <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">psychology</span>
                     </div>
                     <div>
@@ -73,9 +73,19 @@
                     </div>
                   </a>
 
+                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">monetization_on</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Pricing</p>
+                        <p class="text-xs text-gray-500 mt-1">Choose the plan that best fits your needs.</p>
+                    </div>
+                  </a>
+
                   <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">account_tree</span>
+                        <span class="material-icons-round text-xl text-purple-600">account_tree</span>
                     </div>
                     <div>
                         <p class="font-bold text-dark text-sm">Memory Palace</p>
@@ -121,6 +131,15 @@
                        <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
                    </div>
                </a>
+               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">person_add</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Onboarding</p>
+                        <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
+                    </div>
+                  </a>
                <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
                        <span class="material-icons-round">family_restroom</span>
@@ -130,7 +149,7 @@
                        <p class="text-xs text-gray-500">How to support your student.</p>
                    </div>
                </a>
-               <a href="/index.html#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
                        <span class="material-icons-round">help</span>
                    </div>
@@ -162,6 +181,9 @@
                <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
                </a>
+               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
+               </a>
             </div>
           </div>
         </div>
@@ -181,7 +203,7 @@
     </div>
   </header>
 
-  <!-- Mobile Menu Overlay (Hidden by default) -->
+  <!-- mobile menu -->
   <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
       <div class="flex justify-between items-center p-6 border-b border-gray-100">
           <span class="font-bold text-xl text-dark">GoStudy!</span>
@@ -190,7 +212,7 @@
           </button>
       </div>
       <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!-- Mobile Links -->
+          <!--mobile links -->
           <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
               <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
@@ -201,7 +223,7 @@
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Resources</h4>
               <a href="/articles/" class="block text-lg font-semibold text-dark">Articles</a>
               <a href="/parents/" class="block text-lg font-semibold text-dark">For Parents</a>
-              <a href="/index.html#faq" class="block text-lg font-semibold text-dark">Help Center</a>
+              <a href="#faq" class="block text-lg font-semibold text-dark">Help Center</a>
           </div>
            <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Company</h4>

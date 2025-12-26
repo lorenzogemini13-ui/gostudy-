@@ -1,49 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Not Found - GoStudy!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - GoStudy!</title>
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-
-  <!-- Favicon -->
+      <!-- favicon -->
   <link rel="icon" href="assets/go-logo.png" type="image/png" />
   <link rel="shortcut icon" href="assets/go-logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#007AFF", 
-            secondary: "#F5F5F7", 
-            dark: "#1D1D1F",
-            success: "#34C759",
-          },
-          fontFamily: {
-            sans: ["Inter", "-apple-system", "sans-serif"],
-            mono: ["JetBrains Mono", "monospace"],
-          },
-          boxShadow: {
-            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
-          },
-        },
-      },
-    };
-  </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <script type="module" src="js/auth.js"></script>
-  <style>
-    /* Hide scrollbar while keeping scroll functionality */
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0071e3', // Apple Blue style
+                        dark: '#1d1d1f',    // Apple Dark Gray
+                        'gray-50': '#fbfbfd',
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 40px -15px rgba(0, 0, 0, 0.1)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+
     html {
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE/Edge */
@@ -52,49 +63,34 @@
       display: none; /* Chrome, Safari, Opera */
     }
 
-    /* Smooth reveal styles */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .hero-blob {
-      background: radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
-      pointer-events: none;
-    }
 
-    /* Focus Animation for 404 */
-    .animate-focus-in {
-      opacity: 0;
-      filter: blur(12px);
-      animation: focusIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Dropdown transition fix */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 10px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
 
-    @keyframes focusIn {
-      0% {
-        opacity: 0;
-        filter: blur(12px);
-        transform: translateY(10px) scale(1.05);
-      }
-      100% {
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateY(0) scale(1);
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="/assets/css/navbar.css">
+        /* Apple-like grainy background noise (optional, keeps it clean without) */
+        .bg-gradient-blur {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 113, 227, 0.08), transparent 60%),
+                        radial-gradient(circle at 80% 0%, rgba(255, 100, 100, 0.05), transparent 40%);
+        }
+    </style>
 </head>
+<body class="font-sans text-gray-900 bg-white min-h-screen flex flex-col">
 
-<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden flex flex-col min-h-screen">
-
-  
-  <!-- Navbar -->
+      <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
@@ -118,7 +114,7 @@
           
           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
             <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
-               <!-- Decorative Gradient -->
+               
                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
                <!-- Left Col -->
@@ -126,7 +122,7 @@
                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
                   
                   <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">psychology</span>
                     </div>
                     <div>
@@ -135,9 +131,19 @@
                     </div>
                   </a>
 
+                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">monetization_on</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Pricing</p>
+                        <p class="text-xs text-gray-500 mt-1">Choose the plan that best fits your needs.</p>
+                    </div>
+                  </a>
+
                   <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">account_tree</span>
+                        <span class="material-icons-round text-xl text-purple-600">account_tree</span>
                     </div>
                     <div>
                         <p class="font-bold text-dark text-sm">Memory Palace</p>
@@ -183,6 +189,15 @@
                        <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
                    </div>
                </a>
+               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">person_add</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Onboarding</p>
+                        <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
+                    </div>
+                  </a>
                <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
                        <span class="material-icons-round">family_restroom</span>
@@ -192,7 +207,7 @@
                        <p class="text-xs text-gray-500">How to support your student.</p>
                    </div>
                </a>
-               <a href="/index.html#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
                        <span class="material-icons-round">help</span>
                    </div>
@@ -224,6 +239,9 @@
                <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
                </a>
+               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
+               </a>
             </div>
           </div>
         </div>
@@ -243,7 +261,7 @@
     </div>
   </header>
 
-  <!-- Mobile Menu Overlay (Hidden by default) -->
+  <!-- mobile menu -->
   <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
       <div class="flex justify-between items-center p-6 border-b border-gray-100">
           <span class="font-bold text-xl text-dark">GoStudy!</span>
@@ -252,7 +270,7 @@
           </button>
       </div>
       <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!-- Mobile Links -->
+          <!--mobile links -->
           <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
               <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
@@ -263,7 +281,7 @@
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Resources</h4>
               <a href="/articles/" class="block text-lg font-semibold text-dark">Articles</a>
               <a href="/parents/" class="block text-lg font-semibold text-dark">For Parents</a>
-              <a href="/index.html#faq" class="block text-lg font-semibold text-dark">Help Center</a>
+              <a href="#faq" class="block text-lg font-semibold text-dark">Help Center</a>
           </div>
            <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Company</h4>
@@ -276,97 +294,112 @@
       </div>
   </div>
 
-
-  <main class="w-full mx-auto flex-grow flex items-center justify-center">
-
-    <!-- 404 CONTENT -->
-    <section class="relative w-full pt-48 pb-32 px-6 text-center reveal active">
-      <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
-
-      <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+    <main class="flex-grow flex items-center justify-center relative bg-gradient-blur pt-40 pb-20">
         
-        <!-- Animated 404 Text -->
-        <h1 class="text-9xl md:text-[10rem] font-bold tracking-tighter mb-4 text-dark leading-none select-none">
-          <span class="inline-block animate-focus-in" style="animation-delay: 0.1s">4</span>
-          <span class="inline-block animate-focus-in text-primary" style="animation-delay: 0.25s">0</span>
-          <span class="inline-block animate-focus-in" style="animation-delay: 0.4s">4</span>
-        </h1>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px] pointer-events-none"></div>
 
-        <h2 class="text-2xl md:text-3xl font-bold text-dark mb-6 reveal" style="transition-delay: 0.5s">
-          Lost in the library?
-        </h2>
-        
-        <p class="text-gray-500 text-lg mb-10 reveal" style="transition-delay: 0.6s">
-          The page you are looking for has been moved, deleted, or never existed in your syllabus.
-        </p>
+        <div class="max-w-3xl w-full px-6 text-center relative z-10 animate-fade-up">
+            
+            <div class="relative inline-block mb-2">
+                <span class="text-[10rem] md:text-[14rem] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-gray-900 to-gray-500 opacity-90 select-none">
+                    404
+                </span>
+                <div class="absolute top-1/4 -right-4 md:-right-12 bg-white p-3 rounded-2xl shadow-premium animate-float hidden md:block">
+                     <span class="material-icons-round text-3xl text-primary">search_off</span>
+                </div>
+            </div>
 
-        <div class="flex flex-col sm:flex-row gap-4 reveal" style="transition-delay: 0.7s">
-          <a href="/index.html" class="bg-primary text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20">
-            Back to Home
-          </a>
-          <a href="/contact/" class="bg-white text-dark border border-gray-200 px-8 py-3.5 rounded-full text-sm font-bold hover:bg-gray-50 transition-all">
-            Contact Support
-          </a>
+            <h1 class="text-3xl md:text-5xl font-bold text-dark tracking-tight mb-6">
+                Lost in the Memory Palace?
+            </h1>
+            
+            <p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto leading-relaxed">
+                The page you are looking for has been moved, deleted, or never existed. Don't worry, it's not a gap in your knowledge.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/index.html" class="bg-dark text-white px-8 py-4 rounded-full font-semibold hover:bg-black transition-all hover:scale-105 shadow-lg shadow-black/10 flex items-center gap-2">
+                    <span class="material-icons-round text-lg">home</span>
+                    Back Home
+                </a>
+                <a href="#faq" class="bg-white text-dark border border-gray-200 px-8 py-4 rounded-full font-semibold hover:bg-gray-50 transition-all hover:border-gray-300 flex items-center gap-2">
+                    Visit Help Center
+                </a>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-gray-200/60 max-w-md mx-auto">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">You might be looking for</p>
+                <div class="flex justify-center gap-6 text-sm font-medium text-primary">
+                    <a href="/pricing" class="hover:underline">Pricing</a>
+                    <a href="/login/" class="hover:underline">Log In</a>
+                    <a href="/articles/" class="hover:underline">Study Guides</a>
+                </div>
+            </div>
+
         </div>
-      </div>
-    </section>
+    </main>
 
-  </main>
-
-  <!-- footer -->
-  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
-          <p class="text-gray-500 leading-relaxed">
-            The intelligent study companion for high performers.
-          </p>
-        </div>
-        
-        <div class="flex gap-12 md:gap-24">
-          <div>
-            <h4 class="font-bold text-dark mb-6">Product</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
-              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
-              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
-            </ul>
+    <footer class="bg-white border-t border-gray-100 pt-24 pb-12 z-10 relative">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div class="col-span-1 md:col-span-2">
+              <a class="font-bold text-2xl text-dark tracking-tight mb-6 block" href="/index.html">GoStudy!</a>
+              <p class="text-gray-500 leading-relaxed max-w-sm mb-8">
+                The intelligent study companion for high performers. We bridge the gap between information and mastery.
+              </p>
+            </div>
+            
+            <div>
+              <h4 class="font-bold text-dark mb-8 uppercase text-xs tracking-widest">Product</h4>
+              <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
+                <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
+                <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
+                <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
+              </ul>
+            </div>
+    
+            <div>
+              <h4 class="font-bold text-dark mb-8 uppercase text-xs tracking-widest">Company</h4>
+              <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
+                <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+                <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
+                <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4 class="font-bold text-dark mb-6">Company</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
-              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
-            </ul>
+    
+          <div class="border-t border-gray-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
+            <div>&copy; 2025 GoStudy Inc. All rights reserved. Built for the future of education.</div>
+            <div class="flex gap-8">
+              <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
+              <a href="/terms/" class="hover:text-dark transition-colors">Terms of Service</a>
+            </div>
           </div>
         </div>
-      </div>
+    </footer>
 
-      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
-        <div class="flex gap-6">
-          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-  <script>
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('active');
+        function toggleMenu() {
+            // Toggle visibility classes
+            if (mobileMenu.classList.contains('pointer-events-none')) {
+                mobileMenu.classList.remove('pointer-events-none', 'opacity-0', 'translate-x-full');
+                mobileMenu.classList.add('opacity-100', 'translate-x-0');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            } else {
+                mobileMenu.classList.add('pointer-events-none', 'opacity-0', 'translate-x-full');
+                mobileMenu.classList.remove('opacity-100', 'translate-x-0');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
         }
-      });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-    revealElements.forEach(el => revealObserver.observe(el));
-  </script>
-  <script src="/assets/js/navbar.js"></script>
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>

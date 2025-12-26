@@ -120,14 +120,14 @@
 
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
 
-  <!-- Navbar -->
+  <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
       <!-- Logo -->
       <a class="flex items-center gap-2 group" href="/index.html">
         <div class="relative w-10 h-10 overflow-hidden rounded-xl">
-            <img src="assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Logo">
+            <img src="/assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Logo">
         </div>
         <span class="font-bold text-xl tracking-tight text-dark">GoStudy!</span>
       </a>
@@ -144,7 +144,7 @@
           
           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
             <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
-               <!-- Decorative Gradient -->
+               
                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
                <!-- Left Col -->
@@ -152,7 +152,7 @@
                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
                   
                   <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">psychology</span>
                     </div>
                     <div>
@@ -161,9 +161,19 @@
                     </div>
                   </a>
 
+                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">monetization_on</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Pricing</p>
+                        <p class="text-xs text-gray-500 mt-1">Choose the plan that best fits your needs.</p>
+                    </div>
+                  </a>
+
                   <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">account_tree</span>
+                        <span class="material-icons-round text-xl text-purple-600">account_tree</span>
                     </div>
                     <div>
                         <p class="font-bold text-dark text-sm">Memory Palace</p>
@@ -209,6 +219,15 @@
                        <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
                    </div>
                </a>
+               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                    <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                        <span class="material-icons-round text-xl">person_add</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-dark text-sm">Onboarding</p>
+                        <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
+                    </div>
+                  </a>
                <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
                        <span class="material-icons-round">family_restroom</span>
@@ -250,6 +269,9 @@
                <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
                    <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
                </a>
+               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+                   <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
+               </a>
             </div>
           </div>
         </div>
@@ -269,7 +291,7 @@
     </div>
   </header>
 
-  <!-- Mobile Menu Overlay (Hidden by default) -->
+  <!-- mobile menu -->
   <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
       <div class="flex justify-between items-center p-6 border-b border-gray-100">
           <span class="font-bold text-xl text-dark">GoStudy!</span>
@@ -278,7 +300,7 @@
           </button>
       </div>
       <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!-- Mobile Links -->
+          <!--mobile links -->
           <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
               <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
@@ -340,7 +362,7 @@
       </div>
     </section>
 
-    <!-- How it works -->
+    <!-- what it does -->
     <section id="how-it-works" class="py-32 px-6 bg-white reveal">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-20">
@@ -379,23 +401,23 @@
         <div class="max-w-6xl mx-auto">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <!-- Large Card -->
-            <div class="md:col-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-premium flex flex-col justify-between overflow-hidden relative group">
+            <!-- l-card -->
+            <div class="md:col-span-2 bg-white rounded-[2.5rem] p-10 border border-gray-200 flex flex-col justify-between overflow-hidden relative group">
                 <div class="relative z-10">
                     <span class="bg-red-50 text-red-500 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Active Learning</span>
                     <h3 class="text-3xl font-bold mt-6 mb-4">Lecture notes to <br>Recall Quizzes</h3>
                     <p class="text-gray-500 max-w-xs mb-8">Automatically transform dry PDFs into interactive challenges that test your understanding.</p>
                     <a href="/methodology/" class="text-primary font-bold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Learn about Active Recall <span class="material-icons-round text-sm">arrow_forward</span>
+                        Learn about Active Recall <span class="material-icons-round group-hover:cursor-pointer text-sm">arrow_forward</span>
                     </a>
                 </div>
-                <div class="absolute right-[-10%] bottom-[-10%] w-2/3 opacity-10 group-hover:opacity-20 transition-opacity">
+                <div class="absolute right-[-10%] bottom-[-10%] w-2/3 opacity-10 transition-opacity">
                     <span class="material-icons-round text-[200px]">quiz</span>
                 </div>
             </div>
 
-            <!-- Vertical Card -->
-            <div class="bg-dark rounded-[2.5rem] p-10 text-white flex flex-col justify-between shadow-premium">
+            <!-- v-card -->
+            <div class="bg-dark rounded-[2.5rem] p-10 border border-gray-200 text-white flex flex-col justify-between">
                 <div>
                     <span class="bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Efficiency</span>
                     <h3 class="text-3xl font-bold mt-6 mb-4">Save 10+ hours a week.</h3>
@@ -412,8 +434,8 @@
                 </div>
             </div>
 
-            <!-- Horizontal Small -->
-            <div class="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-premium md:col-span-3 grid md:grid-cols-2 gap-8 items-center">
+            <!-- hs-card -->
+            <div class="bg-white rounded-[2.5rem] p-10 border border-gray-200 md:col-span-3 grid md:grid-cols-2 gap-8 items-center">
                 <div>
                     <h3 class="text-3xl font-bold mb-4">Memory Palace AI</h3>
                     <p class="text-gray-500">Visual learners rejoice. Our AI creates a spatial map of your subjects, making complex dates and formulas impossible to forget.</p>
