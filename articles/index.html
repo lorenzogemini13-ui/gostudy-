@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Study Log - GoStudy!</title>
   
-  <!-- Tailwind -->
+   <!-- tailwind -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- ggl fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  
+
   <!-- Config -->
   <script>
     tailwind.config = {
@@ -48,13 +52,13 @@
   <link rel="icon" href="/assets/go-logo.png" type="image/png" />
 
   <style>
-    /* Hide scrollbar while keeping scroll functionality */
+   
     html {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none; 
+      -ms-overflow-style: none; 
     }
     html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none; 
     }
   </style>
 </head>
@@ -78,21 +82,21 @@
     </nav>
   </div>
 
-  <!-- MAIN -->
+  <!-- main -->
   <main class="w-full min-h-screen pt-40 pb-20 px-6">
     <div class="max-w-7xl mx-auto">
       
-      <!-- HERO -->
+      <!-- hero -->
       <div class="text-center mb-20 animate-slide-up pt-16">
         <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-primary text-xs font-bold tracking-wide uppercase mb-4 border border-blue-100">The GoStudy! Journal</span>
         <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-dark mb-6 ">
-          Upgrade Your <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">BrainOS</span>
+          Upgrade Your <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent font-extrabold">BrainOS</span>
         </h1>
         <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10 pb-20">
           Science-backed protocols to learn faster, focus deeper, and optimize your cognitive performance.
         </p>
 
-        <!-- Search -->
+        <!-- search -->
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
           <div class="relative w-full">
             <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
@@ -101,7 +105,7 @@
           </div>
         </div>
         
-        <!-- Category -->
+        <!-- category -->
         <div class="flex flex-wrap justify-center gap-2 mt-6">
             <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-dark text-white border border-transparent shadow-md" data-category="All">All</button>
             <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Science">Science</button>
@@ -111,7 +115,7 @@
         </div>
       </div>
 
-      <!-- ARTICLES -->
+      <!-- articlrs -->
       <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.2s;">
 
       </div>
@@ -119,7 +123,7 @@
     </div>
   </main>
 
-  <!-- ARTICLE -->
+  <!-- articles -->
   <div id="article-modal" class="fixed inset-0 z-[100] hidden">
     
     <div class="absolute inset-0 bg-dark/30 backdrop-blur-sm transition-opacity" id="close-modal-overlay"></div>
