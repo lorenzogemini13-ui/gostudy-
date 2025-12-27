@@ -18,6 +18,7 @@
   <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
+  <link rel="stylesheet" href="/assets/css/navbar.css">
 
   <script>
     tailwind.config = {
@@ -28,6 +29,7 @@
             secondary: "#F5F5F7", 
             dark: "#1D1D1F",
             success: "#34C759",
+            danger: "#FF3B30",
           },
           fontFamily: {
             sans: ["Inter", "-apple-system", "sans-serif"],
@@ -35,6 +37,7 @@
           },
           boxShadow: {
             'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+            'card': '0 4px 24px rgba(0,0,0,0.04)',
           },
         },
       },
@@ -45,42 +48,40 @@
   <style>
     /* Hide scrollbar while keeping scroll functionality */
     html {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none;
     }
 
     /* Smooth reveal styles */
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Subtle Focus Animation */
-    .animate-focus-in {
-      opacity: 0;
-      filter: blur(8px);
-      animation: focusIn 1s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+    
+    .hero-blob {
+      background: radial-gradient(circle at 50% 0%, rgba(52, 199, 89, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
     }
 
-    @keyframes focusIn {
-      0% { opacity: 0; filter: blur(8px); transform: translateY(5px); }
-      100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
     }
   </style>
-  <link rel="stylesheet" href="/assets/css/navbar.css">
 </head>
 
-<body class="bg-white text-dark font-sans antialiased selection:bg-gray-100 selection:text-dark overflow-x-hidden">
+<body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
 
-      
   <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -261,7 +262,6 @@
           </button>
       </div>
       <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!--mobile links -->
           <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
               <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
@@ -288,196 +288,244 @@
 
   <main class="w-full mx-auto mt-20 min-h-screen">
 
-  <!-- HERO -->
-  <section class="relative pt-24 pb-20 px-6 max-w-3xl mx-auto text-center reveal active">
-    <h1 class="text-4xl md:text-5xl font-semibold tracking-tight mb-6 text-dark leading-tight">
-      Supporting <span class="text-blue-500">independent learning</span>.
-    </h1>
-    <p class="text-lg md:text-xl text-gray-500 leading-relaxed font-light">
-      GoStudy! helps students <strong>understand and organize</strong> what they already learn at school.
-      <br class="hidden md:block" />
-      <strong>It supports studying. It does not replace it.</strong>
-    </p>
-    <p class="text-sm text-gray-400 mt-6">
-      Built for students. <span class="text-blue-500 font-medium">Designed with parents in mind.</span>
-    </p>
-  </section>
+    <!-- HERO -->
+    <section class="relative pt-24 pb-16 px-6 text-center reveal active">
+      <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
+      <div class="relative z-10 max-w-3xl mx-auto">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-primary text-xs font-bold uppercase tracking-wider mb-8">
+            <span class="material-icons-round text-sm">verified</span>
+            Trusted by 5,000+ Students
+        </div>
 
-  <!-- WHAT IT IS / ISN'T -->
-  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-    <div class="border-t border-gray-100 pt-12">
-      <h2 class="text-2xl font-semibold text-dark mb-8">
-        What GoStudy! <span class="text-blue-500">does</span> and <span class="text-gray-400">does not</span> do
-      </h2>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-dark leading-tight">
+          Supporting independent <br><span class="text-primary">learning.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-500 leading-relaxed font-light mb-8 max-w-2xl mx-auto">
+          GoStudy! is a tool that helps students organize and understand what they learn at school. 
+          <span class="font-medium text-dark">It supports studying. It does not replace it.</span>
+        </p>
+      </div>
+    </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <!-- WHAT IT IS / ISN'T (Comparison Cards) -->
+    <section class="max-w-6xl mx-auto px-6 pb-24 reveal">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Good Card -->
+        <div class="bg-white p-8 rounded-[2rem] border border-blue-100 shadow-card relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center text-success">
+               <span class="material-icons-round text-xl">check</span>
+            </div>
+            <h3 class="font-bold text-xl text-dark">How GoStudy Helps</h3>
+          </div>
 
-        <div class="bg-blue-50/40 rounded-xl p-6">
-          <h3 class="font-medium text-dark mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-            Helps with
-          </h3>
-          <ul class="space-y-3 text-gray-600 text-sm">
-            <li><strong>Organizing</strong> students’ own notes and PDFs</li>
-            <li><strong>Highlighting</strong> key concepts from class</li>
-            <li><strong>Reviewing</strong> material in a clear structure</li>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span class="material-icons-round text-success text-lg mt-0.5">check_circle</span>
+              <p class="text-gray-600 text-sm leading-relaxed"><strong>Organizes notes:</strong> We turn messy folders into structured study plans.</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="material-icons-round text-success text-lg mt-0.5">check_circle</span>
+              <p class="text-gray-600 text-sm leading-relaxed"><strong>Active Recall:</strong> We generate quizzes to test actual understanding, not just memory.</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="material-icons-round text-success text-lg mt-0.5">check_circle</span>
+              <p class="text-gray-600 text-sm leading-relaxed"><strong>Safe Environment:</strong> A distraction-free zone solely focused on the student's material.</p>
+            </li>
           </ul>
         </div>
 
-        <div class="bg-gray-50 rounded-xl p-6">
-          <h3 class="font-medium text-dark mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-            Does not do
-          </h3>
-          <ul class="space-y-3 text-gray-600 text-sm">
-            <li>Write essays or assignments</li>
-            <li>Solve homework automatically</li>
-            <li>Replace teachers or textbooks</li>
+        <!-- Bad Card -->
+        <div class="bg-secondary/50 p-8 rounded-[2rem] border border-gray-100 relative overflow-hidden">
+          
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+               <span class="material-icons-round text-xl">close</span>
+            </div>
+            <h3 class="font-bold text-xl text-dark">What GoStudy is NOT</h3>
+          </div>
+
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3 opacity-60">
+              <span class="material-icons-round text-dark text-lg mt-0.5">cancel</span>
+              <p class="text-gray-600 text-sm leading-relaxed">An essay writer or homework solver.</p>
+            </li>
+            <li class="flex items-start gap-3 opacity-60">
+              <span class="material-icons-round text-dark text-lg mt-0.5">cancel</span>
+              <p class="text-gray-600 text-sm leading-relaxed">A replacement for teachers or textbooks.</p>
+            </li>
+            <li class="flex items-start gap-3 opacity-60">
+              <span class="material-icons-round text-dark text-lg mt-0.5">cancel</span>
+              <p class="text-gray-600 text-sm leading-relaxed">A social media platform.</p>
+            </li>
           </ul>
         </div>
 
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- HABITS -->
-  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-    <div class="border-t border-gray-100 pt-12">
-      <h2 class="text-2xl font-semibold text-dark mb-10">
-        Building <span class="text-blue-500">better study habits</span>
-      </h2>
+    <!-- HABITS & VALUES (Grid) -->
+    <section class="bg-dark py-24 text-white reveal">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold mb-4">Building better habits</h2>
+                <p class="text-gray-400">We don't just want them to pass the test. We want them to learn how to learn.</p>
+            </div>
 
-      <div class="space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Habit 1 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors">
+                    <span class="material-icons-round text-primary text-4xl mb-6">filter_center_focus</span>
+                    <h3 class="font-bold text-xl mb-3">Focus</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Students face information overload. GoStudy helps them break down large complex topics into manageable chunks.
+                    </p>
+                </div>
 
-        <div class="flex gap-6">
-          <span class="material-icons-round text-blue-500 mt-1">filter_list</span>
-          <div>
-            <h3 class="text-lg font-medium text-dark mb-1">Less overload, more focus</h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              Students face too much material. GoStudy! helps them
-              <strong>focus on what matters</strong> instead of rereading everything.
-            </p>
-            <p class="text-xs text-gray-400 mt-1">
-              Result: shorter, calmer study sessions.
-            </p>
-          </div>
+                <!-- Habit 2 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors">
+                    <span class="material-icons-round text-purple-500 text-4xl mb-6">psychology</span>
+                    <h3 class="font-bold text-xl mb-3">Metacognition</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        By quizzing themselves instead of re-reading, students learn to identify exactly what they don't know yet.
+                    </p>
+                </div>
+
+                <!-- Habit 3 (Privacy) -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors">
+                    <span class="material-icons-round text-green-500 text-4xl mb-6">shield</span>
+                    <h3 class="font-bold text-xl mb-3">Privacy First</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        No ads. No data selling. Content is encrypted and only visible to the student. We are COPPA compliant.
+                    </p>
+                </div>
+
+            </div>
         </div>
+    </section>
 
-        <div class="flex gap-6">
-          <span class="material-icons-round text-blue-500 mt-1">psychology</span>
-          <div>
-            <h3 class="text-lg font-medium text-dark mb-1">Active recall, not passive reading</h3>
-            <p class="text-gray-500 leading-relaxed text-sm">
-              GoStudy! creates short quizzes from the student’s notes,
-              encouraging <strong>self-testing</strong> instead of memorizing blindly.
-            </p>
-            <p class="text-xs text-gray-400 mt-1">
-              Students check what they actually understand.
-            </p>
+    <!-- TIMELINE (Use Case) -->
+    <section class="max-w-4xl mx-auto px-6 py-24 reveal">
+      <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-dark">A typical study session</h2>
+      </div>
+
+      <div class="relative">
+          <!-- Connecting Line -->
+          <div class="absolute left-8 top-8 bottom-8 w-0.5 bg-gray-100 md:left-1/2 md:-translate-x-1/2"></div>
+
+          <!-- Step 1 -->
+          <div class="relative flex flex-col md:flex-row items-center gap-8 mb-12">
+             <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                 <h3 class="font-bold text-xl text-dark">Upload Material</h3>
+                 <p class="text-gray-500 text-sm mt-2">The student uploads their class notes or a PDF textbook chapter.</p>
+                 <span class="inline-block mt-2 text-xs font-mono text-gray-400 bg-gray-50 px-2 py-1 rounded">Time: 2 mins</span>
+             </div>
+             <div class="relative z-10 w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-subtle flex items-center justify-center text-primary order-1 md:order-2">
+                 <span class="material-icons-round text-2xl">cloud_upload</span>
+             </div>
+             <div class="md:w-1/2 md:order-3"></div>
           </div>
-        </div>
+
+          <!-- Step 2 -->
+          <div class="relative flex flex-col md:flex-row items-center gap-8 mb-12">
+             <div class="md:w-1/2 order-3 md:order-1"></div>
+             <div class="relative z-10 w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-subtle flex items-center justify-center text-purple-600 order-1 md:order-2">
+                 <span class="material-icons-round text-2xl">auto_fix_high</span>
+             </div>
+             <div class="md:w-1/2 order-2 md:order-3">
+                 <h3 class="font-bold text-xl text-dark">AI Structure</h3>
+                 <p class="text-gray-500 text-sm mt-2">GoStudy automatically organizes the chaos into clear topics and key concepts.</p>
+                 <span class="inline-block mt-2 text-xs font-mono text-gray-400 bg-gray-50 px-2 py-1 rounded">Time: Instant</span>
+             </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative flex flex-col md:flex-row items-center gap-8">
+             <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                 <h3 class="font-bold text-xl text-dark">Review & Quiz</h3>
+                 <p class="text-gray-500 text-sm mt-2">Short, interactive quizzes verify understanding before the student moves on.</p>
+                 <span class="inline-block mt-2 text-xs font-mono text-gray-400 bg-gray-50 px-2 py-1 rounded">Time: ~15 mins</span>
+             </div>
+             <div class="relative z-10 w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-subtle flex items-center justify-center text-green-500 order-1 md:order-2">
+                 <span class="material-icons-round text-2xl">quiz</span>
+             </div>
+             <div class="md:w-1/2 order-3"></div>
+          </div>
 
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- USE CASE -->
-  <section class="max-w-3xl mx-auto px-6 pb-20 reveal">
-    <div class="bg-secondary/50 rounded-2xl p-8 md:p-10">
-      <h2 class="text-xl font-semibold text-dark mb-8">
-        A <span class="text-blue-500">typical use</span>
-      </h2>
+    <!-- FAQ ACCORDION -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
+      <div class="bg-secondary/30 rounded-[2.5rem] p-8 md:p-12">
+        <h2 class="text-2xl font-bold text-dark mb-8 text-center">Common Questions</h2>
+        
+        <div class="space-y-4">
 
-      <ol class="relative border-l border-gray-200 ml-3 space-y-8">
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>Is using this considered cheating?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    Absolutely not. GoStudy acts as a digital tutor. It does not generate essays or solve homework problems for the student. It simply quizzes them on material they have already uploaded to ensure they understand it.
+                </div>
+            </details>
 
-        <li class="pl-8 relative">
-          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-          <p class="text-dark font-medium">After class</p>
-          <p class="text-sm text-gray-500">
-            Upload notes or a school PDF.
-          </p>
-          <p class="text-xs text-gray-400">2–3 minutes</p>
-        </li>
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>How secure is my child's data?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    Data security is our top priority. All uploaded notes are encrypted. We do not sell data to advertisers, and we are fully compliant with student privacy laws.
+                </div>
+            </details>
 
-        <li class="pl-8 relative">
-          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300"></span>
-          <p class="text-dark font-medium">Organization</p>
-          <p class="text-sm text-gray-500">
-            Content is structured automatically.
-          </p>
-          <p class="text-xs text-gray-400">No effort required</p>
-        </li>
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>Does this replace the teacher?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    No. The teacher remains the primary source of knowledge. GoStudy is a "post-class" tool intended to help students retain what was taught in the classroom.
+                </div>
+            </details>
 
-        <li class="pl-8 relative">
-          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300"></span>
-          <p class="text-dark font-medium">Review</p>
-          <p class="text-sm text-gray-500">
-            Short quiz to verify understanding.
-          </p>
-          <p class="text-xs text-gray-400">~10 minutes</p>
-        </li>
+             <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>Is it free to try?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    Yes, students can sign up for a free Basic account which allows for limited uploads per week. No credit card is required for the free tier.
+                </div>
+            </details>
 
-      </ol>
-    </div>
-  </section>
-
-  <!-- QUESTIONS -->
-  <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
-    <div class="border-t border-gray-100 pt-12">
-      <h2 class="text-2xl font-semibold text-dark mb-10">
-        Common <span class="text-blue-500">parent questions</span>
-      </h2>
-
-      <div class="space-y-8">
-
-        <div>
-          <h3 class="text-base font-bold text-dark mb-1">Is this cheating?</h3>
-          <p class="text-gray-500 text-sm">
-            No. GoStudy! works with <strong>the student’s own material</strong> and supports studying, like a tutor.
-          </p>
         </div>
-
-        <div>
-          <h3 class="text-base font-bold text-dark mb-1">Does it replace teachers?</h3>
-          <p class="text-gray-500 text-sm">
-            No. Teachers remain the <strong>primary source</strong>. GoStudy! works after class.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="text-base font-bold text-dark mb-1">Is the data private?</h3>
-          <p class="text-gray-500 text-sm">
-            Yes. All notes are <strong>encrypted</strong>. No ads. No data selling.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="text-base font-bold text-dark mb-1">Is it always accurate?</h3>
-          <p class="text-gray-500 text-sm">
-            It only uses uploaded content. It’s a <strong>study companion</strong>, not a replacement.
-          </p>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA -->
-  <section class="max-w-3xl mx-auto px-6 pb-32 text-center reveal">
-    <div class="border-t border-gray-100 pt-12">
-      <p class="text-gray-500 mb-6">
-        Transparency matters. <strong>See exactly what your child sees.</strong>
+    <!-- CTA -->
+    <section class="max-w-4xl mx-auto px-6 pb-24 text-center reveal">
+      <h2 class="text-3xl font-bold text-dark mb-6">Transparency matters.</h2>
+      <p class="text-gray-500 mb-8">
+        See exactly what your child sees. Take a tour of the platform without signing up.
       </p>
-      <a href="/how-it-works/" class="text-blue-500 font-semibold hover:text-dark transition-colors inline-flex items-center gap-1">
-        Walk through a real example <span class="material-icons-round text-sm">arrow_forward</span>
+      <a href="/how-it-works/" class="bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-1">
+        View Product Tour
       </a>
-    </div>
-  </section>
+    </section>
 
-</main>
+  </main>
 
-
-   <!-- footer -->
+  <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
