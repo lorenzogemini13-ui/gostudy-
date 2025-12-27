@@ -1,4 +1,4 @@
-import { auth, API_BASE } from "/backend/js/auth.js";
+import { auth, API_BASE } from "../backend/js/auth.js";
 
 // --- CONFIG & STATE ---
 const API_URL = `${API_BASE}/api/generate-plan`;
