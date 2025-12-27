@@ -113,6 +113,20 @@ const extractText = async (file) => {
     }
 };
 
+// Helper to save study plan to a JSON file
+const savePlanToFile = async (userId, generationId, studyPlan) => {
+    const dir = path.join(__dirname, 'saved_plans', userId);
+    try {
+        await fsPromises.mkdir(dir, { recursive: true });
+        const filePath = path.join(dir, `${generationId}.json`);
+        await fsPromises.writeFile(filePath, JSON.stringify(studyPlan, null, 2));
+        return filePath;
+    } catch (err) {
+        console.error(`Failed to save plan to file for user ${userId}:`, err.message);
+        throw err;
+    }
+};
+
 // --- 4. API ROUTE ---
 
 app.post('/api/generate-plan', upload.single('document'), async (req, res) => {
@@ -296,13 +310,15 @@ SCHEMA:
                 const idToken = authHeader.split('Bearer ')[1];
                 const decodedToken = await admin.auth().verifyIdToken(idToken);
                 
-                await db.collection('generations').add({
+                const docRef = await db.collection('generations').add({
                     userId: decodedToken.uid,
                     fileName: req.file.originalname,
-                    studyPlan: studyPlan,
                     createdAt: admin.firestore.FieldValue.serverTimestamp()
                 });
-                console.log('💾 Plan saved to Firestore for user:', decodedToken.uid);
+                
+                // Save to disk using the Firestore ID as filename
+                await savePlanToFile(decodedToken.uid, docRef.id, studyPlan);
+                console.log('💾 Plan saved to Firestore and disk for user:', decodedToken.uid);
             } catch (authError) {
                 console.error('Failed to save to Firestore (possibly invalid token):', authError.message);
                 // We still return the plan to the user even if saving fails
@@ -352,6 +368,58 @@ app.get('/api/generations', authenticate, async (req, res) => {
         res.json(generations);
     } catch (error) {
         console.error('Error fetching generations:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get a specific generation (including file content)
+app.get('/api/generations/:id', authenticate, async (req, res) => {
+    if (!db) return res.status(500).json({ error: 'Firestore not initialized' });
+
+    try {
+        const doc = await db.collection('generations').doc(req.params.id).get();
+        if (!doc.exists || doc.data().userId !== req.user.uid) {
+            return res.status(404).json({ error: 'Generation not found' });
+        }
+
+        const data = doc.data();
+        const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
+        
+        try {
+            const fileContent = await fsPromises.readFile(filePath, 'utf-8');
+            const studyPlan = JSON.parse(fileContent);
+            res.json({ id: doc.id, ...data, studyPlan });
+        } catch (fileError) {
+            console.error('Error reading saved plan file:', fileError);
+            res.status(500).json({ error: 'Failed to read plan file' });
+        }
+    } catch (error) {
+        console.error('Error fetching generation:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Delete a specific generation
+app.delete('/api/generations/:id', authenticate, async (req, res) => {
+    if (!db) return res.status(500).json({ error: 'Firestore not initialized' });
+
+    try {
+        const docRef = db.collection('generations').doc(req.params.id);
+        const doc = await docRef.get();
+        if (!doc.exists || doc.data().userId !== req.user.uid) {
+            return res.status(404).json({ error: 'Generation not found' });
+        }
+
+        // 1. Delete Firestore record
+        await docRef.delete();
+
+        // 2. Delete file from disk
+        const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
+        await safeDelete(filePath);
+
+        res.json({ message: 'Generation deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting generation:', error);
         res.status(500).json({ error: error.message });
     }
 });

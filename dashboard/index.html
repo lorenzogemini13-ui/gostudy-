@@ -78,44 +78,35 @@
 
         <!-- Navigation -->
         <div class="flex-1 overflow-y-auto px-4 py-4 space-y-8">
-            
             <!-- Main Group -->
             <nav class="space-y-1">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-primary font-semibold transition-all">
+                <button id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-primary font-semibold transition-all">
                     <span class="material-icons-round text-xl">dashboard</span>
                     <span class="text-sm">Dashboard</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-all">
-                    <span class="material-icons-round text-xl">folder_open</span>
-                    <span class="text-sm">My Files</span>
-                </a>
+                </button>
+                <button id="nav-history" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left">
+                    <span class="material-icons-round text-xl">history</span>
+                    <span class="text-sm">My Study Plans</span>
+                </button>
             </nav>
-
-            <!-- Courses Group -->
-            <div>
-                <div class="flex justify-between items-center px-4 mb-3">
-                    <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Courses</h4>
-                </div>
-                <nav id="courses-list" class="space-y-1">
-                    <div class="px-4 text-xs text-gray-400">Loading courses...</div>
-                </nav>
+        </div>
+<!-- User Profile -->
+<div class="p-4 border-t border-gray-100 bg-white/50">
+    <a href="/profile" class="block">
+        <button class="flex items-center gap-3 p-2 w-full rounded-xl hover:bg-white hover:shadow-sm transition-all text-left">
+            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold overflow-hidden border border-white shadow-sm">
+                <span id="sidebar-initials">G</span>
+                <img id="sidebar-img" src="" class="w-full h-full object-cover hidden">
             </div>
-        </div>
+            <div class="flex-1 overflow-hidden">
+                <p id="sidebar-name" class="text-sm font-semibold text-gray-800 truncate">Guest User</p>
+                <p class="text-xs text-gray-500">Free Plan</p>
+            </div>
+            <span class="material-icons-round text-gray-400">more_vert</span>
+        </button>
+    </a>
+</div>
 
-        <!-- User Profile -->
-        <div class="p-4 border-t border-gray-100 bg-white/50">
-            <button class="flex items-center gap-3 p-2 w-full rounded-xl hover:bg-white hover:shadow-sm transition-all text-left">
-                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold overflow-hidden border border-white shadow-sm">
-                    <span id="sidebar-initials">G</span>
-                    <img id="sidebar-img" src="" class="w-full h-full object-cover hidden">
-                </div>
-                <div class="flex-1 overflow-hidden">
-                    <p id="sidebar-name" class="text-sm font-semibold text-gray-800 truncate">Guest User</p>
-                    <p class="text-xs text-gray-500">Free Plan</p>
-                </div>
-                <span class="material-icons-round text-gray-400">more_vert</span>
-            </button>
-        </div>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -128,23 +119,7 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <!-- Gamification Stats -->
-                <div id="stats-container" class="hidden md:flex items-center gap-6 bg-white px-5 py-2.5 rounded-full shadow-card border border-gray-100">
-                    <div class="flex items-center gap-2" title="Streak">
-                        <span class="material-icons-round text-orange-500 text-xl">local_fire_department</span>
-                        <span id="stat-streak" class="font-bold text-gray-700 text-sm">0</span>
-                    </div>
-                    <div class="h-4 w-px bg-gray-200"></div>
-                    <div class="flex items-center gap-2" title="Gems">
-                        <span class="material-icons-round text-blue-500 text-xl">diamond</span>
-                        <span id="stat-gems" class="font-bold text-gray-700 text-sm">0</span>
-                    </div>
-                </div>
-
-                <button class="relative w-10 h-10 rounded-full bg-white hover:bg-gray-50 border border-gray-200 flex items-center justify-center transition-all shadow-card text-gray-500">
-                    <span class="material-icons-round">notifications_none</span>
-                    <span class="absolute top-2.5 right-3 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-                </button>
+                 <!-- Rimossi Stats Container (Gemme/Streak) e Notifiche poiché erano mock data -->
             </div>
         </header>
 
@@ -189,6 +164,32 @@
                           </div>
                      </div>
                      <p id="validation-error" class="hidden text-red-500 text-sm font-medium mt-4 text-center"></p>
+                </div>
+                
+                <!-- 1.5 HISTORY SECTION -->
+                <div id="history-section" class="hidden animate-enter">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900 tracking-tight">My Study Plans</h1>
+                            <p class="text-text-secondary">Access and manage your previous document analyses.</p>
+                        </div>
+                        <button onclick="showSection('upload')" class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all font-bold text-sm">
+                            <span class="material-icons-round text-sm">add</span> New Plan
+                        </button>
+                    </div>
+
+                    <div id="history-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- History cards injected here -->
+                    </div>
+
+                    <div id="history-empty" class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
+                         <div class="w-20 h-20 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="material-icons-round text-4xl">inventory_2</span>
+                         </div>
+                         <h3 class="text-xl font-bold text-gray-900 mb-2">No saved plans yet</h3>
+                         <p class="text-gray-500 mb-8">Generated plans will appear here for easy access.</p>
+                         <button onclick="showSection('upload')" class="text-primary font-bold hover:underline">Start your first analysis</button>
+                    </div>
                 </div>
 
                 <!-- 2. LOADING STATE -->
@@ -243,7 +244,7 @@
                              <p id="result-summary" class="text-gray-700 leading-relaxed text-lg font-medium"></p>
                         </div>
 
-                        <!-- Concept Map (New Feature) -->
+                        <!-- Concept Map (Feature reale dal backend) -->
                         <div class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
                             <div class="flex items-center gap-2 mb-6">
                                <span class="bg-purple-100 text-purple-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">hub</span></span>
@@ -309,7 +310,6 @@
       import { auth, API_BASE } from "/backend/js/auth.js";
 
       // --- CONFIG & STATE ---
-      // Assuming server.js runs on port 3000 locally or via proxy
       const ENDPOINT = `${API_BASE}/api/generate-plan`; 
       
       let selectedDifficulty = "High School";
@@ -326,11 +326,11 @@
         bar: document.getElementById("loading-bar"),
         percent: document.getElementById("loading-percent"),
         diffBtns: document.querySelectorAll(".difficulty-btn"),
-        courseList: document.getElementById('courses-list'),
-        stats: {
-          streak: document.getElementById('stat-streak'),
-          gems: document.getElementById('stat-gems')
-        },
+        navDash: document.getElementById("nav-dashboard"),
+        navHistory: document.getElementById("nav-history"),
+        history: document.getElementById("history-section"),
+        historyList: document.getElementById("history-list"),
+        historyEmpty: document.getElementById("history-empty"),
         profile: {
           name: document.getElementById('sidebar-name'),
           initials: document.getElementById('sidebar-initials'),
@@ -338,6 +338,39 @@
         },
         filename: document.getElementById('file-name-display')
       };
+
+      // --- VIEW MANAGEMENT ---
+      window.showSection = function(section) {
+          // Hide all major sections
+          UI.upload.classList.add('hidden');
+          UI.history.classList.add('hidden');
+          UI.results.classList.add('hidden');
+          UI.loading.classList.add('hidden');
+          UI.loading.style.display = 'none';
+
+          // Reset nav styles
+          UI.navDash.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
+          UI.navHistory.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
+
+          if (section === 'upload') {
+              UI.upload.classList.remove('hidden');
+              UI.navDash.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
+              UI.navDash.classList.remove('text-gray-500');
+          } else if (section === 'history') {
+              UI.history.classList.remove('hidden');
+              UI.navHistory.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
+              UI.navHistory.classList.remove('text-gray-500');
+              loadHistory();
+          } else if (section === 'results') {
+              UI.results.classList.remove('hidden');
+              UI.results.style.display = "block";
+              UI.navDash.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
+              UI.navDash.classList.remove('text-gray-500');
+          }
+      };
+
+      UI.navDash.addEventListener('click', () => showSection('upload'));
+      UI.navHistory.addEventListener('click', () => showSection('history'));
 
       // --- INITIALIZATION ---
       async function initDashboard() {
@@ -352,45 +385,10 @@
                 } else {
                      UI.profile.initials.innerText = (user.displayName || "U").charAt(0).toUpperCase();
                 }
-                loadBackendData();
             } else {
-                // Redirect to login if needed, or show Guest state
                 console.log("User not logged in");
             }
         });
-      }
-
-      async function loadBackendData() {
-        if (!auth.currentUser) return;
-        const token = await auth.currentUser.getIdToken();
-        const headers = { 'Authorization': `Bearer ${token}` };
-
-        // 1. Fetch Mock Courses
-        try {
-            const res = await fetch(`${API_BASE}/api/courses`, { headers });
-            const courses = await res.json();
-            if(Array.isArray(courses)) {
-               UI.courseList.innerHTML = courses.map(c => `
-                  <a href="#" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-colors group">
-                        <div class="flex items-center gap-3">
-                             <div class="w-2 h-2 rounded-full ${c.progress > 0 ? 'bg-green-500' : 'bg-gray-300'}"></div>
-                             <span class="text-sm font-medium text-gray-600 group-hover:text-gray-900">${c.title}</span>
-                        </div>
-                        ${c.progress > 0 ? `<span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">${c.progress}%</span>` : ''}
-                  </a>
-               `).join('');
-            }
-        } catch(e) { console.error("Courses load error", e); }
-
-        // 2. Fetch Stats
-        try {
-            const res = await fetch(`${API_BASE}/api/stats`, { headers });
-            const stats = await res.json();
-            if(stats) {
-                if(UI.stats.streak) UI.stats.streak.innerText = stats.streak;
-                if(UI.stats.gems) UI.stats.gems.innerText = stats.gems;
-            }
-        } catch(e) { console.error("Stats load error", e); }
       }
 
       initDashboard();
@@ -428,7 +426,7 @@
         UI.loading.classList.remove("hidden");
         UI.loading.style.display = "flex";
         
-        // Simulated Progress Bar
+        // Simulated Progress Bar (Visual feedback only while waiting for backend)
         let progress = 0;
         const progressInterval = setInterval(() => {
           if (progress < 90) {
@@ -448,10 +446,9 @@
 
           const formData = new FormData();
           formData.append("document", file);
-          // Note: Backend server.js in prompt doesn't strictly use 'difficulty' field in body 
-          // but we send it anyway if logic is expanded later. The prompt text sent to Perplexity handles difficulty.
           formData.append("difficulty", selectedDifficulty);
 
+          // Call the REAL backend
           const response = await fetch(ENDPOINT, {
             method: "POST",
             body: formData,
@@ -485,6 +482,105 @@
           `;
         }
       });
+
+      // --- HISTORY LOGIC ---
+      async function loadHistory() {
+          UI.historyList.innerHTML = '<div class="col-span-full text-center py-20"><div class="animate-spin inline-block w-8 h-8 border-4 border-primary border-t-transparent rounded-full mb-4"></div><p class="text-gray-500">Loading your library...</p></div>';
+          UI.historyEmpty.classList.add('hidden');
+
+          try {
+              const token = await auth.currentUser.getIdToken();
+              const response = await fetch(`${API_BASE}/api/generations`, {
+                  headers: { 'Authorization': `Bearer ${token}` }
+              });
+              
+              const history = await response.json();
+              
+              if (history.length === 0) {
+                  UI.historyList.innerHTML = "";
+                  UI.historyEmpty.classList.remove('hidden');
+                  return;
+              }
+
+              UI.historyList.innerHTML = "";
+              history.forEach(item => {
+                  const date = new Date(item.createdAt?._seconds * 1000 || item.createdAt).toLocaleDateString();
+                  const card = document.createElement('div');
+                  card.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-soft hover:shadow-md transition-all group";
+                  card.innerHTML = `
+                      <div class="flex items-start justify-between mb-4">
+                          <div class="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center">
+                              <span class="material-icons-round">description</span>
+                          </div>
+                          <button onclick="deletePlan('${item.id}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
+                              <span class="material-icons-round text-lg">delete_outline</span>
+                          </button>
+                      </div>
+                      <h4 class="font-bold text-gray-900 mb-1 truncate" title="${item.fileName}">${item.fileName}</h4>
+                      <p class="text-xs text-gray-400 mb-6">${date}</p>
+                      <button onclick="viewPlan('${item.id}')" class="w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-bold hover:bg-primary transition-all shadow-sm">
+                          View Study Plan
+                      </button>
+                  `;
+                  UI.historyList.appendChild(card);
+              });
+          } catch (err) {
+              UI.historyList.innerHTML = `
+                  <div class="col-span-full text-center py-10 text-red-500">
+                      <span class="material-icons-round text-4xl mb-2">error_outline</span>
+                      <p>Failed to load history: ${err.message}</p>
+                  </div>
+              `;
+          }
+      }
+
+      window.viewPlan = async function(id) {
+          UI.history.classList.add('hidden');
+          UI.loading.classList.remove('hidden');
+          UI.loading.style.display = 'flex';
+          UI.bar.style.width = "40%";
+          UI.percent.textContent = "Fetching...";
+
+          try {
+              const token = await auth.currentUser.getIdToken();
+              const response = await fetch(`${API_BASE}/api/generations/${id}`, {
+                  headers: { 'Authorization': `Bearer ${token}` }
+              });
+              const data = await response.json();
+              
+              UI.filename.innerText = data.fileName;
+              UI.bar.style.width = "100%";
+              UI.percent.textContent = "100%";
+              
+              setTimeout(() => {
+                  renderDashboard(data.studyPlan);
+                  showSection('results');
+              }, 500);
+          } catch (err) {
+              alert(`Error loading plan: ${err.message}`);
+              showSection('history');
+          }
+      };
+
+      window.deletePlan = async function(id) {
+          if (!confirm('Are you sure you want to delete this study plan? The associated file will be permanently removed.')) return;
+          
+          try {
+              const token = await auth.currentUser.getIdToken();
+              const response = await fetch(`${API_BASE}/api/generations/${id}`, {
+                  method: 'DELETE',
+                  headers: { 'Authorization': `Bearer ${token}` }
+              });
+              
+              if (response.ok) {
+                  loadHistory();
+              } else {
+                  throw new Error('Delete failed');
+              }
+          } catch (err) {
+              alert(`Error deleting plan: ${err.message}`);
+          }
+      };
 
       // --- RENDERING LOGIC ---
       function renderDashboard(data) {
@@ -551,7 +647,7 @@
           });
         }
 
-        // 5. Concept Map (New Backend Feature)
+        // 5. Concept Map
         const conceptsDiv = document.getElementById("result-concepts");
         conceptsDiv.innerHTML = "";
         if (data.concept_map?.length) {
@@ -588,7 +684,7 @@
         document.querySelectorAll(".quiz-answer").forEach(a => {
            if(answersVisible) {
                a.classList.remove('hidden');
-               a.classList.add('block'); // ensure block display
+               a.classList.add('block');
            } else {
                a.classList.add('hidden');
                a.classList.remove('block');
