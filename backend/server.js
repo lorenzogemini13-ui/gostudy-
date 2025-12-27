@@ -356,8 +356,6 @@ app.get('/api/generations', authenticate, async (req, res) => {
     try {
         const snapshot = await db.collection('generations')
             .where('userId', '==', req.user.uid)
-            .orderBy('createdAt', 'desc')
-            .limit(100)
             .get();
 
         const generations = [];
@@ -365,9 +363,17 @@ app.get('/api/generations', authenticate, async (req, res) => {
             generations.push({ id: doc.id, ...doc.data() });
         });
 
-        res.json(generations);
+        // Sort client-side to avoid requiring a composite index
+        generations.sort((a, b) => {
+            const dateA = a.createdAt?._seconds || 0;
+            const dateB = b.createdAt?._seconds || 0;
+            return dateB - dateA;
+        });
+
+        res.json(generations.slice(0, 100));
     } catch (error) {
         console.error('Error fetching generations:', error);
+        console.error('Error stack:', error.stack);
         res.status(500).json({ error: error.message });
     }
 });
