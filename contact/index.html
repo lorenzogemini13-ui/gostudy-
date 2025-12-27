@@ -15,10 +15,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 
   <!-- Favicon -->
-  <link rel="icon" href= type="image/png" />
-  <link rel="shortcut icon" href= type="image/png" />
-  <link rel="apple-touch-icon" href= />
+  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
+  <link rel="stylesheet" href="/assets/css/navbar.css">
 
   <script>
     tailwind.config = {
@@ -37,6 +38,7 @@
           boxShadow: {
             'subtle': '0 1px 2px rgba(0,0,0,0.05)',
             'card': '0 4px 20px rgba(0,0,0,0.04)',
+            'glow': '0 0 20px rgba(0, 122, 255, 0.15)',
           },
         },
       },
@@ -47,16 +49,16 @@
   <style>
     /* Hide scrollbar while keeping scroll functionality */
     html {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none;
     }
     
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal.active {
@@ -64,24 +66,31 @@
       transform: translateY(0);
     }
     
+    /* Subtle background animation */
     .hero-blob {
-      background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
       pointer-events: none;
     }
-  </style>
 
-    <!-- Favicon -->
-  <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
-  <meta name="theme-color" content="#007AFF" />
-  <link rel="stylesheet" href="/assets/css/navbar.css">
+    /* Custom radio input styling for the form */
+    .topic-radio:checked + div {
+      border-color: #007AFF;
+      background-color: rgba(0, 122, 255, 0.05);
+      color: #007AFF;
+    }
+    
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
 </head>
 
 <body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
 
-     
-   <!-- navbar -->
+  <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
@@ -112,7 +121,7 @@
                <div class="space-y-2">
                   <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
                   
-                  <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                  <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">psychology</span>
                     </div>
@@ -122,7 +131,7 @@
                     </div>
                   </a>
 
-                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">monetization_on</span>
                     </div>
@@ -132,7 +141,7 @@
                     </div>
                   </a>
 
-                  <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+                  <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl text-purple-600">account_tree</span>
                     </div>
@@ -171,7 +180,7 @@
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
             <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
                        <span class="material-icons-round">article</span>
                    </div>
@@ -180,7 +189,7 @@
                        <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
                    </div>
                </a>
-               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group/item">
+               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
                     <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
                         <span class="material-icons-round text-xl">person_add</span>
                     </div>
@@ -189,7 +198,7 @@
                         <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
                     </div>
                   </a>
-               <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
                        <span class="material-icons-round">family_restroom</span>
                    </div>
@@ -198,7 +207,7 @@
                        <p class="text-xs text-gray-500">How to support your student.</p>
                    </div>
                </a>
-               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
                        <span class="material-icons-round">help</span>
                    </div>
@@ -220,17 +229,17 @@
           
            <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
             <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <span class="font-bold text-dark text-sm ml-2">About Us</span>
                </a>
-               <a href="/contact/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/contact/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <span class="font-bold text-dark text-sm ml-2">Contact</span>
                </a>
                <hr class="border-gray-100 my-1 mx-2">
-               <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
                </a>
-               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
+               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
                    <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
                </a>
             </div>
@@ -261,7 +270,6 @@
           </button>
       </div>
       <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!--mobile links -->
           <div class="space-y-4">
               <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
               <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
@@ -291,140 +299,197 @@
     <!-- HEADER -->
     <section class="relative pt-24 pb-12 md:pt-32 md:pb-16 px-6 text-center reveal active">
       <div class="hero-blob absolute inset-0 w-full h-full z-0"></div>
-      <div class="relative z-10 max-w-3xl mx-auto">
+      <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+        
+        <!-- Status Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 shadow-subtle mb-8">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
+            </span>
+            <span class="text-xs font-semibold text-gray-600">Our team is online</span>
+        </div>
+
         <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-dark">
-          Get in touch
+          We’re here to help.
         </h1>
-        <p class="text-lg text-gray-500 leading-relaxed">
-          Have a question about our Spaced Repetition algorithms? Need help with your account? We're here to help you learn better.
+        <p class="text-lg text-gray-500 leading-relaxed max-w-lg">
+            Got questions about GoStudy? We’d love to hear from you. 
+            Choose a topic below or fill out the form.
         </p>
       </div>
     </section>
 
-    <!-- CONTENT -->
+    <!-- MAIN CONTENT GRID -->
     <section class="px-6 pb-24 reveal">
-      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
         
-        <!-- LEFT COLUMN: INFO -->
-        <div class="space-y-8">
+        <!-- LEFT COLUMN: CONTEXT (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
           
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-subtle">
-              <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-                <span class="material-icons-round text-primary">support_agent</span>
-              </div>
-              <h3 class="font-bold text-lg mb-1">Support</h3>
-              <p class="text-sm text-gray-500 mb-2">Technical issues & account help.</p>
-              <a href="mailto:support@gostudy.ai" class="text-sm font-medium text-primary hover:underline">support@gostudy.ai</a>
-            </div>
-
-            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-subtle">
-              <div class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center mb-4">
-                <span class="material-icons-round text-purple-600">school</span>
-              </div>
-              <h3 class="font-bold text-lg mb-1">Sales</h3>
-              <p class="text-sm text-gray-500 mb-2">For Schools & Universities.</p>
-              <a href="mailto:sales@gostudy.ai" class="text-sm font-medium text-primary hover:underline">sales@gostudy.ai</a>
-            </div>
-          </div>
-
-          
-          <div class="bg-secondary/50 p-8 rounded-3xl border border-gray-100">
-            <h3 class="font-bold text-xl mb-2">Looking for quick answers?</h3>
-            <p class="text-gray-500 mb-6">Check out our FAQ for instant answers about file formats, privacy, and pricing.</p>
-            <a href="/index.html/#FAQ" class="inline-flex items-center gap-2 text-dark font-medium hover:text-primary transition-colors">
-              Visit FAQ 
-              <span class="material-icons-round text-sm">arrow_forward</span>
+          <!-- Sales Card -->
+          <div class="bg-dark text-white p-8 rounded-3xl shadow-card relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/30 transition-colors"></div>
+            
+            <span class="material-icons-round text-3xl mb-4 text-primary">school</span>
+            <h3 class="font-bold text-2xl mb-2">Talk to Sales</h3>
+            <p class="text-gray-400 mb-6 text-sm leading-relaxed">Perfect for schools, universities, and districts looking to deploy GoStudy at scale.</p>
+            <a href="mailto:sales@gostudy.ai" class="inline-flex items-center gap-2 font-bold text-sm hover:gap-3 transition-all">
+                Contact Sales <span class="material-icons-round text-sm">arrow_forward</span>
             </a>
           </div>
 
-          <!-- Social -->
-          <div class="pl-2">
-            <h4 class="font-bold text-dark mb-4">Office</h4>
-            <p class="text-gray-500 leading-relaxed mb-6">
-              123 Innovation Drive<br>
-              Palo Alto, CA 94301<br>
-              United States
-            </p>
-            <div class="flex gap-4">
-              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">thumb_up</span></a> <!-- Placeholder for social icons -->
-              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">photo_camera</span></a>
-              <a href="#" class="text-gray-400 hover:text-primary transition-colors"><span class="material-icons-round">alternate_email</span></a>
+          <!-- Support Card -->
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-subtle hover:shadow-card transition-all">
+            <span class="material-icons-round text-3xl mb-4 text-blue-500">support_agent</span>
+            <h3 class="font-bold text-xl mb-2 text-dark">Help & Support</h3>
+            <p class="text-gray-500 mb-6 text-sm">Issues with your account or billing? Technical bugs?</p>
+            <div class="flex items-center gap-3">
+                 <!-- Avatar Group -->
+                <div class="flex -space-x-2 overflow-hidden">
+                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" alt=""/>
+                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64" alt=""/>
+                    <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=64&h=64" alt=""/>
+                </div>
+                <span class="text-xs text-gray-400 font-medium">Avg. reply &lt; 2 hrs</span>
             </div>
+          </div>
+
+          <!-- Community -->
+          <a href="#" class="block bg-[#5865F2]/10 p-8 rounded-3xl border border-[#5865F2]/20 hover:bg-[#5865F2]/20 transition-colors cursor-pointer">
+             <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-[#5865F2] text-lg">Join the Community</h3>
+                    <p class="text-gray-500 text-xs mt-1">Chat with other students on Discord.</p>
+                </div>
+                <span class="material-icons-round text-[#5865F2]">discord</span>
+             </div>
+          </a>
+
+          <!-- Location (Subtle) -->
+          <div class="pt-4 flex items-start gap-3 text-gray-400 text-sm">
+             <span class="material-icons-round text-lg mt-0.5">location_on</span>
+             <p>123 Innovation Drive, Palo Alto, CA 94301</p>
           </div>
 
         </div>
 
-        <!-- RIGHT COLUMN: FORM -->
-        <div class="bg-white p-8 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-card">
-          <form action="#" method="POST" class="space-y-6">
+        <!-- RIGHT COLUMN: FORM (7 Cols) -->
+        <div class="lg:col-span-7">
+          <div class="bg-white p-8 md:p-10 rounded-[2.5rem] border border-gray-100 shadow-card relative">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form action="#" method="POST" class="space-y-8">
+              
+              <!-- Topic Selection -->
               <div>
-                <label for="first-name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
-                <input type="text" id="first-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Jane">
+                <label class="block text-sm font-bold text-dark mb-4">What can we help you with?</label>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="topic" class="topic-radio sr-only" checked>
+                        <div class="border border-gray-200 rounded-xl p-4 text-center hover:bg-gray-50 transition-all h-full flex flex-col items-center justify-center">
+                            <span class="material-icons-round text-gray-400 mb-2">help_outline</span>
+                            <span class="text-sm font-semibold text-dark">General</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="topic" class="topic-radio sr-only">
+                        <div class="border border-gray-200 rounded-xl p-4 text-center hover:bg-gray-50 transition-all h-full flex flex-col items-center justify-center">
+                            <span class="material-icons-round text-gray-400 mb-2">bug_report</span>
+                            <span class="text-sm font-semibold text-dark">Technical</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="topic" class="topic-radio sr-only">
+                        <div class="border border-gray-200 rounded-xl p-4 text-center hover:bg-gray-50 transition-all h-full flex flex-col items-center justify-center">
+                            <span class="material-icons-round text-gray-400 mb-2">receipt_long</span>
+                            <span class="text-sm font-semibold text-dark">Billing</span>
+                        </div>
+                    </label>
+                </div>
               </div>
-              <div>
-                <label for="last-name" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
-                <input type="text" id="last-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Doe">
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label for="first-name" class="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">First Name</label>
+                  <input type="text" id="first-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Jane">
+                </div>
+                <div class="space-y-2">
+                  <label for="last-name" class="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Last Name</label>
+                  <input type="text" id="last-name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="Doe">
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-              <input type="email" id="email" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="jane@university.edu">
-            </div>
+              <div class="space-y-2">
+                <label for="email" class="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Email Address</label>
+                <input type="email" id="email" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors" placeholder="jane@university.edu">
+              </div>
 
-<div>
-  <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">
-    Subject
-  </label>
+              <div class="space-y-2">
+                <label for="message" class="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Message</label>
+                <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors resize-none" placeholder="Tell us more about your project..."></textarea>
+              </div>
 
-  <div class="relative">
-    <select
-      id="subject"
-      class="w-full px-4 py-3 pr-12 rounded-xl bg-gray-50 border border-gray-200
-             focus:bg-white focus:border-primary focus:ring-primary transition-colors
-             appearance-none"
-    >
-      <option>General Inquiry</option>
-      <option>Technical Support</option>
-      <option>Billing Question</option>
-      <option>Feature Request</option>
-      <option>Enterprise / School License</option>
-    </select>
+              <div class="pt-2">
+                  <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-600 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 group">
+                    Send Message
+                    <span class="material-icons-round group-hover:translate-x-1 transition-transform">send</span>
+                  </button>
+                  <p class="text-center text-xs text-gray-400 mt-4">
+                    Protected by reCAPTCHA and the Google <a href="#" class="underline">Privacy Policy</a>.
+                  </p>
+              </div>
 
-    <!-- Custom arrow -->
-    <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500">
-      <span class="material-icons-round">expand_more</span>
-    </div>
-  </div>
-</div>
-
-
-            <div>
-              <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-              <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-xl bg-gray-50 border-gray-200 focus:bg-white focus:border-primary focus:ring-primary transition-colors resize-none" placeholder="How can we help you?"></textarea>
-            </div>
-
-            <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-600 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-blue-500/20">
-              Send Message
-            </button>
-            
-            <p class="text-center text-xs text-gray-400 mt-4">
-              By sending this form, you agree to our <a href="privacy.html" class="underline hover:text-dark">Privacy Policy</a>.
-            </p>
-
-          </form>
+            </form>
+          </div>
         </div>
 
       </div>
     </section>
 
+    <!-- FAQ SECTION (Quick Answers) -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 reveal">
+        <h2 class="text-2xl font-bold text-dark mb-8 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>How do I cancel my subscription?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    You can cancel anytime from your Account Settings > Billing page. Your access will continue until the end of the billing cycle.
+                </div>
+            </details>
+
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>Do you offer student discounts?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    Yes! Verified students get 30% off our Pro plan. Use your .edu email during signup or contact support with your student ID.
+                </div>
+            </details>
+
+            <details class="group bg-white rounded-2xl border border-gray-100 open:shadow-subtle transition-all">
+                <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-dark">
+                    <span>Where can I find the API documentation?</span>
+                    <span class="transition group-open:rotate-180 material-icons-round text-gray-400">expand_more</span>
+                </summary>
+                <div class="text-gray-500 text-sm px-5 pb-5 leading-relaxed">
+                    Our API is currently in closed beta. If you are an enterprise partner, please contact sales@gostudy.ai for access keys.
+                </div>
+            </details>
+
+        </div>
+    </section>
+
   </main>
 
-    <!-- footer -->
+  <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
