@@ -400,6 +400,33 @@ app.put('/api/account', authenticate, async (req, res) => {
     }
 });
 
+// --- 7. NEW DASHBOARD ENDPOINTS (MOCK) ---
+
+app.get('/api/courses', authenticate, (req, res) => {
+    // Return mock courses
+    res.json([
+        { id: 1, title: 'My First Course', progress: 0 },
+        { id: 2, title: 'Advanced Calculus', progress: 35 },
+        { id: 3, title: 'World History', progress: 80 }
+    ]);
+});
+
+app.get('/api/stats', authenticate, (req, res) => {
+     res.json({
+        streak: 10,
+        gems: 50,
+        hearts: 5,
+        xp: 1250
+     });
+});
+
+app.get('/api/notifications', authenticate, (req, res) => {
+    res.json([
+        { id: 1, text: "Welcome to your new dashboard!", read: false },
+        { id: 2, text: "Don't forget your daily goal.", read: false }
+    ]);
+});
+
 // Delete Account
 app.delete('/api/account', authenticate, async (req, res) => {
     try {

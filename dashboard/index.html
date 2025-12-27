@@ -1,505 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Auth Logic -->
     <script type="module" src="/backend/js/auth.js"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - GoStudy!</title>
+    
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+    
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              primary: "#007AFF",
-              secondary: "#F5F5F7",
-              dark: "#1D1D1F",
+              primary: "#007AFF", // Apple Electric Blue
+              "primary-hover": "#0062cc",
+              bg: "#F5F5F7", // Apple Light Gray Background
+              surface: "#FFFFFF",
+              text: "#1D1D1F",
+              "text-secondary": "#86868B",
             },
             fontFamily: { sans: ["Inter", "sans-serif"] },
+            boxShadow: {
+              'soft': '0 4px 20px rgba(0, 0, 0, 0.03)',
+              'card': '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }
           },
         },
       };
     </script>
-    <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-    <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/assets/go-logo.png" />
-    <meta name="theme-color" content="#ffffff" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
     <style>
-      /* Hide scrollbar while keeping scroll functionality */
-      html {
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
+      /* Smooth scrolling & custom scrollbars */
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
-      html::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .glass-sidebar {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .animate-enter {
+        animation: enter 0.4s ease-out forwards;
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      @keyframes enter {
+        to { opacity: 1; transform: translateY(0); }
       }
     </style>
-    <link rel="stylesheet" href="/assets/css/navbar.css">
 </head>
-  <body class="bg-white text-dark font-sans antialiased relative min-h-screen">
-    
-    <!-- Background Decor -->
-    <div class="absolute top-0 left-0 right-0 h-[600px] pointer-events-none -z-10" style="background: radial-gradient(circle at 50% -20%, #e0e7ff 0%, #f3f4f6 60%, transparent 100%);"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-blue-400/10 blur-[100px] rounded-full -z-10"></div>
+<body class="bg-bg font-sans text-text h-screen flex overflow-hidden">
 
-    
-  <!-- navbar -->
-  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      
-      <!-- Logo -->
-      <a class="flex items-center gap-2 group" href="/index.html">
-        <div class="relative w-10 h-10 overflow-hidden rounded-xl">
-            <img src="/assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Logo">
-        </div>
-        <span class="font-bold text-xl tracking-tight text-dark">GoStudy!</span>
-      </a>
-
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-2">
-        
-        <!-- Products Dropdown -->
-        <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
-            Products
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
-          </button>
-          
-          <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
-            <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
-               
-               <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
-               <!-- Left Col -->
-               <div class="space-y-2">
-                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
-                  
-                  <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">psychology</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Active Recall</p>
-                        <p class="text-xs text-gray-500 mt-1">Science-backed testing method.</p>
-                    </div>
-                  </a>
-
-                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">monetization_on</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Pricing</p>
-                        <p class="text-xs text-gray-500 mt-1">Choose the plan that best fits your needs.</p>
-                    </div>
-                  </a>
-
-                  <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl text-purple-600">account_tree</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Memory Palace</p>
-                        <p class="text-xs text-gray-500 mt-1">AI-generated spatial maps.</p>
-                    </div>
-                  </a>
-               </div>
-
-               <!-- Right Col -->
-               <div class="flex flex-col h-full">
-                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Plans</h4>
-                  <a href="/pricing" class="block bg-dark rounded-2xl p-5 text-white flex-1 hover:shadow-lg transition-all group/card relative overflow-hidden">
-                      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
-                      <div class="relative z-10">
-                          <div class="flex justify-between items-start mb-4">
-                              <span class="bg-primary px-2 py-1 rounded text-[10px] font-bold">PRO</span>
-                              <span class="material-icons-round">arrow_forward</span>
-                          </div>
-                          <p class="font-bold text-lg mb-1">Upgrade your <br>Study Game</p>
-                          <p class="text-gray-400 text-xs">Unlock unlimited uploads and advanced spaced repetition.</p>
-                      </div>
-                  </a>
-               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Resources Dropdown -->
-        <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
-            Resources
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
-          </button>
-          
-           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
-                       <span class="material-icons-round">article</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">Articles & Guides</p>
-                       <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
-                   </div>
-               </a>
-               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">person_add</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Onboarding</p>
-                        <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
-                    </div>
-                  </a>
-               <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
-                       <span class="material-icons-round">family_restroom</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">For Parents</p>
-                       <p class="text-xs text-gray-500">How to support your student.</p>
-                   </div>
-               </a>
-               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
-                       <span class="material-icons-round">help</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">Help Center</p>
-                       <p class="text-xs text-gray-500">FAQs and Support.</p>
-                   </div>
-               </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Company Dropdown -->
-        <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
-            Company
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
-          </button>
-          
-           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="font-bold text-dark text-sm ml-2">About Us</span>
-               </a>
-               <a href="/contact/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="font-bold text-dark text-sm ml-2">Contact</span>
-               </a>
-               <hr class="border-gray-100 my-1 mx-2">
-               <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
-               </a>
-               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
-               </a>
-            </div>
-          </div>
-        </div>
-
-      </nav>
-
-      <!-- CTA & Mobile Toggle -->
-      <div class="flex items-center gap-4">
-        <a href="/login/" class="hidden md:inline-flex bg-dark hover:bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-black/5 hover:shadow-black/10 hover:-translate-y-0.5">
-            Launch App
-        </a>
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-dark">
-            <span class="material-icons-round text-2xl">menu</span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- mobile menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
-      <div class="flex justify-between items-center p-6 border-b border-gray-100">
-          <span class="font-bold text-xl text-dark">GoStudy!</span>
-          <button id="mobile-menu-close" class="p-2 text-dark">
-              <span class="material-icons-round text-2xl">close</span>
-          </button>
-      </div>
-      <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!--mobile links -->
-          <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
-              <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
-              <a href="/how-it-works/" class="block text-lg font-semibold text-dark">Memory Palace</a>
-              <a href="/pricing" class="block text-lg font-semibold text-dark">Pricing</a>
-          </div>
-          <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Resources</h4>
-              <a href="/articles/" class="block text-lg font-semibold text-dark">Articles</a>
-              <a href="/parents/" class="block text-lg font-semibold text-dark">For Parents</a>
-              <a href="#faq" class="block text-lg font-semibold text-dark">Help Center</a>
-          </div>
-           <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Company</h4>
-              <a href="/about/" class="block text-lg font-semibold text-dark">About</a>
-              <a href="/contact/" class="block text-lg font-semibold text-dark">Contact</a>
-          </div>
-      </div>
-      <div class="p-6 border-t border-gray-100">
-          <a href="/login/" class="block w-full text-center bg-primary text-white py-4 rounded-xl font-bold text-lg">Launch App</a>
-      </div>
-  </div>
-
-
-    <!-- MAIN -->
-    <main class="max-w-6xl mx-auto px-6 py-12 pt-40 pb-32">
-      <h1 class="text-3xl font-bold mb-2">My Library</h1>
-      <p class="text-gray-500 mb-8">Upload a document (Max 5MB) to generate a precision study plan.</p>
-
-      <!-- 1. UPLOAD BOX WITH DIFFICULTY SELECTOR -->
-      <div id="upload-section" class="bg-white border text-center transition-all p-12 rounded-[2rem] shadow-sm max-w-2xl mx-auto mt-20 mb-20 pb-20">
-        <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 mx-auto">
-          <span class="material-icons-round text-3xl">cloud_upload</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-3 tracking-tight">Upload study material</h3>
-        <p class="text-gray-500 mb-8 max-w-sm mx-auto">Choose your level and we'll build a custom manuscript for you.</p>
-
-        <!-- Difficulty Selector -->
-        <div class="flex flex-col items-center mb-10">
-          <label class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4">Academic Level</label>
-          <div id="difficulty-picker" class="inline-flex p-1.5 bg-secondary rounded-2xl border border-gray-100 shadow-inner">
-            <button type="button" data-level="Middle School" class="difficulty-btn px-5 py-2 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-dark">MIDDLE SCHOOL</button>
-            <button type="button" data-level="High School" class="difficulty-btn px-5 py-2 rounded-xl text-xs font-bold transition-all bg-white shadow-sm ring-1 ring-black/5 text-dark">HIGH SCHOOL</button>
-            <button type="button" data-level="University" class="difficulty-btn px-5 py-2 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-dark">UNIVERSITY</button>
-          </div>
-        </div>
-
-        <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt" />
-        <p id="validation-error" class="hidden text-red-500 text-sm font-bold mb-4"></p>
-
-        <button onclick="document.getElementById('file-input').click()" class="bg-primary text-white px-10 py-4 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-all hover:-translate-y-0.5 active:translate-y-0">
-          Select Document
-        </button>
-      </div>
-
-<!-- loading -->
-<div id="loading-section" class="hidden min-h-[400px] w-full max-w-2xl mx-auto border border-white/20 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center bg-white/70 backdrop-blur-2xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-500">
-  
-  <!-- Subtle Background Ambient Glow -->
-  <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -z-10"></div>
-  <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -z-10"></div>
-
-  <!-- Modern Spinner/Icon -->
-  <div class="relative mb-10">
-    <!-- Breathing Ring -->
-    <div class="absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-20"></div>
-    <div class="w-20 h-20 bg-white rounded-[22px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] border border-gray-100 flex items-center justify-center relative z-10">
-      <svg class="w-10 h-10 text-blue-600 animate-[spin_3s_linear_infinite]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2V6M12 18V22M6 12H2M22 12H18M19.07 4.93L16.24 7.76M7.76 16.24L4.93 19.07M19.07 19.07L16.24 16.24M7.76 7.76L4.93 4.93" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- Typography -->
-  <div class="space-y-2 mb-10">
-    <h3 id="loading-title" class="text-[28px] font-semibold tracking-[-0.02em] text-slate-900 transition-all duration-500">
-      Analyzing Document
-    </h3>
-    <p id="loading-subtext" class="text-[17px] text-slate-500 font-medium tracking-tight max-w-[280px] mx-auto leading-snug transition-all duration-500">
-      Our AI is extracting key insights to build your plan.
-    </p>
-  </div>
-
-  <!-- Apple-Style Progress Bar Container -->
-  <div class="w-full max-w-sm">
-    <div class="h-[6px] w-full bg-gray-200/50 rounded-full overflow-hidden relative backdrop-blur-sm">
-      <!-- The Actual Bar -->
-      <div id="loading-bar" 
-           class="h-full bg-[#0071e3] w-0 rounded-full transition-all duration-1000 ease-[cubic-bezier(0.65,0,0.35,1)] relative overflow-hidden"
-           style="box-shadow: 0 0 20px rgba(0, 113, 227, 0.4);">
-        <!-- Shimmer Effect -->
-        <div class="absolute inset-0 w-full h-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"></div>
-      </div>
-    </div>
-    
-    <!-- Meta Data -->
-    <div class="flex justify-between mt-4 px-1">
-      <span id="loading-status" class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">
-        Initializing...
-      </span>
-      <span id="loading-percent" class="text-[13px] font-semibold tabular-nums text-blue-600">
-        0%
-      </span>
-    </div>
-  </div>
-</div>
-
-<style>
-  @keyframes shimmer {
-    100% { transform: translateX(100%); }
-  }
-
-  /* Custom Bezier Curve for Apple-like smoothness */
-  .ease-apple {
-    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-</style>
-
-<script>
-  // Simple Logic to simulate the advanced loading states
-  let progress = 0;
-  const bar = document.getElementById('loading-bar');
-  const percentText = document.getElementById('loading-percent');
-  const title = document.getElementById('loading-title');
-  const status = document.getElementById('loading-status');
-  const subtext = document.getElementById('loading-subtext');
-
-  const states = [
-    { threshold: 0, title: "Analyzing Document", sub: "Reading text and structure...", status: "Parsing" },
-    { threshold: 35, title: "Understanding Context", sub: "Identifying core concepts and themes...", status: "Processing" },
-    { threshold: 70, title: "Building Your Plan", sub: "Optimizing the learning path for you...", status: "Generating" },
-    { threshold: 90, title: "Almost Ready", sub: "Finalizing your custom dashboard...", status: "Completing" }
-  ];
-
-  function simulateLoading() {
-    if (progress < 100) {
-      // Apple logic: Progress starts fast then slows down as it reaches the end
-      let increment = progress > 80 ? Math.random() * 1 : Math.random() * 3;
-      progress = Math.min(progress + increment, 100);
-      
-      bar.style.width = `${progress}%`;
-      percentText.innerText = `${Math.floor(progress)}%`;
-
-      // Update text based on progress
-      const currentState = [...states].reverse().find(s => progress >= s.threshold);
-      if (currentState && title.innerText !== currentState.title) {
-        title.innerText = currentState.title;
-        subtext.innerText = currentState.sub;
-        status.innerText = currentState.status;
-      }
-
-      setTimeout(simulateLoading, 150);
-    }
-  }
-
-  // To trigger: simulateLoading();
-</script>
-
-      <!-- 3. RESULTS AREA -->
-      <div id="results-section" class="hidden space-y-6 pt-10">
-        <div class="flex flex-col md:flex-row justify-between items-end border-b pb-6 mb-8 mt-12">
-          <div class="text-center md:text-left w-full">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-dark">Your <b>Personalized</b> <b class="text-primary">Study Guide</b></h1>
-            <p class="text-gray-500 max-w-xl">This manuscript will help you study faster, better and effortlessly.</p>
-          </div>
-          <div class="flex gap-3 mt-4 md:mt-0">
-            <button onclick="exportMarkdown()" class="flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-gray-50 text-sm font-medium transition-colors">
-              <span class="material-icons-round text-base">code</span> Markdown
-            </button>
-            <button onclick="exportPDF()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-dark text-white hover:bg-black text-sm font-medium transition-colors">
-              <span class="material-icons-round text-base">picture_as_pdf</span> PDF
-            </button>
-          </div>
-        </div>
-
-        <div id="printable-content" class="space-y-6">
-          <!-- Summary -->
-          <div class="bg-white p-8 rounded-[2rem] border border-gray-200 shadow-sm relative overflow-hidden group">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-12 h-12 bg-blue-100/50 rounded-xl flex items-center justify-center text-blue-600">
-                <span class="material-icons-round">school</span>
-              </div>
-              <h2 class="text-xl font-bold text-dark">Summary</h2>
-            </div>
-            <p id="result-summary" class="text-gray-600 leading-relaxed text-lg"></p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Quiz -->
-            <div class="bg-[#F7F7F8] p-8 rounded-[2rem] border border-gray-200/50 shadow-sm">
-              <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
-                    <span class="material-icons-round">quiz</span>
-                  </div>
-                  <h2 class="text-lg font-bold">Quiz</h2>
+    <!-- SIDEBAR -->
+    <aside class="w-72 glass-sidebar border-r border-gray-200 flex flex-col h-full flex-shrink-0 z-50">
+        <!-- Brand -->
+        <div class="h-20 flex items-center px-8">
+            <a href="/index.html" class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-lg shadow-blue-500/30">
+                     <span class="material-icons-round text-lg">school</span>
                 </div>
-                <button onclick="toggleAnswers()" class="text-xs font-bold bg-green-100 text-green-700 px-3 py-1.5 rounded-full hover:bg-green-200 transition-colors">
-                  See the Answers ->
+                <span class="font-bold text-lg tracking-tight text-slate-800">GoStudy!</span>
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto px-4 py-4 space-y-8">
+            
+            <!-- Main Group -->
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-primary font-semibold transition-all">
+                    <span class="material-icons-round text-xl">dashboard</span>
+                    <span class="text-sm">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-all">
+                    <span class="material-icons-round text-xl">folder_open</span>
+                    <span class="text-sm">My Files</span>
+                </a>
+            </nav>
+
+            <!-- Courses Group -->
+            <div>
+                <div class="flex justify-between items-center px-4 mb-3">
+                    <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Courses</h4>
+                </div>
+                <nav id="courses-list" class="space-y-1">
+                    <div class="px-4 text-xs text-gray-400">Loading courses...</div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Profile -->
+        <div class="p-4 border-t border-gray-100 bg-white/50">
+            <button class="flex items-center gap-3 p-2 w-full rounded-xl hover:bg-white hover:shadow-sm transition-all text-left">
+                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold overflow-hidden border border-white shadow-sm">
+                    <span id="sidebar-initials">G</span>
+                    <img id="sidebar-img" src="" class="w-full h-full object-cover hidden">
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <p id="sidebar-name" class="text-sm font-semibold text-gray-800 truncate">Guest User</p>
+                    <p class="text-xs text-gray-500">Free Plan</p>
+                </div>
+                <span class="material-icons-round text-gray-400">more_vert</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative"> 
+        
+        <!-- Top Bar -->
+        <header class="h-20 flex items-center justify-between px-10 flex-shrink-0 z-40">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Overview</h2>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <!-- Gamification Stats -->
+                <div id="stats-container" class="hidden md:flex items-center gap-6 bg-white px-5 py-2.5 rounded-full shadow-card border border-gray-100">
+                    <div class="flex items-center gap-2" title="Streak">
+                        <span class="material-icons-round text-orange-500 text-xl">local_fire_department</span>
+                        <span id="stat-streak" class="font-bold text-gray-700 text-sm">0</span>
+                    </div>
+                    <div class="h-4 w-px bg-gray-200"></div>
+                    <div class="flex items-center gap-2" title="Gems">
+                        <span class="material-icons-round text-blue-500 text-xl">diamond</span>
+                        <span id="stat-gems" class="font-bold text-gray-700 text-sm">0</span>
+                    </div>
+                </div>
+
+                <button class="relative w-10 h-10 rounded-full bg-white hover:bg-gray-50 border border-gray-200 flex items-center justify-center transition-all shadow-card text-gray-500">
+                    <span class="material-icons-round">notifications_none</span>
+                    <span class="absolute top-2.5 right-3 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                 </button>
-              </div>
-              <div id="result-quiz" class="space-y-1"></div>
             </div>
+        </header>
 
-            <!-- Schedule -->
-            <div class="bg-[#F7F7F8] p-8 rounded-[2rem] border border-gray-200/50 shadow-sm">
-              <div class="flex items-center gap-3 mb-6">
-                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600">
-                  <span class="material-icons-round">calendar_today</span>
+        <!-- Scrollable Canvas -->
+        <div class="flex-1 overflow-y-auto p-10 scroll-smooth">
+            <div class="max-w-6xl mx-auto pb-20">
+
+                <!-- 1. UPLOAD SECTION -->
+                <div id="upload-section" class="mb-12 animate-enter">
+                     <!-- Hero Banner -->
+                     <div class="text-center mb-10">
+                        <h1 class="text-4xl font-bold text-gray-900 mb-3 tracking-tight">What do you want to learn today?</h1>
+                        <p class="text-text-secondary text-lg">Upload your lecture notes, documents, or books.</p>
+                     </div>
+
+                     <div class="bg-surface rounded-3xl p-1 shadow-soft max-w-3xl mx-auto border border-gray-100">
+                        <div class="p-8 border-2 border-dashed border-gray-200 rounded-[20px] text-center hover:border-primary/50 hover:bg-blue-50/30 transition-all cursor-pointer group relative" onclick="document.getElementById('file-input').click()">
+                            
+                            <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt" />
+                            
+                            <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                                <span class="material-icons-round text-3xl">cloud_upload</span>
+                            </div>
+
+                            <p class="text-gray-900 font-semibold text-lg mb-2">Click to upload or drag and drop</p>
+                            <p class="text-gray-400 text-sm mb-8">PDF, DOCX, or TXT (Max 5MB)</p>
+
+                            <div class="flex justify-center gap-4">
+                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Auto-Summary</span>
+                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Quiz Generation</span>
+                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Concept Maps</span>
+                            </div>
+                        </div>
+                     </div>
+
+                     <!-- Difficulty Toggle -->
+                     <div class="mt-8 flex justify-center">
+                          <div class="inline-flex p-1.5 bg-white rounded-full shadow-card border border-gray-200">
+                            <button type="button" data-level="High School" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md">HIGH SCHOOL</button>
+                            <button type="button" data-level="University" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900">UNIVERSITY</button>
+                            <button type="button" data-level="Professional" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900">PRO</button>
+                          </div>
+                     </div>
+                     <p id="validation-error" class="hidden text-red-500 text-sm font-medium mt-4 text-center"></p>
                 </div>
-                <h2 class="text-lg font-bold">Plan</h2>
-              </div>
-              <div id="result-schedule" class="space-y-4"></div>
+
+                <!-- 2. LOADING STATE -->
+                <div id="loading-section" class="hidden min-h-[400px] flex-col items-center justify-center text-center animate-enter">
+                      <div class="relative w-24 h-24 mb-8">
+                          <div class="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
+                          <div class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                          <span class="material-icons-round absolute inset-0 flex items-center justify-center text-primary text-3xl animate-pulse">auto_awesome</span>
+                      </div>
+                      <h3 class="text-2xl font-bold text-gray-900 mb-2">Analyzing Content</h3>
+                      <p class="text-gray-500 text-sm mb-8 max-w-md mx-auto">Our AI is reading your document, extracting key concepts, and building your personalized memory palace...</p>
+                      
+                      <div class="w-64 bg-gray-100 rounded-full h-2 overflow-hidden mx-auto">
+                          <div id="loading-bar" class="h-full bg-primary w-0 rounded-full transition-all duration-500 ease-out"></div>
+                      </div>
+                      <p id="loading-percent" class="text-xs text-primary font-bold mt-3">0%</p>
+                </div>
+
+                <!-- 3. RESULTS DASHBOARD -->
+                <div id="results-section" class="hidden space-y-8 animate-enter">
+                    
+                    <!-- Actions Header -->
+                    <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
+                                <span class="material-icons-round">check_circle</span>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900">Study Plan Ready</h2>
+                                <p class="text-xs text-gray-500" id="file-name-display">Document Analysis</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="exportMarkdown()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium">
+                                <span class="material-icons-round text-sm">code</span> Markdown
+                            </button>
+                             <button onclick="exportPDF()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all text-sm font-medium">
+                                <span class="material-icons-round text-sm">download</span> Download PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Summary (Full Width) -->
+                        <div class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
+                             <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-yellow-100 text-yellow-700 p-1.5 rounded-lg"><span class="material-icons-round text-lg">lightbulb</span></span>
+                                <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Executive Summary</h3>
+                             </div>
+                             <p id="result-summary" class="text-gray-700 leading-relaxed text-lg font-medium"></p>
+                        </div>
+
+                        <!-- Concept Map (New Feature) -->
+                        <div class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
+                            <div class="flex items-center gap-2 mb-6">
+                               <span class="bg-purple-100 text-purple-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">hub</span></span>
+                               <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Concept Map</h3>
+                            </div>
+                            <div id="result-concepts" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Concepts injected here -->
+                            </div>
+                       </div>
+
+                        <!-- Active Recall Quiz -->
+                         <div class="lg:col-span-2 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100 flex flex-col">
+                             <div class="flex justify-between items-center mb-6">
+                                 <div class="flex items-center gap-2">
+                                     <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">quiz</span></span>
+                                     <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Active Recall</h3>
+                                 </div>
+                                 <button onclick="toggleAnswers()" class="text-xs font-bold text-primary bg-blue-50 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors">Show/Hide Answers</button>
+                             </div>
+                             <div id="result-quiz" class="space-y-4"></div>
+                        </div>
+
+                        <!-- Spaced Repetition Schedule -->
+                        <div class="lg:col-span-1 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
+                             <div class="flex items-center gap-2 mb-6">
+                                 <span class="bg-green-100 text-green-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">calendar_today</span></span>
+                                 <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Schedule</h3>
+                             </div>
+                             <!-- Timeline -->
+                             <div class="relative pl-4 border-l-2 border-gray-100 space-y-8" id="result-schedule">
+                                <!-- Items injected here -->
+                             </div>
+                        </div>
+
+                         <!-- Memory Palace -->
+                        <div class="lg:col-span-3 bg-gradient-to-br from-indigo-600 to-primary p-10 rounded-3xl shadow-xl text-white relative overflow-hidden">
+                             <!-- Decorative circles -->
+                             <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+                             <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-10 -mb-10 pointer-events-none"></div>
+                             
+                             <div class="relative z-10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="bg-white/20 p-2 rounded-xl backdrop-blur-sm"><span class="material-icons-round">psychology</span></span>
+                                    <h3 class="font-bold text-sm uppercase tracking-widest opacity-90">Memory Palace Technique</h3>
+                                </div>
+                                <p id="result-palace" class="text-xl md:text-2xl font-serif italic leading-relaxed text-white/95"></p>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="mt-20 text-center border-t border-gray-200 pt-8">
+                    <p class="text-gray-400 text-sm">Powered by GoStudy Intelligence &copy; 2025</p>
+                </div>
+
             </div>
-          </div>
-
-          <!-- Memory Palace -->
-          <div class="bg-[#333333] text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
-            <div class="flex items-center gap-4 mb-6 relative z-10">
-              <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                <span class="material-icons-round">psychology</span>
-              </div>
-              <h2 class="text-lg font-bold">Memory Palace</h2>
-            </div>
-            <p id="result-palace" class="text-gray-300 leading-relaxed relative z-10 text-lg"></p>
-          </div>
         </div>
-
-        <div id="methodology-badge-container" class="flex justify-center mt-12 mb-12"></div>
-      </div>
-
-  <!-- footer -->
-  <footer class="bg-white border-t border-gray-100 pt-24 pb-12">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-        <div class="col-span-1 md:col-span-2">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-6 block" href="/index.html">GoStudy!</a>
-          <p class="text-gray-500 leading-relaxed max-w-sm mb-8">
-            The intelligent study companion for high performers. We bridge the gap between information and mastery.
-          </p>
-        </div>
-        
-        <div>
-          <h4 class="font-bold text-dark mb-8 uppercase text-xs tracking-widest">Product</h4>
-          <ul class="space-y-4 text-sm text-gray-500 font-medium">
-            <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-            <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
-            <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
-            <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-dark mb-8 uppercase text-xs tracking-widest">Company</h4>
-          <ul class="space-y-4 text-sm text-gray-500 font-medium">
-            <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
-            <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
-            <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
-            <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="border-t border-gray-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy Inc. All rights reserved. Built for the future of education.</div>
-        <div class="flex gap-8">
-          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
     </main>
 
     <!-- LOGIC -->
@@ -507,11 +309,14 @@
       import { auth, API_BASE } from "/backend/js/auth.js";
 
       // --- CONFIG & STATE ---
-      const API_URL = `${API_BASE}/api/generate-plan`;
+      // Assuming server.js runs on port 3000 locally or via proxy
+      const ENDPOINT = `${API_BASE}/api/generate-plan`; 
+      
       let selectedDifficulty = "High School";
       let currentData = null;
       let answersVisible = false;
 
+      // DOM Elements
       const UI = {
         upload: document.getElementById("upload-section"),
         loading: document.getElementById("loading-section"),
@@ -520,188 +325,307 @@
         fileInput: document.getElementById("file-input"),
         bar: document.getElementById("loading-bar"),
         percent: document.getElementById("loading-percent"),
-        diffBtns: document.querySelectorAll(".difficulty-btn")
+        diffBtns: document.querySelectorAll(".difficulty-btn"),
+        courseList: document.getElementById('courses-list'),
+        stats: {
+          streak: document.getElementById('stat-streak'),
+          gems: document.getElementById('stat-gems')
+        },
+        profile: {
+          name: document.getElementById('sidebar-name'),
+          initials: document.getElementById('sidebar-initials'),
+          img: document.getElementById('sidebar-img')
+        },
+        filename: document.getElementById('file-name-display')
       };
 
-      // --- DIFFICULTY PICKER LOGIC ---
+      // --- INITIALIZATION ---
+      async function initDashboard() {
+        auth.onAuthStateChanged(user => {
+            if(user) {
+                // Update Sidebar Profile
+                UI.profile.name.innerText = user.displayName || user.email.split('@')[0];
+                if(user.photoURL) {
+                    UI.profile.img.src = user.photoURL;
+                    UI.profile.img.classList.remove('hidden');
+                    UI.profile.initials.classList.add('hidden');
+                } else {
+                     UI.profile.initials.innerText = (user.displayName || "U").charAt(0).toUpperCase();
+                }
+                loadBackendData();
+            } else {
+                // Redirect to login if needed, or show Guest state
+                console.log("User not logged in");
+            }
+        });
+      }
+
+      async function loadBackendData() {
+        if (!auth.currentUser) return;
+        const token = await auth.currentUser.getIdToken();
+        const headers = { 'Authorization': `Bearer ${token}` };
+
+        // 1. Fetch Mock Courses
+        try {
+            const res = await fetch(`${API_BASE}/api/courses`, { headers });
+            const courses = await res.json();
+            if(Array.isArray(courses)) {
+               UI.courseList.innerHTML = courses.map(c => `
+                  <a href="#" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-colors group">
+                        <div class="flex items-center gap-3">
+                             <div class="w-2 h-2 rounded-full ${c.progress > 0 ? 'bg-green-500' : 'bg-gray-300'}"></div>
+                             <span class="text-sm font-medium text-gray-600 group-hover:text-gray-900">${c.title}</span>
+                        </div>
+                        ${c.progress > 0 ? `<span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">${c.progress}%</span>` : ''}
+                  </a>
+               `).join('');
+            }
+        } catch(e) { console.error("Courses load error", e); }
+
+        // 2. Fetch Stats
+        try {
+            const res = await fetch(`${API_BASE}/api/stats`, { headers });
+            const stats = await res.json();
+            if(stats) {
+                if(UI.stats.streak) UI.stats.streak.innerText = stats.streak;
+                if(UI.stats.gems) UI.stats.gems.innerText = stats.gems;
+            }
+        } catch(e) { console.error("Stats load error", e); }
+      }
+
+      initDashboard();
+
+      // --- DIFFICULTY TOGGLE ---
       UI.diffBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+          // Reset styles
           UI.diffBtns.forEach(b => {
-            b.classList.remove('bg-white', 'shadow-sm', 'ring-1', 'ring-black/5', 'text-dark');
-            b.classList.add('text-gray-400', 'hover:text-dark');
+             b.className = "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900";
           });
-          btn.classList.add('bg-white', 'shadow-sm', 'ring-1', 'ring-black/5', 'text-dark');
-          btn.classList.remove('text-gray-400', 'hover:text-dark');
+          // Set active style (Apple dark button)
+          btn.className = "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md";
           selectedDifficulty = btn.getAttribute('data-level');
         });
       });
 
-      // --- API SERVICE ---
-      const StudyAPI = {
-        async generatePlan(file, difficulty) {
+      // --- UPLOAD HANDLER ---
+      UI.fileInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validation
+        UI.error.classList.add("hidden");
+        if (file.size > 5 * 1024 * 1024) {
+          UI.error.textContent = "File is too large. Max 5MB.";
+          UI.error.classList.remove("hidden");
+          return;
+        }
+
+        UI.filename.innerText = file.name;
+
+        // Switch View
+        UI.upload.classList.add("hidden");
+        UI.loading.classList.remove("hidden");
+        UI.loading.style.display = "flex";
+        
+        // Simulated Progress Bar
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+          if (progress < 90) {
+            progress += Math.random() * 3;
+            const display = Math.min(Math.round(progress), 95);
+            UI.bar.style.width = `${display}%`;
+            UI.percent.textContent = `${display}%`;
+          }
+        }, 400);
+
+        try {
+           const headers = {};
+           if (auth.currentUser) {
+             const token = await auth.currentUser.getIdToken();
+             headers['Authorization'] = `Bearer ${token}`;
+           }
+
           const formData = new FormData();
           formData.append("document", file);
-          formData.append("difficulty", difficulty);
+          // Note: Backend server.js in prompt doesn't strictly use 'difficulty' field in body 
+          // but we send it anyway if logic is expanded later. The prompt text sent to Perplexity handles difficulty.
+          formData.append("difficulty", selectedDifficulty);
 
-          const headers = {};
-          if (auth.currentUser) {
-            const token = await auth.currentUser.getIdToken();
-            headers['Authorization'] = `Bearer ${token}`;
-          }
-
-          const response = await fetch(API_URL, {
+          const response = await fetch(ENDPOINT, {
             method: "POST",
             body: formData,
             headers: headers
           });
 
           if (!response.ok) {
-            const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error || `Server Error: ${response.status}`);
+             const errData = await response.json().catch(() => ({}));
+             throw new Error(errData.error || errData.message || `Server Error: ${response.status}`);
           }
-          return await response.json();
-        }
-      };
 
-      // --- MAIN HANDLER ---
-      UI.fileInput.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        UI.error.classList.add("hidden");
-        if (file.size > 5 * 1024 * 1024) {
-          showError(`File is too large. Maximum size is 5MB.`);
-          return;
-        }
-
-        // UI Transition
-        UI.upload.style.display = "none";
-        UI.loading.classList.remove("hidden");
-        UI.loading.style.display = "flex";
-
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-          if (progress < 90) {
-            progress += Math.random() * 2;
-            const display = Math.min(Math.round(progress), 90);
-            UI.bar.style.width = `${display}%`;
-            UI.percent.textContent = `${display}%`;
-          }
-        }, 500);
-
-        try {
-          const data = await StudyAPI.generatePlan(file, selectedDifficulty);
+          const data = await response.json();
+          
           clearInterval(progressInterval);
           UI.bar.style.width = "100%";
           UI.percent.textContent = "100%";
-          renderDashboard(data);
+          
+          setTimeout(() => {
+             renderDashboard(data);
+          }, 800);
+
         } catch (err) {
           clearInterval(progressInterval);
-          handleError(err);
+          UI.loading.innerHTML = `
+            <div class="text-red-500 p-8 text-center bg-white rounded-3xl shadow-soft">
+              <span class="material-icons-round text-5xl mb-4">error_outline</span>
+              <h3 class="text-xl font-bold text-gray-900">Analysis Failed</h3>
+              <p class="mt-2 mb-6 text-sm text-gray-500 max-w-sm mx-auto">${err.message}</p>
+              <button onclick="location.reload()" class="bg-gray-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-gray-800 transition-colors">Try Again</button>
+            </div>
+          `;
         }
       });
 
-      function showError(msg) {
-        UI.error.textContent = msg;
-        UI.error.classList.remove("hidden");
-      }
-
-      function handleError(err) {
-        UI.loading.innerHTML = `
-          <div class="text-red-500 p-8">
-            <h3 class="text-xl font-bold">Analysis Failed</h3>
-            <p class="mt-2 mb-4 text-sm">${err.message}</p>
-            <button onclick="location.reload()" class="bg-gray-200 px-4 py-2 rounded font-bold hover:bg-gray-300 text-dark transition-colors">Try Again</button>
-          </div>
-        `;
-      }
-
-      // --- RENDERING FUNCTIONS ---
+      // --- RENDERING LOGIC ---
       function renderDashboard(data) {
         currentData = data;
         UI.loading.style.display = "none";
-        UI.results.style.display = "block";
         UI.results.classList.remove("hidden");
+        UI.results.style.display = "block";
 
-        document.getElementById("result-summary").innerText = data.summary || "No summary available.";
-        document.getElementById("result-palace").innerText = data.memory_palace || "No memory palace available.";
+        // 1. Summary
+        document.getElementById("result-summary").innerText = data.summary || "No summary generated.";
+        
+        // 2. Memory Palace
+        document.getElementById("result-palace").innerText = data.memory_palace || "No mnemonic generated.";
 
+        // 3. Active Recall (Handles difficulty_rating)
         const quizDiv = document.getElementById("result-quiz");
         quizDiv.innerHTML = "";
         if (data.active_recall?.length) {
           data.active_recall.forEach((q, i) => {
+            // Generate Stars
+            const stars = Array(5).fill(0).map((_, idx) => 
+                idx < q.difficulty_rating 
+                ? '<span class="material-icons-round text-[10px] text-yellow-400">star</span>' 
+                : '<span class="material-icons-round text-[10px] text-gray-300">star</span>'
+            ).join('');
+
             const div = document.createElement("div");
-            div.className = "mb-4 pb-1";
+            div.className = "bg-gray-50 p-5 rounded-2xl border border-gray-100 hover:shadow-md transition-shadow";
             div.innerHTML = `
-              <p class="font-semibold text-gray-800 mb-1 leading-snug"><span class="text-green-600 font-bold mr-2">${i+1}.</span> ${q.question}</p>
-              <p class="quiz-answer text-sm text-gray-500 font-medium ml-6 opacity-0 h-0 overflow-hidden transition-all duration-300 ease-out">${q.answer}</p>
+              <div class="flex justify-between items-start mb-2">
+                 <span class="bg-blue-100 text-blue-600 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${i+1}</span>
+                 <div class="flex gap-0.5" title="Difficulty: ${q.difficulty_rating}/5">${stars}</div>
+              </div>
+              <p class="font-semibold text-gray-800 mb-3 text-sm">${q.question}</p>
+              <div class="quiz-answer hidden p-3 bg-white rounded-xl text-sm text-gray-600 border-l-4 border-green-500 shadow-sm">
+                 <span class="font-bold text-green-600 block text-xs mb-1">ANSWER</span>
+                 ${q.answer}
+              </div>
             `;
             quizDiv.appendChild(div);
           });
         }
 
+        // 4. Spaced Repetition (Handles hint)
         const schedDiv = document.getElementById("result-schedule");
         schedDiv.innerHTML = "";
         if (data.spaced_repetition?.length) {
           data.spaced_repetition.forEach(s => {
             const div = document.createElement("div");
-            div.className = "flex gap-4 mb-4 items-start";
+            div.className = "relative flex items-start gap-4 pb-2 group";
             div.innerHTML = `
-              <span class="bg-orange-100/80 text-orange-600 text-[10px] font-extrabold px-2 py-1 rounded-md min-w-[50px] text-center uppercase tracking-wide mt-0.5">${s.day}</span>
-              <span class="text-sm text-gray-600 font-medium leading-relaxed">${s.topic}</span>
+              <div class="absolute -left-[23px] top-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm z-10"></div>
+              <div class="flex-1">
+                  <div class="flex justify-between items-center mb-1">
+                      <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${s.day}</span>
+                  </div>
+                  <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                      <p class="text-sm font-medium text-gray-800">${s.topic}</p>
+                      ${s.hint ? `<p class="mt-2 text-xs text-indigo-500 bg-indigo-50 inline-block px-2 py-1 rounded">💡 Hint: ${s.hint}</p>` : ''}
+                  </div>
+              </div>
             `;
             schedDiv.appendChild(div);
           });
         }
 
-        renderBadge(data);
-        UI.results.scrollIntoView({ behavior: "smooth" });
+        // 5. Concept Map (New Backend Feature)
+        const conceptsDiv = document.getElementById("result-concepts");
+        conceptsDiv.innerHTML = "";
+        if (data.concept_map?.length) {
+            data.concept_map.forEach(c => {
+                const div = document.createElement("div");
+                div.className = "bg-white p-4 rounded-2xl border border-gray-100 shadow-sm";
+                
+                // Relations tags
+                const relationsHtml = c.related_to.map(r => 
+                    `<span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-md border border-gray-200">${r}</span>`
+                ).join('');
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                        <h4 class="font-bold text-gray-800 text-sm">${c.concept}</h4>
+                    </div>
+                    <p class="text-xs text-gray-400 italic mb-2">${c.relationship_type}</p>
+                    <div class="flex flex-wrap gap-1">
+                        ${relationsHtml}
+                    </div>
+                `;
+                conceptsDiv.appendChild(div);
+            });
+        }
+
+        // Auto scroll
+        setTimeout(() => UI.results.scrollIntoView({ behavior: "smooth" }), 100);
       }
 
-      // --- HELPERS (Exports & Toggles) ---
+      // --- EXPORTS & UTILS ---
       window.toggleAnswers = function() {
         answersVisible = !answersVisible;
         document.querySelectorAll(".quiz-answer").forEach(a => {
-          if (answersVisible) a.classList.remove("opacity-0", "h-0", "overflow-hidden");
-          else a.classList.add("opacity-0", "h-0", "overflow-hidden");
+           if(answersVisible) {
+               a.classList.remove('hidden');
+               a.classList.add('block'); // ensure block display
+           } else {
+               a.classList.add('hidden');
+               a.classList.remove('block');
+           }
         });
       };
 
       window.exportMarkdown = function() {
         if (!currentData) return;
-        const md = `# Study Plan (${selectedDifficulty})\n\n## Summary\n${currentData.summary}...`;
+        let md = `# Study Plan: ${UI.filename.innerText}\n\n`;
+        md += `## Summary\n${currentData.summary}\n\n`;
+        
+        md += `## Active Recall\n`;
+        currentData.active_recall.forEach(q => {
+            md += `- **Q:** ${q.question} (Diff: ${q.difficulty_rating}/5)\n  **A:** ${q.answer}\n`;
+        });
+
+        md += `\n## Memory Palace\n${currentData.memory_palace}\n`;
+
         const blob = new Blob([md], { type: "text/markdown" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url; a.download = `study-plan-${selectedDifficulty.toLowerCase()}.md`;
+        a.href = url; a.download = `StudyPlan.md`;
         a.click();
       };
-
+      
       window.exportPDF = function() {
-        const element = document.getElementById("results-section");
-        html2pdf().set({ margin: 0.5, filename: "study-plan.pdf", html2canvas: { scale: 2 } }).from(element).save();
+         const element = document.getElementById("results-section");
+         const opt = {
+           margin:       0.3,
+           filename:     'GoStudy-Plan.pdf',
+           image:        { type: 'jpeg', quality: 0.98 },
+           html2canvas:  { scale: 2, useCORS: true },
+           jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+         };
+         html2pdf().set(opt).from(element).save();
       };
-
-      function renderBadge(data) {
-        const text = (data.summary + " " + (data.active_recall?.[0]?.question || "")).toLowerCase();
-        let config = { icon: "verified", bg: "bg-blue-50/50", text: "text-blue-700", label: "Scientifically Optimized" };
-        
-        if (text.match(/biology|cell|physics|chemistry|science/)) config = { icon: "biotech", bg: "bg-emerald-50/80", text: "text-emerald-700", label: "Science-Verified" };
-        
-        document.getElementById("methodology-badge-container").innerHTML = `
-          <div class="group relative">
-            <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-2xl blur opacity-25"></div>
-            <div class="${config.bg} border-2 border-white/50 px-10 py-6 rounded-2xl text-center relative flex flex-col items-center gap-3 backdrop-blur-sm">
-              <div class="flex items-center gap-2">
-                <span class="material-icons-round ${config.text} text-3xl">${config.icon}</span>
-                <span class="font-black ${config.text} tracking-tighter text-lg uppercase">${config.label}</span>
-              </div>
-              <p class="text-gray-500 text-xs font-bold uppercase tracking-widest">Level: ${selectedDifficulty}</p>
-            </div>
-          </div>
-        `;
-      }
     </script>
-    <script src="/assets/js/navbar.js"></script>
 </body>
 </html>
