@@ -494,9 +494,13 @@
                   headers: { 'Authorization': `Bearer ${token}` }
               });
               
+              if (!response.ok) {
+                  throw new Error(`Server returned ${response.status}`);
+              }
+
               const history = await response.json();
               
-              if (history.length === 0) {
+              if (!Array.isArray(history) || history.length === 0) {
                   UI.historyList.innerHTML = "";
                   UI.historyEmpty.classList.remove('hidden');
                   return;
@@ -506,20 +510,22 @@
               history.forEach(item => {
                   const date = new Date(item.createdAt?._seconds * 1000 || item.createdAt).toLocaleDateString();
                   const card = document.createElement('div');
-                  card.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-soft hover:shadow-md transition-all group";
+                  card.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-soft hover:shadow-lg hover:border-primary/20 transition-all group cursor-pointer relative flex flex-col h-full";
                   card.innerHTML = `
                       <div class="flex items-start justify-between mb-4">
-                          <div class="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center">
+                          <div class="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                               <span class="material-icons-round">description</span>
                           </div>
-                          <button onclick="deletePlan('${item.id}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
+                          <button onclick="event.stopPropagation(); deletePlan('${item.id}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100 relative z-10">
                               <span class="material-icons-round text-lg">delete_outline</span>
                           </button>
                       </div>
-                      <h4 class="font-bold text-gray-900 mb-1 truncate" title="${item.fileName}">${item.fileName}</h4>
-                      <p class="text-xs text-gray-400 mb-6">${date}</p>
+                      <div class="flex-1" onclick="viewPlan('${item.id}')">
+                          <h4 class="font-bold text-gray-900 mb-1 truncate pr-8" title="${item.fileName}">${item.fileName}</h4>
+                          <p class="text-xs text-gray-400 mb-6">${date}</p>
+                      </div>
                       <button onclick="viewPlan('${item.id}')" class="w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-bold hover:bg-primary transition-all shadow-sm">
-                          View Study Plan
+                          Open Study Plan
                       </button>
                   `;
                   UI.historyList.appendChild(card);

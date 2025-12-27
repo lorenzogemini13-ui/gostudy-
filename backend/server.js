@@ -357,7 +357,7 @@ app.get('/api/generations', authenticate, async (req, res) => {
         const snapshot = await db.collection('generations')
             .where('userId', '==', req.user.uid)
             .orderBy('createdAt', 'desc')
-            .limit(20)
+            .limit(100)
             .get();
 
         const generations = [];
