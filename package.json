@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "start": "node backend/server.js"
   },
   "keywords": [],
@@ -20,4 +21,5 @@
     "multer": "^2.0.2",
     "pdf-parse": "^1.1.1"
   }
+
 }
