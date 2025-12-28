@@ -1,164 +1,228 @@
-
+// Articles data for GoStudy! blog
 export const articles = [
   {
     id: 1,
-    title: "The Forgetting Curve: Why You Lose 80% of What You Read",
+    title: "The Science of Active Recall: Why Testing Yourself Beats Re-Reading",
     category: "Science",
-    date: "Oct 12, 2025",
-    author: "Dr. Hermann Ebbinghaus",
-    readingTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=800&q=80",
-    intro: "Hermann Ebbinghaus discovered that memory decay is exponential. Here is the mathematical formula to stop it.",
+    author: "Dr. Sarah Chen",
+    date: "Dec 20, 2024",
+    readingTime: "8 min read",
+    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80",
+    intro: "Discover why actively retrieving information from memory is one of the most powerful learning techniques backed by decades of cognitive science research.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">The Mathematics of Memory</h3>
-      <p class="mb-4">In 1885, Hermann Ebbinghaus hypothesized that the speed of forgetting depends on a number of factors such as the difficulty of the learned material (e.g., how meaningful it is), its representation, and physiological factors such as stress and sleep. He concluded that the difference between the difficulty of the material significantly affects the speed of forgetting.</p>
+      <h3>What is Active Recall?</h3>
+      <p>Active recall is a learning strategy where you actively stimulate your memory during the learning process. Instead of passively reviewing notes, you test yourself on the material, forcing your brain to retrieve information.</p>
       
-      <h3 class="text-2xl font-bold mb-4">How to Beat the Curve</h3>
-      <p class="mb-4">The best way to combat the forgetting curve is through <strong>Spaced Repetition</strong>. By reviewing information at increasing intervals, you can flatten the curve and retain information for much longer.</p>
+      <h3>The Research Behind It</h3>
+      <p>Studies from institutions like Harvard and MIT have consistently shown that students who use active recall retain 50-70% more information compared to those who only re-read their notes. This phenomenon is known as the "testing effect."</p>
       
-      <ul class="list-disc pl-6 mb-6 space-y-2">
-        <li><strong>Review 1:</strong> Immediately after learning (100% retention)</li>
-        <li><strong>Review 2:</strong> 24 hours later</li>
-        <li><strong>Review 3:</strong> 1 week later</li>
-        <li><strong>Review 4:</strong> 1 month later</li>
+      <h3>How to Practice Active Recall</h3>
+      <ul>
+        <li>Close your notes and try to write down everything you remember</li>
+        <li>Use flashcards to test yourself regularly</li>
+        <li>Teach the concept to someone else without looking at your materials</li>
+        <li>Take practice tests before the actual exam</li>
       </ul>
-
-      <p class="mb-4">This technique forces your brain to reconstruct the memory, strengthening the neural pathways associated with it.</p>
+      
+      <h3>Why It Works</h3>
+      <p>When you struggle to retrieve information, you strengthen the neural pathways associated with that memory. This makes the information easier to access in the future, especially under pressure during exams.</p>
     `
   },
   {
     id: 2,
-    title: "Active Recall: The High-Performance Student's Secret",
+    title: "Building Your Memory Palace: A Step-by-Step Guide",
     category: "Technique",
-    date: "Oct 08, 2025",
-    author: "Ali Abdaal",
-    readingTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
-    intro: "Stop highlighting. It feels like work, but it's not learning. Discover why testing yourself is 3x more effective.",
+    author: "Marco Benedetti",
+    date: "Dec 18, 2024",
+    readingTime: "12 min read",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    intro: "Learn the ancient technique used by memory champions to memorize thousands of data points using spatial visualization.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">The Illusion of Competence</h3>
-      <p class="mb-4">When you re-read a textbook or highlight passages, you are recognizing information, not retrieving it. This creates an illusion of competence. You feel like you know it because the text looks familiar.</p>
-
-      <h3 class="text-2xl font-bold mb-4">What is Active Recall?</h3>
-      <p class="mb-4">Active recall involves closing the book and asking yourself, "What did I just read?" It requires effort. That cognitive strain is exactly what signals your brain that this information is important.</p>
-
-      <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500 mb-6">
-        <p class="italic text-blue-800">"The more effort it takes to retrieve a memory, the more that retrieval strengthens the memory."</p>
-      </div>
-
-      <h3 class="text-2xl font-bold mb-4">Implementation Strategies</h3>
-      <ol class="list-decimal pl-6 mb-6 space-y-2">
-        <li><strong>The SQ3R Method:</strong> Survey, Question, Read, Recite, Review.</li>
-        <li><strong>Flashcards:</strong> Use tools like Anki to automate the process.</li>
-        <li><strong>The Feynman Technique:</strong> Try to explain the concept to a 5-year-old.</li>
-      </ol>
+      <h3>The Ancient Art of Memory</h3>
+      <p>The Memory Palace technique, also known as the Method of Loci, dates back to ancient Greece. It leverages our brain's exceptional ability to remember spatial information and locations.</p>
+      
+      <h3>Choosing Your Palace</h3>
+      <p>Select a place you know intimately—your home, school, or a familiar route. The key is having a clear mental image of the space and being able to navigate it in your mind.</p>
+      
+      <h3>Placing Your Memories</h3>
+      <ul>
+        <li>Walk through your palace mentally and identify distinct locations</li>
+        <li>Associate each piece of information with a specific spot</li>
+        <li>Create vivid, unusual mental images for each association</li>
+        <li>Review by mentally walking through your palace</li>
+      </ul>
+      
+      <h3>Advanced Techniques</h3>
+      <p>As you master the basics, you can create multiple palaces for different subjects or chain them together for larger amounts of information.</p>
     `
   },
   {
     id: 3,
-    title: "Deep Work: Rules for Focused Success",
+    title: "The Pomodoro Technique: Maximizing Focus in 25-Minute Bursts",
     category: "Productivity",
-    date: "Sep 29, 2025",
-    author: "Cal Newport",
-    readingTime: "10 min read",
-    image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=800&q=80",
-    intro: "In a distracted world, the ability to focus without distraction is a superpower. Here is how to cultivate it.",
+    author: "Lisa Park",
+    date: "Dec 15, 2024",
+    readingTime: "6 min read",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
+    intro: "Why working in focused intervals with regular breaks can dramatically improve your concentration and output.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">The Shallow Work Epidemic</h3>
-      <p class="mb-4">Most people spend their days in a state of "continuous partial attention." Checking emails, Slack messages, and notifications every 10 minutes prevents you from entering a flow state.</p>
-
-      <h3 class="text-2xl font-bold mb-4">The 4 Rules of Deep Work</h3>
-      <p class="mb-4">Deep work is the ability to focus without distraction on a cognitively demanding task. It's a skill that allows you to quickly master complicated information and produce better results in less time.</p>
-
-      <ul class="list-disc pl-6 mb-6 space-y-2">
-        <li><strong>Rule 1:</strong> Work Deeply. Schedule 90-minute blocks of uninterrupted time.</li>
-        <li><strong>Rule 2:</strong> Embrace Boredom. Don't pull out your phone the moment you're waiting in line.</li>
-        <li><strong>Rule 3:</strong> Quit Social Media. Unless it's vital for your career, it's a net negative.</li>
-        <li><strong>Rule 4:</strong> Drain the Shallows. Minimize logistical/admin work.</li>
+      <h3>What is the Pomodoro Technique?</h3>
+      <p>Developed by Francesco Cirillo in the late 1980s, the Pomodoro Technique divides work into 25-minute focused sessions (called "pomodoros") separated by short breaks.</p>
+      
+      <h3>The Basic Framework</h3>
+      <ul>
+        <li>Choose a task to work on</li>
+        <li>Set a timer for 25 minutes</li>
+        <li>Work with full focus until the timer rings</li>
+        <li>Take a 5-minute break</li>
+        <li>After 4 pomodoros, take a longer 15-30 minute break</li>
       </ul>
+      
+      <h3>Why It Works</h3>
+      <p>The technique combats two enemies of productivity: the inability to start (by making tasks seem manageable) and the inability to stop (by enforcing breaks that prevent burnout).</p>
+      
+      <h3>Adapting for Your Needs</h3>
+      <p>While 25 minutes is the standard, some people find 50-minute or 90-minute sessions more effective. Experiment to find your optimal focus duration.</p>
     `
   },
   {
     id: 4,
-    title: "Exam Anxiety is Biological: How to Hack It",
+    title: "Managing Exam Anxiety: Techniques That Actually Work",
     category: "Mental Health",
-    date: "Sep 15, 2025",
-    author: "Dr. Andrew Huberman",
-    readingTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&w=800&q=80",
-    intro: "Your cortisol levels spike before a test. Here are 3 breathing exercises to hijack your nervous system immediately.",
+    author: "Dr. James Wilson",
+    date: "Dec 12, 2024",
+    readingTime: "10 min read",
+    image: "https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=800&q=80",
+    intro: "Evidence-based strategies to calm your nerves and perform at your best when it matters most.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">The Sympathetic Nervous System</h3>
-      <p class="mb-4">When you're anxious, your body enters "fight or flight" mode. Blood leaves your prefrontal cortex (responsible for logic) and goes to your muscles. This is why you "blank out" during exams.</p>
-
-      <h3 class="text-2xl font-bold mb-4">The Physiological Sigh</h3>
-      <p class="mb-4">This is the fastest way to reduce autonomic arousal in real-time. It offloads carbon dioxide and slows the heart rate.</p>
-
-      <div class="bg-gray-100 p-6 rounded-xl mb-6">
-        <h4 class="font-bold mb-2">How to do it:</h4>
-        <ol class="list-decimal pl-6 space-y-1">
-          <li>Two short inhales through the nose (fully inflate the lungs).</li>
-          <li>One long exhale through the mouth (until lungs are empty).</li>
-          <li>Repeat 2-3 times.</li>
-        </ol>
-      </div>
-
-      <p class="mb-4">Use this whenever you feel your heart racing before or during a study session.</p>
+      <h3>Understanding Exam Anxiety</h3>
+      <p>Some nervousness before an exam is normal and can actually improve performance. However, excessive anxiety can impair memory recall and cognitive function.</p>
+      
+      <h3>Breathing Techniques</h3>
+      <p>The 4-7-8 breathing technique can quickly activate your parasympathetic nervous system: breathe in for 4 seconds, hold for 7 seconds, exhale for 8 seconds. Repeat 4 times.</p>
+      
+      <h3>Reframing Your Thoughts</h3>
+      <ul>
+        <li>Replace "I'm going to fail" with "I've prepared, and I'll do my best"</li>
+        <li>View anxiety symptoms as excitement rather than fear</li>
+        <li>Focus on the process, not the outcome</li>
+      </ul>
+      
+      <h3>Physical Preparation</h3>
+      <p>Sleep, exercise, and nutrition play crucial roles in managing anxiety. Ensure you get adequate rest the week before major exams, not just the night before.</p>
     `
   },
   {
     id: 5,
-    title: "The Feynman Technique: Master Any Subject",
-    category: "Technique",
-    date: "Sep 01, 2025",
-    author: "Richard Feynman",
-    readingTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80",
-    intro: "If you can't explain it simply, you don't understand it well enough. The ultimate mental model for learning.",
+    title: "Spaced Repetition: The Optimal Learning Schedule",
+    category: "Science",
+    author: "Dr. Sarah Chen",
+    date: "Dec 10, 2024",
+    readingTime: "9 min read",
+    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80",
+    intro: "How reviewing information at strategically spaced intervals can dramatically improve long-term retention.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">Complexity is the Enemy</h3>
-      <p class="mb-4">Richard Feynman, a Nobel prize-winning physicist, was known as the "Great Explainer." He believed that jargon often hides a lack of understanding.</p>
-
-      <h3 class="text-2xl font-bold mb-4">The 4 Steps</h3>
-      <ol class="list-decimal pl-6 mb-6 space-y-4">
-        <li>
-          <strong>Choose a Concept:</strong> Write the name of the concept at the top of a blank sheet of paper.
-        </li>
-        <li>
-          <strong>Teach it to a Child:</strong> Write an explanation in simple language. Avoid technical terms. Use analogies.
-        </li>
-        <li>
-          <strong>Identify Gaps:</strong> If you get stuck, go back to the source material. This is where the learning happens.
-        </li>
-        <li>
-          <strong>Simplify and Organize:</strong> Streamline your explanation and create a narrative.
-        </li>
-      </ol>
+      <h3>The Forgetting Curve</h3>
+      <p>Without review, we forget approximately 70% of new information within 24 hours. Spaced repetition combats this by timing reviews at optimal intervals.</p>
+      
+      <h3>The Science of Spacing</h3>
+      <p>Research shows that spreading practice over time leads to better retention than cramming. This is because each retrieval session strengthens the memory trace.</p>
+      
+      <h3>Optimal Review Intervals</h3>
+      <ul>
+        <li>First review: 1 day after learning</li>
+        <li>Second review: 3 days after first review</li>
+        <li>Third review: 7 days after second review</li>
+        <li>Fourth review: 21 days after third review</li>
+      </ul>
+      
+      <h3>Using Technology</h3>
+      <p>Apps like Anki and GoStudy! use algorithms to calculate optimal review times based on your performance, making spaced repetition effortless to implement.</p>
     `
   },
   {
     id: 6,
-    title: "Dopamine Detox: Reset Your Focus",
-    category: "Productivity",
-    date: "Aug 20, 2025",
-    author: "Dr. Anna Lembke",
-    readingTime: "12 min read",
-    image: "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?auto=format&fit=crop&w=800&q=80",
-    intro: "Why you can't stop scrolling and how to reset your brain's reward system for maximum motivation.",
+    title: "The Cornell Note-Taking System Explained",
+    category: "Technique",
+    author: "Prof. Emily Rhodes",
+    date: "Dec 8, 2024",
+    readingTime: "7 min read",
+    image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80",
+    intro: "A structured approach to note-taking that enhances comprehension and makes review more effective.",
     content: `
-      <h3 class="text-2xl font-bold mb-4">The Pleasure-Pain Balance</h3>
-      <p class="mb-4">In her book <em>Dopamine Nation</em>, Dr. Lembke explains that pleasure and pain are processed in the same part of the brain and work like a balance.</p>
+      <h3>The Layout</h3>
+      <p>Divide your page into three sections: a narrow left column for cues, a wide right column for notes, and a bottom section for summary.</p>
       
-      <p class="mb-4">When you over-indulge in high-dopamine activities (social media, video games, sugar), the balance tips to the side of pleasure. But the brain constantly seeks homeostasis, so it tips the balance hard to the side of pain (boredom, anxiety, lack of motivation) to compensate.</p>
-
-      <h3 class="text-2xl font-bold mb-4">How to Reset</h3>
-      <ul class="list-disc pl-6 mb-6 space-y-2">
-        <li><strong>The 30-Day Reset:</strong> Abstain from your drug of choice for 4 weeks.</li>
-        <li><strong>Self-Binding:</strong> Create physical barriers between you and the temptation.</li>
-        <li><strong>Honest Truth:</strong> Stop lying to yourself about your consumption habits.</li>
+      <h3>How to Use It</h3>
+      <ul>
+        <li>During class: Take notes in the right column</li>
+        <li>After class: Add questions and keywords in the left column</li>
+        <li>Review: Cover the notes and use cues to test yourself</li>
+        <li>Summarize: Write a brief summary at the bottom</li>
       </ul>
       
-      <p>After the reset, you will find that "boring" tasks like studying become more interesting because your baseline dopamine levels have restored.</p>
+      <h3>Why It Works</h3>
+      <p>The Cornell System combines note-taking with built-in active recall practice. The cue column naturally creates a self-testing system.</p>
+      
+      <h3>Digital Adaptation</h3>
+      <p>Many note-taking apps now offer Cornell templates, making it easy to implement this system on tablets and computers.</p>
+    `
+  },
+  {
+    id: 7,
+    title: "Morning Routines of Straight-A Students",
+    category: "Productivity",
+    author: "Alex Turner",
+    date: "Dec 5, 2024",
+    readingTime: "8 min read",
+    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
+    intro: "How top performers structure their mornings to maximize learning potential throughout the day.",
+    content: `
+      <h3>The Power of Consistency</h3>
+      <p>High performers often share one trait: consistent morning routines. These routines reduce decision fatigue and set a productive tone for the day.</p>
+      
+      <h3>Common Elements</h3>
+      <ul>
+        <li>Waking at the same time each day (even weekends)</li>
+        <li>Avoiding phone/social media for the first hour</li>
+        <li>Brief exercise or movement (even 10 minutes helps)</li>
+        <li>Review of daily goals and priorities</li>
+        <li>Tackling the most challenging task first</li>
+      </ul>
+      
+      <h3>The Morning Study Session</h3>
+      <p>Many top students do their most difficult studying in the morning when willpower and cognitive resources are at their peak.</p>
+      
+      <h3>Building Your Routine</h3>
+      <p>Start small—add one positive habit at a time. It takes about 66 days on average to form a new habit, so be patient with yourself.</p>
+    `
+  },
+  {
+    id: 8,
+    title: "Sleep and Memory: What Every Student Should Know",
+    category: "Mental Health",
+    author: "Dr. James Wilson",
+    date: "Dec 3, 2024",
+    readingTime: "11 min read",
+    image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80",
+    intro: "The critical role of sleep in memory consolidation and why all-nighters are counterproductive.",
+    content: `
+      <h3>Sleep and Memory Consolidation</h3>
+      <p>During sleep, particularly during deep sleep and REM phases, your brain consolidates and organizes the information learned during the day.</p>
+      
+      <h3>The All-Nighter Myth</h3>
+      <p>Studies show that students who pull all-nighters perform significantly worse than those who get proper rest, even if they studied less overall.</p>
+      
+      <h3>Optimal Sleep for Students</h3>
+      <ul>
+        <li>Aim for 7-9 hours of sleep per night</li>
+        <li>Maintain consistent wake/sleep times</li>
+        <li>Study before sleep for better consolidation</li>
+        <li>Avoid screens for 1 hour before bed</li>
+      </ul>
+      
+      <h3>Power Naps</h3>
+      <p>A 20-minute nap can improve alertness and performance. Longer naps (60-90 minutes) include REM sleep and are better for creative problem-solving.</p>
     `
   }
 ];

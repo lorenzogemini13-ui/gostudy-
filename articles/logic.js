@@ -4,7 +4,7 @@ const grid = document.getElementById('articles-grid');
 const modal = document.getElementById('article-modal');
 const modalContent = document.getElementById('modal-content');
 const searchInput = document.getElementById('search-input');
-const categoryFilters = document.querySelectorAll('.category-filter');
+const categoryFilters = document.querySelectorAll('.category-btn');
 
 let currentArticles = [...articles];
 

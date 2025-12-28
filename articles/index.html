@@ -22,6 +22,7 @@
           fontFamily: {
             sans: ["Inter", "-apple-system", "sans-serif"],
             mono: ["JetBrains Mono", "monospace"],
+            display: ["Inter", "sans-serif"], // Unified font for clean look
           },
           colors: {
             primary: "#007AFF",
@@ -31,7 +32,8 @@
           },
           animation: {
             'fade-in': 'fadeIn 0.5s ease-out forwards',
-            'slide-up': 'slideUp 0.5s ease-out forwards',
+            'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           },
           keyframes: {
             fadeIn: {
@@ -52,20 +54,22 @@
   <link rel="icon" href="/assets/go-logo.png" type="image/png" />
 
   <style>
-   
-    html {
-      scrollbar-width: none; 
-      -ms-overflow-style: none; 
-    }
-    html::-webkit-scrollbar {
-      display: none; 
+    html { scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar { display: none; }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      overflow: hidden;
     }
   </style>
   <link rel="stylesheet" href="/assets/css/navbar.css">
 </head>
 <body class="bg-[#FAFAFA] text-dark antialiased">
 
-    
+  <body class="bg-[#FBFBFD] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+
   <!-- navbar -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -271,67 +275,78 @@
   </div>
 
 
-  <main class="w-full min-h-screen pt-40 pb-20 px-6">
+  <main class="w-full min-h-screen pt-32 pb-20 px-6">
     <div class="max-w-7xl mx-auto">
       
-      <!-- hero -->
-      <div class="text-center mb-20 animate-slide-up pt-16">
-        <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-primary text-xs font-bold tracking-wide uppercase mb-4 border border-blue-100">The GoStudy! Journal</span>
-        <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-dark mb-6 ">
-          Upgrade Your <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent font-extrabold">BrainOS</span>
+      <!-- Hero Header -->
+      <div class="text-center mb-12 animate-slide-up">
+        <h1 class="font-display text-5xl md:text-6xl font-extrabold tracking-tight text-dark mb-4">
+          The <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Study Log</span>
         </h1>
-        <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10 pb-20">
-          Science-backed protocols to learn faster, focus deeper, and optimize your cognitive performance.
+        <p class="text-lg text-gray-500 max-w-xl mx-auto">
+          Explore the science of learning, productivity hacks, and mental models for high performance.
         </p>
+      </div>
 
-        <!-- search -->
-        <div class="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
-          <div class="relative w-full">
-            <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-            <input type="text" id="search-input" placeholder="Search for active recall, pomodoro, focus..." 
-                   class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all text-dark placeholder-gray-400 outline-none">
+      <!-- Featured Article Section (Populated via JS) -->
+      <div id="featured-container" class="mb-16 animate-slide-up" style="animation-delay: 0.1s;">
+        <!-- Skeleton Loading State -->
+        <div class="w-full h-[400px] bg-gray-200 rounded-3xl animate-pulse"></div>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="sticky top-24 z-30 mb-10 animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="bg-white/80 backdrop-blur-md border border-gray-200 shadow-sm rounded-2xl p-2 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto">
+          
+          <!-- Search -->
+          <div class="relative w-full md:w-64 flex-shrink-0">
+            <span class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+            <input type="text" id="search-input" placeholder="Search topics..." 
+                   class="w-full pl-10 pr-4 py-2 bg-gray-50 border-transparent focus:bg-white rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
           </div>
-        </div>
-        
-        <!-- category -->
-        <div class="flex flex-wrap justify-center gap-2 mt-6">
-            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-dark text-white border border-transparent shadow-md" data-category="All">All</button>
-            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Science">Science</button>
-            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Technique">Technique</button>
-            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Productivity">Productivity</button>
-            <button class="category-filter px-5 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-600 border border-gray-200 hover:bg-gray-50" data-category="Mental Health">Mental Health</button>
+
+          <!-- Divider -->
+          <div class="hidden md:block w-px h-6 bg-gray-200 mx-2"></div>
+
+          <!-- Categories -->
+          <div class="flex w-full overflow-x-auto pb-2 md:pb-0 gap-1 no-scrollbar" id="category-filters">
+              <button class="category-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-dark text-white shadow-md whitespace-nowrap" data-category="All">All Posts</button>
+              <button class="category-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-transparent text-gray-500 hover:bg-gray-100 whitespace-nowrap" data-category="Science">Science</button>
+              <button class="category-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-transparent text-gray-500 hover:bg-gray-100 whitespace-nowrap" data-category="Technique">Technique</button>
+              <button class="category-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-transparent text-gray-500 hover:bg-gray-100 whitespace-nowrap" data-category="Productivity">Productivity</button>
+              <button class="category-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-transparent text-gray-500 hover:bg-gray-100 whitespace-nowrap" data-category="Mental Health">Mental Health</button>
+          </div>
         </div>
       </div>
 
-      <!-- articlrs -->
-      <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.2s;">
-
+      <!-- Articles Grid -->
+      <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.3s;">
+        <!-- JS will populate this -->
+      </div>
       </div>
 
     </div>
   </main>
 
-  <!-- articles -->
-  <div id="article-modal" class="fixed inset-0 z-[100] hidden">
+  <!-- Article Modal -->
+  <div id="article-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-dark/60 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop"></div>
     
-    <div class="absolute inset-0 bg-dark/30 backdrop-blur-sm transition-opacity" id="close-modal-overlay"></div>
-    
-    <!-- Modal -->
-    <div class="absolute inset-0 md:inset-10 lg:inset-y-10 lg:inset-x-40 bg-white rounded-none md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden animate-slide-up">
+    <div class="absolute inset-0 md:inset-10 lg:inset-y-10 lg:inset-x-40 bg-white rounded-none md:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform translate-y-10 opacity-0 transition-all duration-300" id="modal-panel">
       
-      <!-- Close Button -->
-      <button id="close-modal" class="absolute top-4 right-4 z-50 p-2 bg-white/50 backdrop-blur rounded-full hover:bg-white transition-all text-dark md:hidden">
+      <!-- Close Button (Mobile) -->
+      <button id="close-modal-mobile" class="absolute top-4 right-4 z-50 p-2 bg-white/80 backdrop-blur rounded-full shadow-lg text-dark md:hidden">
         <span class="material-icons-round">close</span>
       </button>
 
-      <!-- Sidebar -->
-      <div class="w-full md:w-1/3 h-48 md:h-full relative bg-gray-100 flex-shrink-0">
-        <img id="modal-img" src="" class="w-full h-full object-cover" alt="Article Cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+      <!-- Sidebar / Image -->
+      <div class="w-full md:w-1/3 h-56 md:h-full relative bg-gray-100 flex-shrink-0 group">
+        <img id="modal-img" src="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Article Cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
            <div class="text-white">
-             <span id="modal-category" class="text-xs font-bold uppercase tracking-wider bg-primary/90 px-2 py-1 rounded mb-2 inline-block">Category</span>
-             <h2 id="modal-title" class="font-display font-bold text-2xl leading-tight">Article Title</h2>
-             <div class="flex items-center gap-2 mt-4 text-sm text-gray-200">
+             <span id="modal-category" class="text-[10px] font-bold uppercase tracking-widest bg-primary px-2 py-1 rounded mb-3 inline-block shadow-lg shadow-primary/20">Category</span>
+             <h2 id="modal-title" class="font-display font-bold text-2xl md:text-3xl leading-tight mb-2">Title</h2>
+             <div class="flex items-center gap-2 mt-4 text-xs font-mono text-gray-300">
                <span id="modal-author">Author</span> • <span id="modal-date">Date</span>
              </div>
            </div>
@@ -341,74 +356,43 @@
       <!-- Content -->
       <div class="flex-grow flex flex-col h-full bg-white relative">
         <!-- Toolbar -->
-        <div class="flex items-center justify-between px-8 py-4 border-b border-gray-100 bg-white z-10">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white/95 backdrop-blur z-10">
            <div class="flex gap-2">
-             <button id="btn-print" class="p-2 text-gray-500 hover:text-dark hover:bg-gray-100 rounded-lg transition-all" title="Print / Save PDF">
-               <span class="material-icons-round">print</span>
+             <button class="p-2 text-gray-400 hover:text-primary hover:bg-blue-50 rounded-lg transition-all" title="Share">
+               <span class="material-icons-round text-xl">ios_share</span>
              </button>
-             <button id="btn-export-md" class="p-2 text-gray-500 hover:text-dark hover:bg-gray-100 rounded-lg transition-all" title="Export Markdown">
-               <span class="material-icons-round">download</span>
+             <button class="p-2 text-gray-400 hover:text-primary hover:bg-blue-50 rounded-lg transition-all" title="Bookmark">
+               <span class="material-icons-round text-xl">bookmark_border</span>
              </button>
            </div>
            
-           <button class="hidden md:flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-dark px-3 py-1.5 hover:bg-gray-100 rounded-lg transition-all" onclick="document.getElementById('close-modal').click()">
-             Close <span class="material-icons-round text-lg">close</span>
+           <button id="close-modal-desktop" class="hidden md:flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-gray-400 hover:text-dark px-3 py-1.5 hover:bg-gray-100 rounded-lg transition-all">
+             Close <span class="material-icons-round text-base">close</span>
            </button>
         </div>
 
         <!-- Scrollable Text -->
-        <div id="modal-body" class="flex-grow overflow-y-auto p-8 prose prose-blue prose-lg max-w-none font-serif leading-loose text-gray-700">
-          
+        <div id="modal-body" class="flex-grow overflow-y-auto p-8 md:p-12 prose prose-slate prose-lg max-w-none font-serif leading-loose text-gray-600">
+          <!-- Content injected here -->
         </div>
       </div>
     </div>
   </div>
 
-   <!-- footer -->
-  <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
-          <p class="text-gray-500 leading-relaxed">
-            The intelligent study companion for high performers.
-          </p>
-        </div>
-        
-        <div class="flex gap-12 md:gap-24">
-          <div>
-            <h4 class="font-bold text-dark mb-6">Product</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/articles/" class="text-primary font-bold">Articles</a></li>
-              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
-              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
-              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-dark mb-6">Company</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
-              <li><a href="/how-it-works/" class="hover:text-primary transition-colors">How It Works</a></li>
-            </ul>
-          </div>
-        </div>
+  <!-- Footer (Simplified) -->
+  <footer class="bg-white border-t border-gray-100 py-12">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <img src="/assets/go-logo.png" class="w-8 h-8 rounded-lg" alt="Logo">
+        <span class="font-bold text-dark">GoStudy!</span>
       </div>
-
-      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
-        <div class="flex gap-6">
-          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
-        </div>
+      <div class="text-sm text-gray-400">
+        &copy; 2025 GoStudy Inc. <a href="#" class="hover:text-dark ml-4">Privacy</a> <a href="#" class="hover:text-dark ml-4">Terms</a>
       </div>
     </div>
   </footer>
 
-  <!-- LOGIC -->
-  <script type="module" src="/backend/js/auth.js"></script>
+  <!-- Scripts -->
   <script type="module" src="/articles/logic.js"></script>
   <script src="/assets/js/navbar.js"></script>
 </body>
