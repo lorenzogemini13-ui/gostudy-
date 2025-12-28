@@ -522,7 +522,7 @@
             <div class="absolute top-6 right-6 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">RECOMMENDED</div>
             <h3 class="text-xl font-bold mb-2">Pro Student</h3>
             <div class="flex items-baseline gap-1 mb-6">
-                <span class="text-4xl font-bold">$9.99</span>
+                <span class="text-4xl font-bold">$12.99</span>
                 <span class="text-gray-400 text-sm">/month</span>
             </div>
             <a href="/pricing/pro" class="w-full py-4 rounded-2xl bg-primary text-white font-bold hover:bg-blue-600 shadow-lg shadow-primary/20 transition-all mb-8 inline-block text-center">Get Pro Access</a>
@@ -705,5 +705,100 @@
         }
     });
   </script>
+
+  <!-- PayPal Warning Notification -->
+  <div id="paypal-warning" class="fixed bottom-6 right-6 z-[100] max-w-md animate-slide-up" style="animation: slideUp 0.4s ease-out forwards;">
+    <div class="bg-white rounded-3xl shadow-2xl border-2 border-red-200 overflow-hidden">
+      <!-- Header -->
+      <div class="p-6">
+        <div class="flex items-start gap-4">
+          <!-- Warning Icon -->
+          <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+            <span class="material-icons-round text-2xl">warning</span>
+          </div>
+          
+          <div class="flex-1">
+            <div class="flex justify-between items-start">
+              <h3 class="font-bold text-lg text-gray-900">⚠️ PayPal Payments Down</h3>
+              <button onclick="closePayPalWarning()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <span class="material-icons-round">close</span>
+              </button>
+            </div>
+            
+            <p class="text-gray-500 mt-2 text-sm leading-relaxed">
+              We're experiencing issues with PayPal payments. Our team is working to restore service <strong>today</strong>. We apologize for the inconvenience.
+            </p>
+            
+            <button onclick="closePayPalWarning()" class="mt-4 w-full py-3 rounded-xl border-2 border-gray-200 font-bold text-gray-700 hover:bg-gray-50 transition-colors text-sm">
+              I Understand
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Progress bar footer -->
+      <div class="bg-red-50 px-6 py-3 border-t border-red-100">
+        <div class="flex items-center justify-between text-xs text-gray-500">
+          <span>This message will close in <strong id="countdown-seconds">15</strong> seconds.</span>
+          <button onclick="stopCountdown()" class="font-bold text-red-600 hover:text-red-700">Click to stop.</button>
+        </div>
+        <div class="mt-2 h-1 bg-red-200 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-red-500 rounded-full transition-all duration-1000" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <script>
+    // PayPal Warning Notification Logic
+    let countdownInterval;
+    let secondsRemaining = 15;
+    
+    function startCountdown() {
+      const progressBar = document.getElementById('progress-bar');
+      const countdownEl = document.getElementById('countdown-seconds');
+      
+      countdownInterval = setInterval(() => {
+        secondsRemaining--;
+        countdownEl.textContent = secondsRemaining;
+        progressBar.style.width = `${(secondsRemaining / 15) * 100}%`;
+        
+        if (secondsRemaining <= 0) {
+          closePayPalWarning();
+        }
+      }, 1000);
+    }
+    
+    function stopCountdown() {
+      clearInterval(countdownInterval);
+      document.getElementById('countdown-seconds').textContent = '∞';
+      document.getElementById('progress-bar').style.width = '100%';
+    }
+    
+    function closePayPalWarning() {
+      clearInterval(countdownInterval);
+      const warning = document.getElementById('paypal-warning');
+      warning.style.animation = 'slideDown 0.3s ease-in forwards';
+      setTimeout(() => warning.remove(), 300);
+    }
+    
+    // Start countdown on page load
+    document.addEventListener('DOMContentLoaded', startCountdown);
+  </script>
+
+  <style>
+    @keyframes slideDown {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
+
 </body>
 </html>

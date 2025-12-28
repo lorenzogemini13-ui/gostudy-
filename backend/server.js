@@ -127,9 +127,304 @@ const savePlanToFile = async (userId, generationId, studyPlan) => {
     }
 };
 
-// --- 4. API ROUTE ---
+// --- 4. PRODUCTION-SAFE CREDITS SYSTEM ---
 
-app.post('/api/generate-plan', upload.single('document'), async (req, res) => {
+// Plan credits configuration
+const PLAN_CREDITS = {
+    free: 3,    // 3 LIFETIME credits for free users (not monthly)
+    pro: 40     // 40 credits per month for Pro users
+};
+
+// PayPal API Configuration
+const PAYPAL_CONFIG = {
+    clientId: process.env.PAYPAL_CLIENT_ID,
+    clientSecret: process.env.PAYPAL_CLIENT_SECRET,
+    webhookId: process.env.PAYPAL_WEBHOOK_ID,
+    apiBase: process.env.NODE_ENV === 'production' 
+        ? 'https://api-m.paypal.com' 
+        : 'https://api-m.sandbox.paypal.com'
+};
+
+// Get PayPal access token for API calls
+const getPayPalAccessToken = async () => {
+    const auth = Buffer.from(`${PAYPAL_CONFIG.clientId}:${PAYPAL_CONFIG.clientSecret}`).toString('base64');
+    
+    const response = await axios.post(
+        `${PAYPAL_CONFIG.apiBase}/v1/oauth2/token`,
+        'grant_type=client_credentials',
+        {
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    );
+    
+    return response.data.access_token;
+};
+
+// Verify PayPal webhook signature
+const verifyPayPalWebhook = async (headers, body) => {
+    if (!PAYPAL_CONFIG.clientId || !PAYPAL_CONFIG.webhookId) {
+        console.warn('⚠️ PayPal credentials not configured, skipping webhook verification');
+        return true; // Skip verification in dev
+    }
+    
+    try {
+        const accessToken = await getPayPalAccessToken();
+        
+        const verifyPayload = {
+            auth_algo: headers['paypal-auth-algo'],
+            cert_url: headers['paypal-cert-url'],
+            transmission_id: headers['paypal-transmission-id'],
+            transmission_sig: headers['paypal-transmission-sig'],
+            transmission_time: headers['paypal-transmission-time'],
+            webhook_id: PAYPAL_CONFIG.webhookId,
+            webhook_event: body
+        };
+        
+        const response = await axios.post(
+            `${PAYPAL_CONFIG.apiBase}/v1/notifications/verify-webhook-signature`,
+            verifyPayload,
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+        
+        return response.data.verification_status === 'SUCCESS';
+    } catch (error) {
+        console.error('PayPal webhook verification failed:', error.message);
+        return false;
+    }
+};
+
+// Check if webhook event was already processed (idempotency)
+const isWebhookProcessed = async (eventId) => {
+    if (!db) return false;
+    
+    const doc = await db.collection('processed_webhooks').doc(eventId).get();
+    return doc.exists;
+};
+
+// Mark webhook event as processed
+const markWebhookProcessed = async (eventId, eventType) => {
+    if (!db) return;
+    
+    await db.collection('processed_webhooks').doc(eventId).set({
+        eventId,
+        eventType,
+        processedAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+};
+
+// Get user's credits balance (with auto-initialization)
+const getCreditsBalance = async (userId) => {
+    if (!db) return null;
+    
+    const userRef = db.collection('users').doc(userId);
+    const userDoc = await userRef.get();
+    
+    if (!userDoc.exists) {
+        // Initialize new user with free plan credits
+        const newUserData = {
+            plan: 'free',
+            credits_balance: PLAN_CREDITS.free,
+            paypalSubscriptionId: null,
+            createdAt: admin.firestore.FieldValue.serverTimestamp()
+        };
+        await userRef.set(newUserData);
+        
+        // Log initial grant in ledger
+        await db.collection('credits_ledger').add({
+            userId,
+            amount: PLAN_CREDITS.free,
+            type: 'grant',
+            description: 'Initial free plan credits',
+            idempotencyKey: `init_${userId}`,
+            paypalEventId: null,
+            createdAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+        
+        return { ...newUserData, id: userId };
+    }
+    
+    return { ...userDoc.data(), id: userId };
+};
+
+// Deduct credits atomically with transaction (returns success/failure)
+const deductCredits = async (userId, amount, description, idempotencyKey) => {
+    if (!db) return { success: false, error: 'Database not initialized' };
+    
+    // Check idempotency first
+    const existingLedger = await db.collection('credits_ledger')
+        .where('idempotencyKey', '==', idempotencyKey)
+        .limit(1)
+        .get();
+    
+    if (!existingLedger.empty) {
+        console.log(`⚠️ Duplicate deduction attempt: ${idempotencyKey}`);
+        return { success: true, duplicate: true }; // Already processed
+    }
+    
+    const userRef = db.collection('users').doc(userId);
+    
+    try {
+        const result = await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            
+            if (!userDoc.exists) {
+                throw new Error('User not found');
+            }
+            
+            const currentBalance = userDoc.data().credits_balance || 0;
+            
+            if (currentBalance < amount) {
+                throw new Error('Insufficient credits');
+            }
+            
+            const newBalance = currentBalance - amount;
+            
+            // Update balance atomically
+            transaction.update(userRef, { credits_balance: newBalance });
+            
+            // Add ledger entry within same transaction
+            const ledgerRef = db.collection('credits_ledger').doc();
+            transaction.set(ledgerRef, {
+                userId,
+                amount: -amount,
+                type: 'deduction',
+                description,
+                idempotencyKey,
+                paypalEventId: null,
+                balanceAfter: newBalance,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            
+            return { newBalance };
+        });
+        
+        console.log(`💳 Deducted ${amount} credit(s) from user ${userId}. New balance: ${result.newBalance}`);
+        return { success: true, newBalance: result.newBalance };
+        
+    } catch (error) {
+        console.error(`Failed to deduct credits for ${userId}:`, error.message);
+        return { success: false, error: error.message };
+    }
+};
+
+// Add credits atomically (for purchases, refunds, grants)
+const addCredits = async (userId, amount, type, description, idempotencyKey, paypalEventId = null) => {
+    if (!db) return { success: false, error: 'Database not initialized' };
+    
+    // Check idempotency first
+    const existingLedger = await db.collection('credits_ledger')
+        .where('idempotencyKey', '==', idempotencyKey)
+        .limit(1)
+        .get();
+    
+    if (!existingLedger.empty) {
+        console.log(`⚠️ Duplicate credit addition attempt: ${idempotencyKey}`);
+        return { success: true, duplicate: true };
+    }
+    
+    const userRef = db.collection('users').doc(userId);
+    
+    try {
+        const result = await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            
+            let currentBalance = 0;
+            let currentPlan = 'free';
+            
+            if (userDoc.exists) {
+                currentBalance = userDoc.data().credits_balance || 0;
+                currentPlan = userDoc.data().plan || 'free';
+            }
+            
+            const newBalance = Math.max(0, currentBalance + amount); // Prevent negative on refunds
+            
+            // Update or create user
+            if (userDoc.exists) {
+                transaction.update(userRef, { 
+                    credits_balance: newBalance,
+                    plan: type === 'purchase' ? 'pro' : currentPlan
+                });
+            } else {
+                transaction.set(userRef, {
+                    plan: type === 'purchase' ? 'pro' : 'free',
+                    credits_balance: newBalance,
+                    paypalSubscriptionId: null,
+                    createdAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+            }
+            
+            // Add ledger entry
+            const ledgerRef = db.collection('credits_ledger').doc();
+            transaction.set(ledgerRef, {
+                userId,
+                amount,
+                type,
+                description,
+                idempotencyKey,
+                paypalEventId,
+                balanceAfter: newBalance,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            
+            return { newBalance };
+        });
+        
+        console.log(`💰 Added ${amount} credit(s) to user ${userId} (${type}). New balance: ${result.newBalance}`);
+        return { success: true, newBalance: result.newBalance };
+        
+    } catch (error) {
+        console.error(`Failed to add credits for ${userId}:`, error.message);
+        return { success: false, error: error.message };
+    }
+};
+
+// Middleware to check credits before actions
+const checkCredits = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ') || !db) {
+        return next();
+    }
+    
+    try {
+        const idToken = authHeader.split('Bearer ')[1];
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const userId = decodedToken.uid;
+        
+        const userData = await getCreditsBalance(userId);
+        if (!userData) return next();
+        
+        if (userData.credits_balance <= 0) {
+            return res.status(403).json({
+                error: 'Insufficient credits',
+                message: userData.plan === 'free' 
+                    ? 'You have used all 3 free lifetime uploads. Upgrade to Pro for 40 uploads/month!' 
+                    : 'You have no credits remaining. Your credits will renew with your next billing cycle.',
+                credits_balance: userData.credits_balance,
+                plan: userData.plan
+            });
+        }
+        
+        // Attach user data for later use
+        req.creditsData = userData;
+        req.user = decodedToken;
+        next();
+    } catch (error) {
+        console.error('Error checking credits:', error);
+        next();
+    }
+};
+
+// --- 5. API ROUTES ---
+
+app.post('/api/generate-plan', checkCredits, upload.single('document'), async (req, res) => {
     // 1. Validation
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded or file too large (>5MB).' });
@@ -318,6 +613,19 @@ SCHEMA:
                 
                 // Save to disk using the Firestore ID as filename
                 await savePlanToFile(decodedToken.uid, docRef.id, studyPlan);
+                
+                // Deduct credits atomically (idempotency key = generation ID)
+                const deductResult = await deductCredits(
+                    decodedToken.uid, 
+                    1, 
+                    `Study plan generation: ${req.file.originalname}`,
+                    `gen_${docRef.id}`
+                );
+                
+                if (!deductResult.success && !deductResult.duplicate) {
+                    console.error('⚠️ Credit deduction failed after generation:', deductResult.error);
+                }
+                
                 console.log('💾 Plan saved to Firestore and disk for user:', decodedToken.uid);
             } catch (authError) {
                 console.error('Failed to save to Firestore (possibly invalid token):', authError.message);
@@ -346,7 +654,196 @@ SCHEMA:
     }
 });
 
-// --- 5. HISTORY ROUTE ---
+// --- 6. CREDITS ENDPOINTS ---
+
+// Get current user's credits balance
+app.get('/api/credits/balance', authenticate, async (req, res) => {
+    if (!db) {
+        return res.status(500).json({ error: 'Firestore not initialized' });
+    }
+
+    try {
+        const userData = await getCreditsBalance(req.user.uid);
+        if (!userData) {
+            return res.status(500).json({ error: 'Could not fetch credits data' });
+        }
+        
+        res.json({
+            plan: userData.plan,
+            credits_balance: userData.credits_balance,
+            plan_credits: PLAN_CREDITS[userData.plan] || PLAN_CREDITS.free
+        });
+    } catch (error) {
+        console.error('Error fetching credits:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Legacy endpoint for backwards compatibility (maps to new credits system)
+app.get('/api/usage', authenticate, async (req, res) => {
+    if (!db) {
+        return res.status(500).json({ error: 'Firestore not initialized' });
+    }
+
+    try {
+        const userData = await getCreditsBalance(req.user.uid);
+        if (!userData) {
+            return res.status(500).json({ error: 'Could not fetch usage data' });
+        }
+        
+        const limit = PLAN_CREDITS[userData.plan] || PLAN_CREDITS.free;
+        
+        res.json({
+            plan: userData.plan,
+            uploadsThisMonth: limit - userData.credits_balance, // Backwards compatible
+            limit: limit,
+            remaining: userData.credits_balance,
+            credits_balance: userData.credits_balance
+        });
+    } catch (error) {
+        console.error('Error fetching usage:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// PayPal Webhook handler with signature verification and idempotency
+app.post('/api/paypal/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+    try {
+        // Parse the webhook body
+        const rawBody = req.body;
+        const event = typeof rawBody === 'string' ? JSON.parse(rawBody) : rawBody;
+        const eventId = event.id;
+        
+        console.log(`📬 PayPal Webhook received: ${event.event_type} (ID: ${eventId})`);
+        
+        if (!db) {
+            console.error('Firestore not initialized, cannot process webhook');
+            return res.status(200).send('OK');
+        }
+        
+        // 1. Verify webhook signature (production requirement)
+        const isValid = await verifyPayPalWebhook(req.headers, event);
+        if (!isValid) {
+            console.error('❌ PayPal webhook signature verification failed');
+            return res.status(401).send('Invalid signature');
+        }
+        
+        // 2. Check if already processed (idempotency)
+        if (await isWebhookProcessed(eventId)) {
+            console.log(`⚠️ Webhook ${eventId} already processed, skipping`);
+            return res.status(200).send('OK');
+        }
+        
+        const subscriptionId = event.resource?.id;
+        const customId = event.resource?.custom_id; // User ID from PayPal
+        
+        // 3. Process event based on type
+        switch (event.event_type) {
+            case 'BILLING.SUBSCRIPTION.ACTIVATED':
+            case 'PAYMENT.SALE.COMPLETED':
+                // Add credits for new subscription or renewal payment
+                if (subscriptionId) {
+                    // Find user by subscription ID or custom_id
+                    let userId = customId;
+                    
+                    if (!userId) {
+                        const snapshot = await db.collection('users')
+                            .where('paypalSubscriptionId', '==', subscriptionId)
+                            .limit(1)
+                            .get();
+                        
+                        if (!snapshot.empty) {
+                            userId = snapshot.docs[0].id;
+                        }
+                    }
+                    
+                    if (userId) {
+                        // Add Pro credits
+                        const result = await addCredits(
+                            userId,
+                            PLAN_CREDITS.pro,
+                            'purchase',
+                            `Pro subscription payment (${event.event_type})`,
+                            `paypal_${eventId}`,
+                            eventId
+                        );
+                        
+                        // Update subscription ID on user
+                        await db.collection('users').doc(userId).update({
+                            paypalSubscriptionId: subscriptionId,
+                            plan: 'pro'
+                        });
+                        
+                        console.log(`🎉 Credits added for user ${userId}: ${PLAN_CREDITS.pro}`);
+                    } else {
+                        console.warn(`⚠️ No user found for subscription: ${subscriptionId}`);
+                    }
+                }
+                break;
+                
+            case 'PAYMENT.SALE.REFUNDED':
+            case 'PAYMENT.SALE.REVERSED':
+                // Subtract credits for refunds
+                if (subscriptionId) {
+                    const snapshot = await db.collection('users')
+                        .where('paypalSubscriptionId', '==', subscriptionId)
+                        .limit(1)
+                        .get();
+                    
+                    if (!snapshot.empty) {
+                        const userId = snapshot.docs[0].id;
+                        
+                        // Subtract credits (use negative amount in addCredits)
+                        await addCredits(
+                            userId,
+                            -PLAN_CREDITS.pro,
+                            'refund',
+                            `Payment refunded/reversed (${event.event_type})`,
+                            `paypal_refund_${eventId}`,
+                            eventId
+                        );
+                        
+                        console.log(`💸 Credits refunded for user ${userId}`);
+                    }
+                }
+                break;
+                
+            case 'BILLING.SUBSCRIPTION.CANCELLED':
+            case 'BILLING.SUBSCRIPTION.SUSPENDED':
+            case 'BILLING.SUBSCRIPTION.EXPIRED':
+                // Downgrade user to free (don't remove credits, just change plan)
+                if (subscriptionId) {
+                    const snapshot = await db.collection('users')
+                        .where('paypalSubscriptionId', '==', subscriptionId)
+                        .limit(1)
+                        .get();
+                    
+                    if (!snapshot.empty) {
+                        const userDoc = snapshot.docs[0];
+                        await userDoc.ref.update({
+                            plan: 'free',
+                            subscriptionCancelledAt: admin.firestore.FieldValue.serverTimestamp()
+                        });
+                        console.log(`📉 User ${userDoc.id} downgraded to Free (${event.event_type})`);
+                    }
+                }
+                break;
+                
+            default:
+                console.log(`ℹ️ Unhandled PayPal event: ${event.event_type}`);
+        }
+        
+        // 4. Mark webhook as processed
+        await markWebhookProcessed(eventId, event.event_type);
+        
+        res.status(200).send('OK');
+    } catch (error) {
+        console.error('Error processing PayPal webhook:', error);
+        res.status(200).send('OK'); // Always return 200 to avoid retries
+    }
+});
+
+// --- 7. HISTORY ROUTE ---
 
 app.get('/api/generations', authenticate, async (req, res) => {
     if (!db) {

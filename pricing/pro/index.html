@@ -322,7 +322,7 @@
           <a href="#purchase" class="px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-blue-500/30">
             Upgrade Now
           </a>
-          <p class="text-sm font-semibold text-subtle">Starting at $9.99/mo</p>
+          <p class="text-sm font-semibold text-subtle">Starting at $12.99/mo</p>
         </div>
       </div>
     </section>
@@ -398,8 +398,8 @@
                 <div class="flex items-center justify-between py-4 border-b border-gray-100 reveal">
                     <span class="text-lg font-medium text-gray-500">File Limits</span>
                     <div class="flex gap-12 text-right">
-                        <span class="text-gray-400 font-medium w-24">10 / mo</span>
-                        <span class="text-dark font-bold w-24">Unlimited</span>
+                        <span class="text-gray-400 font-medium w-24">3 (Lifetime)</span>
+                        <span class="text-dark font-bold w-24">40 / month</span>
                     </div>
                 </div>
                 <!-- Row -->
@@ -438,7 +438,7 @@
               <div class="flex justify-between items-center mb-8">
                   <div class="text-left">
                       <span class="block text-sm font-bold text-gray-400 uppercase tracking-wider">Pro Student</span>
-                      <span class="block text-4xl font-bold tracking-tight text-white mt-1">$9.99<span class="text-base text-gray-500 font-normal">/mo</span></span>
+                      <span class="block text-4xl font-bold tracking-tight text-white mt-1">$12.99<span class="text-base text-gray-500 font-normal">/mo</span></span>
                   </div>
                   <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-glow">
                       <span class="material-icons-round text-white">star</span>
@@ -505,7 +505,9 @@
 
   <script src="/assets/js/navbar.js"></script>
 
-  <script>
+  <script type="module">
+    import { auth, API_BASE } from "/backend/js/auth.js";
+    
     // Reveal Animation Logic
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
@@ -517,6 +519,30 @@
     }, { threshold: 0.1 });
     revealElements.forEach(el => revealObserver.observe(el));
 
+    // Poll for credits balance with timeout
+    async function pollForCredits(token, initialBalance, maxAttempts = 30) {
+        for (let i = 0; i < maxAttempts; i++) {
+            await new Promise(r => setTimeout(r, 2000)); // Wait 2 seconds between polls
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/credits/balance`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // Check if credits increased (payment processed)
+                    if (data.credits_balance > initialBalance) {
+                        return { success: true, data };
+                    }
+                }
+            } catch (e) {
+                console.log('Poll attempt failed:', e);
+            }
+        }
+        return { success: false };
+    }
+
     // PayPal Buttons Implementation
     paypal.Buttons({
         style: {
@@ -526,13 +552,82 @@
             label: 'subscribe'
         },
         createSubscription: function(data, actions) {
+          // Pass user ID to PayPal as custom_id for webhook matching
+          const user = auth.currentUser;
           return actions.subscription.create({
-            plan_id: 'P-67G68648B35652948NFFQ7BA'
+            plan_id: 'P-67G68648B35652948NFFQ7BA',
+            custom_id: user ? user.uid : undefined
           });
         },
-        onApprove: function(data, actions) {
-          // You can add a redirect here, e.g., window.location.href = '/dashboard';
-          alert('Welcome to Pro! Your account is being upgraded...');
+        onApprove: async function(data, actions) {
+          const container = document.getElementById('paypal-button-container-P-67G68648B35652948NFFQ7BA');
+          
+          // Show processing state
+          container.innerHTML = `
+            <div class="text-center py-6">
+              <div class="animate-spin inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
+              <p class="text-white font-medium mb-2">Payment Processing...</p>
+              <p class="text-sm text-gray-400">Your credits will appear shortly. Please wait.</p>
+            </div>
+          `;
+          
+          try {
+            const user = auth.currentUser;
+            if (!user) {
+              // Store subscription for after login
+              sessionStorage.setItem('pendingSubscription', data.subscriptionID);
+              window.location.href = '/login/?upgrade=pro';
+              return;
+            }
+            
+            const token = await user.getIdToken();
+            
+            // Get current balance before polling
+            let initialBalance = 0;
+            try {
+                const balanceRes = await fetch(`${API_BASE}/api/credits/balance`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (balanceRes.ok) {
+                    const balanceData = await balanceRes.json();
+                    initialBalance = balanceData.credits_balance || 0;
+                }
+            } catch (e) {}
+            
+            // Poll for credits (webhook will add them)
+            const result = await pollForCredits(token, initialBalance);
+            
+            if (result.success) {
+                // Credits received! Redirect to dashboard
+                window.location.href = '/dashboard/?upgraded=true';
+            } else {
+                // Timeout - show success anyway (webhook may be slow)
+                container.innerHTML = `
+                  <div class="text-center py-4">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="text-2xl">✓</span>
+                    </div>
+                    <p class="text-white font-medium mb-2">Payment Received!</p>
+                    <p class="text-sm text-gray-400 mb-4">Your credits will appear within a few minutes.</p>
+                    <a href="/dashboard/" class="inline-block bg-white text-gray-900 px-6 py-2 rounded-lg font-bold hover:shadow-lg transition-all">
+                      Go to Dashboard
+                    </a>
+                  </div>
+                `;
+            }
+            
+          } catch (error) {
+            console.error('Payment processing error:', error);
+            container.innerHTML = `
+              <div class="text-center py-4">
+                <p class="text-amber-400 font-medium mb-2">Payment received but processing delayed</p>
+                <p class="text-sm text-gray-400 mb-4">Your credits will appear within a few minutes.</p>
+                <a href="/dashboard/" class="inline-block bg-white text-gray-900 px-6 py-2 rounded-lg font-bold">
+                  Go to Dashboard
+                </a>
+              </div>
+            `;
+          }
         }
     }).render('#paypal-button-container-P-67G68648B35652948NFFQ7BA');
   </script>
