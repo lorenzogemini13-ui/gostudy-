@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 
   <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AaAliFLS8NdzLj84dS8dMi-n9PN507M8j0o7C2UwhhbvfjJc2hJnnNrK3PTWRhInNjrdpPiQj9ufr4jo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AQaH0DHGWrf-PqqpMUNbGCCGwrr25WATrrDqqr8O_NsWdfooMTPeLVAwL-uei9BlwbxNyg_vNAIOPYaV&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 
   <!-- favicon -->
   <link rel="icon" href="/assets/go-logo.png" type="image/png" />
@@ -446,7 +446,7 @@
               </div>
 
               <!-- PayPal Container -->
-              <div id="paypal-button-container-P-0WC83277A42555440NFJ3TVY" class="w-full relative z-20"></div>
+              <div id="paypal-button-container-P-1HX52143VS0590336NFJ7DBY" class="w-full relative z-20"></div>
               
               <div class="mt-6 flex items-center justify-center gap-2 text-gray-500 text-xs">
                 <span class="material-icons-round text-sm">lock</span>
@@ -555,12 +555,12 @@
           // Pass user ID to PayPal as custom_id for webhook matching
           const user = auth.currentUser;
           return actions.subscription.create({
-            plan_id: 'P-0WC83277A42555440NFJ3TVY',
+            plan_id: 'P-1HX52143VS0590336NFJ7DBY',
             custom_id: user ? user.uid : undefined
           });
         },
         onApprove: async function(data, actions) {
-          const container = document.getElementById('paypal-button-container-P-0WC83277A42555440NFJ3TVY');
+          const container = document.getElementById('paypal-button-container-P-1HX52143VS0590336NFJ7DBY');
           
           // Show processing state
           container.innerHTML = `
@@ -629,7 +629,7 @@
             `;
           }
         }
-    }).render('#paypal-button-container-P-0WC83277A42555440NFJ3TVY');
+    }).render('#paypal-button-container-P-1HX52143VS0590336NFJ7DBY');
   </script>
 </body>
 </html>
