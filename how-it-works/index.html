@@ -15,8 +15,6 @@
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="shortcut icon" href="/assets/go-logo.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/assets/go-logo.png" />
   <meta name="theme-color" content="#007AFF" />
 
   <script>
@@ -34,457 +32,320 @@
             mono: ["JetBrains Mono", "monospace"],
           },
           boxShadow: {
-            'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+            'subtle': '0 4px 20px rgba(0,0,0,0.04)',
+            'glow': '0 0 40px rgba(0,122,255,0.15)',
           },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
         },
       },
     };
   </script>
 
-  <script type="module" src="js/auth.js"></script>
   <style>
-    /* Hide scrollbar while keeping scroll functionality */
-    html {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
-    }
-    html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+    /* Hide scrollbar */
+    html { scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar { display: none; }
+    
+    body {
+      -webkit-font-smoothing: antialiased;
+      background-color: #FAFAFA;
     }
 
-    /* Smooth reveal styles */
-    .reveal {
+    .apple-reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: blur(16px); /* The "frosted glass" entrance */
+      transform: translateY(40px) scale(0.96);
+      transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); /* Custom easing curve */
+      will-change: transform, opacity, filter;
     }
-    .reveal.active {
+    
+    .apple-reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      filter: blur(0px);
+      transform: translateY(0) scale(1);
     }
 
-    .hero-blob {
-      background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.04) 0%, rgba(255, 255, 255, 0) 60%);
+    /* Stagger delays for grid items */
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+
+    /* Ambient Background blobs */
+    .ambient-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(255,255,255,0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       pointer-events: none;
+      z-index: 0;
     }
 
-    /* Focus Animation */
-    .animate-focus-in {
-      opacity: 0;
-      filter: blur(12px);
-      animation: focusIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    /* Card Hover Physics */
+    .apple-card {
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease;
+    }
+    .apple-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
     }
 
-    @keyframes focusIn {
-      0% {
-        opacity: 0;
-        filter: blur(12px);
-        transform: translateY(10px) scale(1.05);
-      }
-      100% {
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateY(0) scale(1);
-      }
-    }
   </style>
   <link rel="stylesheet" href="/assets/css/navbar.css">
 </head>
 
-<body class="bg-white text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+<body class="bg-[#FAFAFA] text-dark font-sans antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden">
 
-     
-  <!-- navbar -->
-  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
+  <!-- navbar (kept largely the same but added backdrop) -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-white/20 transition-all duration-500 supports-[backdrop-filter]:bg-white/60">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
       <!-- Logo -->
       <a class="flex items-center gap-2 group" href="/index.html">
-        <div class="relative w-10 h-10 overflow-hidden rounded-xl">
-            <img src="/assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Logo">
+        <div class="relative w-10 h-10 overflow-hidden rounded-xl shadow-sm">
+            <img src="/assets/go-logo.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" alt="Logo">
         </div>
         <span class="font-bold text-xl tracking-tight text-dark">GoStudy!</span>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-2">
-        
-        <!-- Products Dropdown -->
         <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
+          <button class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-dark transition-colors duration-300">
             Products
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
           </button>
-          
-          <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[700px] pt-4">
-            <div class="bg-white rounded-3xl p-6 shadow-premium border border-gray-100 grid grid-cols-2 gap-6 relative overflow-hidden">
-               
-               <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
-               <!-- Left Col -->
-               <div class="space-y-2">
-                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Platform</h4>
-                  
-                  <a href="/methodology/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">psychology</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Active Recall</p>
-                        <p class="text-xs text-gray-500 mt-1">Science-backed testing method.</p>
-                    </div>
-                  </a>
-
-                  <a href="/pricing/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">monetization_on</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Pricing</p>
-                        <p class="text-xs text-gray-500 mt-1">Choose the plan that best fits your needs.</p>
-                    </div>
-                  </a>
-
-                  <a href="/how-it-works/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl text-purple-600">account_tree</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Memory Palace</p>
-                        <p class="text-xs text-gray-500 mt-1">AI-generated spatial maps.</p>
-                    </div>
-                  </a>
-               </div>
-
-               <!-- Right Col -->
-               <div class="flex flex-col h-full">
-                  <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Plans</h4>
-                  <a href="/pricing" class="block bg-dark rounded-2xl p-5 text-white flex-1 hover:shadow-lg transition-all group/card relative overflow-hidden">
-                      <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
-                      <div class="relative z-10">
-                          <div class="flex justify-between items-start mb-4">
-                              <span class="bg-primary px-2 py-1 rounded text-[10px] font-bold">PRO</span>
-                              <span class="material-icons-round">arrow_forward</span>
-                          </div>
-                          <p class="font-bold text-lg mb-1">Upgrade your <br>Study Game</p>
-                          <p class="text-gray-400 text-xs">Unlock unlimited uploads and advanced spaced repetition.</p>
-                      </div>
-                  </a>
-               </div>
-            </div>
-          </div>
         </div>
-
-        <!-- Resources Dropdown -->
         <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
-            Resources
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
+          <button class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-dark transition-colors duration-300">
+            Methodology
           </button>
-          
-           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/articles/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
-                       <span class="material-icons-round">article</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">Articles & Guides</p>
-                       <p class="text-xs text-gray-500">Study tips and neuroscience.</p>
-                   </div>
-               </a>
-               <a href="/onboarding/" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors group/item">
-                    <div class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span class="material-icons-round text-xl">person_add</span>
-                    </div>
-                    <div>
-                        <p class="font-bold text-dark text-sm">Onboarding</p>
-                        <p class="text-xs text-gray-500 mt-1">Start your journey with us.</p>
-                    </div>
-                  </a>
-               <a href="/parents/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center">
-                       <span class="material-icons-round">family_restroom</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">For Parents</p>
-                       <p class="text-xs text-gray-500">How to support your student.</p>
-                   </div>
-               </a>
-               <a href="#faq" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
-                       <span class="material-icons-round">help</span>
-                   </div>
-                   <div class="flex-1">
-                       <p class="font-bold text-dark text-sm">Help Center</p>
-                       <p class="text-xs text-gray-500">FAQs and Support.</p>
-                   </div>
-               </a>
-            </div>
-          </div>
         </div>
-
-        <!-- Company Dropdown -->
         <div class="nav-item relative group px-4 py-3">
-          <button class="flex items-center gap-1 text-sm font-semibold text-gray-600 group-hover:text-primary transition-colors">
-            Company
-            <span class="material-icons-round text-lg opacity-50 group-hover:rotate-180 transition-transform">expand_more</span>
+          <button class="flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-dark transition-colors duration-300">
+            Pricing
           </button>
-          
-           <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 w-[300px] pt-4">
-            <div class="bg-white rounded-3xl p-2 shadow-premium border border-gray-100">
-               <a href="/about/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="font-bold text-dark text-sm ml-2">About Us</span>
-               </a>
-               <a href="/contact/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="font-bold text-dark text-sm ml-2">Contact</span>
-               </a>
-               <hr class="border-gray-100 my-1 mx-2">
-               <a href="/privacy/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="text-gray-500 text-sm ml-2">Privacy Policy</span>
-               </a>
-               <a href="/terms/" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-100 transition-colors">
-                   <span class="text-gray-500 text-sm ml-2">Terms of Service</span>
-               </a>
-            </div>
-          </div>
         </div>
-
       </nav>
 
-      <!-- CTA & Mobile Toggle -->
+      <!-- CTA -->
       <div class="flex items-center gap-4">
-        <a href="/login/" class="hidden md:inline-flex bg-dark hover:bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shadow-black/5 hover:shadow-black/10 hover:-translate-y-0.5">
+        <a href="/login/" class="hidden md:inline-flex bg-dark hover:bg-black text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-500 hover:scale-105 hover:shadow-lg shadow-black/10">
             Launch App
         </a>
-        <button id="mobile-menu-btn" class="md:hidden p-2 text-dark">
-            <span class="material-icons-round text-2xl">menu</span>
-        </button>
       </div>
-
     </div>
   </header>
 
-  <!-- mobile menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col hidden">
-      <div class="flex justify-between items-center p-6 border-b border-gray-100">
-          <span class="font-bold text-xl text-dark">GoStudy!</span>
-          <button id="mobile-menu-close" class="p-2 text-dark">
-              <span class="material-icons-round text-2xl">close</span>
-          </button>
-      </div>
-      <div class="p-6 flex-1 overflow-y-auto space-y-6">
-          <!--mobile links -->
-          <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Products</h4>
-              <a href="/methodology/" class="block text-lg font-semibold text-dark">Active Recall</a>
-              <a href="/how-it-works/" class="block text-lg font-semibold text-dark">Memory Palace</a>
-              <a href="/pricing" class="block text-lg font-semibold text-dark">Pricing</a>
-          </div>
-          <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Resources</h4>
-              <a href="/articles/" class="block text-lg font-semibold text-dark">Articles</a>
-              <a href="/parents/" class="block text-lg font-semibold text-dark">For Parents</a>
-              <a href="#faq" class="block text-lg font-semibold text-dark">Help Center</a>
-          </div>
-           <div class="space-y-4">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Company</h4>
-              <a href="/about/" class="block text-lg font-semibold text-dark">About</a>
-              <a href="/contact/" class="block text-lg font-semibold text-dark">Contact</a>
-          </div>
-      </div>
-      <div class="p-6 border-t border-gray-100">
-          <a href="/login/" class="block w-full text-center bg-primary text-white py-4 rounded-xl font-bold text-lg">Launch App</a>
-      </div>
-  </div>
-
-
-  <main class="w-full mx-auto mt-20 min-h-screen bg-[#fafafa] text-[#1d1d1f] font-sans">
+  <main class="w-full mx-auto mt-20 min-h-screen">
 
   <!-- HERO SECTION -->
-  <section class="relative pt-32 pb-20 px-6 text-center">
-    <div class="max-w-4xl mx-auto">
-      <span class="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest uppercase bg-blue-50 text-blue-600 rounded-full">
-        The Workflow
-      </span>
-      <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-[0.9]">
-        Effortless <span class="text-blue-600">Clarity.</span>
+  <section class="relative pt-32 pb-24 px-6 text-center overflow-hidden">
+    <!-- Ambient background light -->
+    <div class="ambient-glow animate-pulse opacity-60"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+      
+      <div class="apple-reveal">
+        <span class="inline-block px-4 py-1.5 mb-8 text-[11px] font-bold tracking-[0.2em] uppercase bg-white border border-gray-100 text-gray-500 rounded-full shadow-sm">
+          The Workflow
+        </span>
+      </div>
+
+      <h1 class="apple-reveal delay-100 text-5xl md:text-7xl font-semibold tracking-tighter mb-8 leading-[1.05] text-dark">
+        Effortless <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">Clarity.</span>
       </h1>
-      <p class="text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto font-medium leading-tight">
-        We don’t replace studying. We <b>remove the noise</b> so you can <b>master the content.</b>
+      
+      <p class="apple-reveal delay-200 text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto font-medium leading-relaxed">
+        We don’t replace studying. We <span class="text-dark">remove the noise</span> so you can master the content.
       </p>
+
+      <!-- Subtle scroll indicator -->
+      <div class="apple-reveal delay-300 mt-16 animate-bounce opacity-30">
+        <span class="material-icons-round text-3xl">keyboard_arrow_down</span>
+      </div>
     </div>
   </section>
 
   <!-- THE PROCESS SECTION -->
-  <section class="max-w-5xl mx-auto px-6 py-20">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       
       <!-- STEP 1 -->
-      <div class="group p-8 bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-500">
-        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
-          <span class="material-icons-round text-white">upload_file</span>
+      <div class="apple-reveal apple-card group p-10 bg-white rounded-[2.5rem] border border-gray-100/50 shadow-subtle relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        
+        <div class="w-14 h-14 bg-[#F5F5F7] rounded-2xl flex items-center justify-center mb-6 text-dark group-hover:scale-110 transition-transform duration-500">
+          <span class="material-icons-round">upload_file</span>
         </div>
-        <h2 class="text-2xl font-bold mb-4">1. Drop your <span class="text-blue-600">Source</span></h2>
-        <p class="text-gray-500 leading-snug">
-          Upload <b>PDFs, Word docs,</b> or <b>handwritten photos</b>. No formatting required. Just the raw data.
+        <h2 class="text-2xl font-bold mb-3 tracking-tight">1. Drop your Source</h2>
+        <p class="text-gray-500 leading-relaxed font-medium">
+          Upload PDFs, Word docs, or handwritten photos. We handle the raw data, no formatting required.
         </p>
       </div>
 
       <!-- STEP 2 -->
-      <div class="group p-8 bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-500">
-        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
-          <span class="material-icons-round text-white">psychology</span>
+      <div class="apple-reveal delay-100 apple-card group p-10 bg-white rounded-[2.5rem] border border-gray-100/50 shadow-subtle relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+        <div class="w-14 h-14 bg-[#F5F5F7] rounded-2xl flex items-center justify-center mb-6 text-dark group-hover:scale-110 transition-transform duration-500">
+          <span class="material-icons-round">psychology</span>
         </div>
-        <h2 class="text-2xl font-bold mb-4">2. AI <span class="text-blue-600">Distillation</span></h2>
-        <p class="text-gray-500 leading-snug">
-          GoStudy! <b>identifies core concepts</b> and <b>maps connections</b>, stripping away the filler text instantly.
+        <h2 class="text-2xl font-bold mb-3 tracking-tight">2. AI Distillation</h2>
+        <p class="text-gray-500 leading-relaxed font-medium">
+          GoStudy! identifies core concepts and maps connections, stripping away the filler text instantly.
         </p>
       </div>
 
       <!-- STEP 3 -->
-      <div class="group p-8 bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-500">
-        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
-          <span class="material-icons-round text-white">auto_awesome</span>
+      <div class="apple-reveal delay-200 apple-card group p-10 bg-white rounded-[2.5rem] border border-gray-100/50 shadow-subtle relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+        <div class="w-14 h-14 bg-[#F5F5F7] rounded-2xl flex items-center justify-center mb-6 text-dark group-hover:scale-110 transition-transform duration-500">
+          <span class="material-icons-round">auto_awesome</span>
         </div>
-        <h2 class="text-2xl font-bold mb-4">3. Precision <span class="text-blue-600">Output</span></h2>
-        <p class="text-gray-500 leading-snug">
-          Receive a <b>clean summary</b> and <b>Active Recall quizzes</b>. Designed for <b>maximum retention</b>.
+        <h2 class="text-2xl font-bold mb-3 tracking-tight">3. Precision Output</h2>
+        <p class="text-gray-500 leading-relaxed font-medium">
+          Receive a clean summary and Active Recall quizzes. Designed specifically for maximum retention.
         </p>
       </div>
 
       <!-- STEP 4 -->
-      <div class="group p-8 bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-500">
-        <div class="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-200">
-          <span class="material-icons-round text-white">bolt</span>
+      <div class="apple-reveal delay-300 apple-card group p-10 bg-white rounded-[2.5rem] border border-gray-100/50 shadow-subtle relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+        <div class="w-14 h-14 bg-[#F5F5F7] rounded-2xl flex items-center justify-center mb-6 text-dark group-hover:scale-110 transition-transform duration-500">
+          <span class="material-icons-round">bolt</span>
         </div>
-        <h2 class="text-2xl font-bold mb-4">4. Rapid <span class="text-blue-600">Mastery</span></h2>
-        <p class="text-gray-500 leading-snug">
-          Fits your routine. <b>10-minute reviews</b> or deep dives. Study <b>smarter</b>, not longer.
+        <h2 class="text-2xl font-bold mb-3 tracking-tight">4. Rapid Mastery</h2>
+        <p class="text-gray-500 leading-relaxed font-medium">
+          Fits your routine. 10-minute reviews or deep dives. Study smarter, not longer.
         </p>
       </div>
 
     </div>
   </section>
 
-  <!-- NEW "WHY IT WORKS" SECTION -->
-  <section class="py-24 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-12">
-        <div class="md:w-1/2">
-          <h2 class="text-4xl font-extrabold tracking-tight mb-6">Designed for the <br><span class="text-blue-600">Modern Learner.</span></h2>
-          <ul class="space-y-4">
-            <li class="flex items-center gap-3 font-medium text-lg">
-              <span class="material-icons-round text-blue-600">check_circle</span> 
-              <span><b>Zero</b> manual formatting</span>
-            </li>
-            <li class="flex items-center gap-3 font-medium text-lg">
-              <span class="material-icons-round text-blue-600">check_circle</span> 
-              <span><b>Science-backed</b> active recall</span>
-            </li>
-            <li class="flex items-center gap-3 font-medium text-lg">
-              <span class="material-icons-round text-blue-600">check_circle</span> 
-              <span><b>Cross-platform</b> accessibility</span>
-            </li>
-          </ul>
+  <!-- FEATURE SECTION -->
+  <section class="py-24 bg-white relative">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-16">
+        
+        <div class="md:w-5/12 apple-reveal">
+          <h2 class="text-4xl md:text-5xl font-semibold tracking-tighter mb-8 text-dark">
+            Designed for the <br><span class="text-blue-600">modern learner.</span>
+          </h2>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4 group">
+              <span class="material-icons-round text-blue-600 mt-1 transition-transform group-hover:scale-125 duration-300">check_circle</span> 
+              <div>
+                <p class="font-bold text-lg text-dark">Zero formatting</p>
+                <p class="text-sm text-gray-500">Just drop the file. We do the rest.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="material-icons-round text-blue-600 mt-1 transition-transform group-hover:scale-125 duration-300">check_circle</span> 
+              <div>
+                <p class="font-bold text-lg text-dark">Science-backed</p>
+                <p class="text-sm text-gray-500">Built on active recall principles.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="material-icons-round text-blue-600 mt-1 transition-transform group-hover:scale-125 duration-300">check_circle</span> 
+              <div>
+                <p class="font-bold text-lg text-dark">Cross-platform</p>
+                <p class="text-sm text-gray-500">Syncs across all your devices.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="md:w-1/2 w-full aspect-video bg-gradient-to-br from-blue-500 to-blue-700 rounded-[2.5rem] shadow-2xl flex items-center justify-center overflow-hidden relative">
-            <!-- Decorative Element -->
-            <div class="absolute inset-0 opacity-50 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-            <span class="text-white font-bold text-xl relative z-10">Interface Preview</span>
+
+        <!-- Floating UI Element -->
+        <div class="md:w-7/12 w-full apple-reveal delay-200">
+            <div class="aspect-video bg-gradient-to-br from-[#007AFF] to-[#0055B3] rounded-[2rem] shadow-glow flex items-center justify-center overflow-hidden relative">
+                <!-- Inner glassmorphism card -->
+                <div class="w-3/4 h-3/4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-2xl flex flex-col items-center justify-center relative z-10">
+                    <span class="material-icons-round text-white/80 text-6xl mb-4">smart_toy</span>
+                    <p class="text-white font-medium">Generating Quiz...</p>
+                    <div class="w-48 h-1.5 bg-black/20 rounded-full mt-4 overflow-hidden">
+                        <div class="h-full bg-white/80 w-2/3 rounded-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Background decoration -->
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-30 mix-blend-overlay"></div>
+                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- CTA SECTION -->
-  <section class="py-32 bg-[#fafafa] relative overflow-hidden">
-    <div class="max-w-3xl mx-auto text-center px-6 relative z-10">
-      <h2 class="text-5xl font-black mb-8 tracking-tighter">Ready to <span class="text-blue-600">Focus?</span></h2>
-      <a href="login.html" class="inline-flex items-center justify-center bg-blue-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-xl shadow-blue-200">
+  <section class="py-32 bg-[#FAFAFA] relative overflow-hidden text-center">
+    <!-- Center glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto px-6 relative z-10 apple-reveal">
+      <h2 class="text-5xl md:text-6xl font-semibold mb-10 tracking-tighter text-dark">
+        Ready to <span class="text-blue-600">Focus?</span>
+      </h2>
+      
+      <a href="login.html" class="inline-flex items-center justify-center bg-blue-600 text-white px-10 py-5 rounded-full text-xl font-medium hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-blue-500/20 group">
         Get Started for Free
-        <span class="material-icons-round ml-2">arrow_forward</span>
+        <span class="material-icons-round ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
       </a>
-      <p class="mt-8 text-gray-400 font-medium">
-        <b>No credit card</b> required. Start in seconds.
+      
+      <p class="mt-8 text-gray-400 font-medium text-sm">
+        No credit card required. Start in seconds.
       </p>
     </div>
   </section>
 
-</main>
+  </main>
 
-<style>
-  /* Extra punchy Apple-style refinements */
-  body {
-    -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.02em;
-  }
-  
-  .material-icons-round {
-    font-size: 24px;
-  }
-
-  /* Electric blue glow on hover */
-  .group:hover {
-    transform: translateY(-5px);
-  }
-</style>
-
-  <!-- footer -->
   <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div class="max-w-sm">
-          <a class="font-bold text-2xl text-dark tracking-tight mb-4 block" href="/index.html">GoStudy!</a>
-          <p class="text-gray-500 leading-relaxed">
-            The intelligent study companion for high performers.
-          </p>
-        </div>
-        
-        <div class="flex gap-12 md:gap-24">
-          <div>
-            <h4 class="font-bold text-dark mb-6">Product</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/articles/" class="hover:text-primary transition-colors">Articles</a></li>
-              <li><a href="/pricing" class="hover:text-primary transition-colors">Pricing</a></li>
-              <li><a href="/onboarding/" class="hover:text-primary transition-colors">Onboarding</a></li>
-              <li><a href="/parents/" class="hover:text-primary transition-colors">Parents</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-dark mb-6">Company</h4>
-            <ul class="space-y-4 text-sm text-gray-500 font-medium">
-              <li><a href="/about/" class="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="/methodology/" class="hover:text-primary transition-colors">Methodology</a></li>
-              <li><a href="/how-it-works/" class="text-primary font-bold">How It Works</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-        <div>&copy; 2025 GoStudy Inc. All rights reserved.</div>
+      <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+        <div class="mb-4 md:mb-0">&copy; 2025 GoStudy Inc.</div>
         <div class="flex gap-6">
-          <a href="/privacy/" class="hover:text-dark transition-colors">Privacy Policy</a>
-          <a href="/terms/" class="hover:text-dark transition-colors">Terms</a>
+          <a href="#" class="hover:text-dark transition-colors">Privacy</a>
+          <a href="#" class="hover:text-dark transition-colors">Terms</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script>
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
+    // The "Apple Reveal" Engine
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15 // Trigger when 15% visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('active');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Only animate once
         }
       });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-    revealElements.forEach(el => revealObserver.observe(el));
+    }, observerOptions);
+
+    document.querySelectorAll('.apple-reveal').forEach((el) => {
+      observer.observe(el);
+    });
   </script>
-  <script type="module" src="/backend/js/auth.js"></script>
-  <script src="/assets/js/navbar.js"></script>
 </body>
 </html>

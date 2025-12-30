@@ -446,7 +446,7 @@
               </div>
 
               <!-- PayPal Container -->
-              <div id="paypal-button-container-P-67G68648B35652948NFFQ7BA" class="w-full relative z-20"></div>
+              <div id="paypal-button-container-P-0WC83277A42555440NFJ3TVY" class="w-full relative z-20"></div>
               
               <div class="mt-6 flex items-center justify-center gap-2 text-gray-500 text-xs">
                 <span class="material-icons-round text-sm">lock</span>
@@ -555,12 +555,12 @@
           // Pass user ID to PayPal as custom_id for webhook matching
           const user = auth.currentUser;
           return actions.subscription.create({
-            plan_id: 'P-67G68648B35652948NFFQ7BA',
+            plan_id: 'P-0WC83277A42555440NFJ3TVY',
             custom_id: user ? user.uid : undefined
           });
         },
         onApprove: async function(data, actions) {
-          const container = document.getElementById('paypal-button-container-P-67G68648B35652948NFFQ7BA');
+          const container = document.getElementById('paypal-button-container-P-0WC83277A42555440NFJ3TVY');
           
           // Show processing state
           container.innerHTML = `
@@ -629,7 +629,7 @@
             `;
           }
         }
-    }).render('#paypal-button-container-P-67G68648B35652948NFFQ7BA');
+    }).render('#paypal-button-container-P-0WC83277A42555440NFJ3TVY');
   </script>
 </body>
 </html>

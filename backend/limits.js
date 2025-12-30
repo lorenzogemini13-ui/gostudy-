@@ -4,3 +4,5 @@ function canUpload(plan, uploads) {
   if (plan === 'pro') return true;
   return false;
 }
+
+module.exports = { canUpload };

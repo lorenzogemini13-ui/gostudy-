@@ -1023,8 +1023,14 @@ app.delete('/api/account', authenticate, async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`------------------------------------------------`);
-    console.log(`🚀 GoStudy Backend running on port ${PORT}`);
-    console.log(`------------------------------------------------`);
-});
+
+// Only start server if run directly (not imported)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`------------------------------------------------`);
+        console.log(`🚀 GoStudy Backend running on port ${PORT}`);
+        console.log(`------------------------------------------------`);
+    });
+}
+
+module.exports = app;
