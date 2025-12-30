@@ -6,22 +6,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - GoStudy!</title>
-    
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+
     <!-- PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-      <!-- favicon -->
-  <link rel="icon" href="assets/go-logo.png?v=2" type="image/png" />
-  <link rel="shortcut icon" href="assets/go-logo.png?v=2" type="image/png" />
-  <link rel="apple-touch-icon" href="assets/go-logo.png?v=2" />
-  <meta name="theme-color" content="#007AFF" />
+    <!-- favicon -->
+    <link rel="icon" href="assets/go-logo.png?v=2" type="image/png" />
+    <link rel="shortcut icon" href="assets/go-logo.png?v=2" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/go-logo.png?v=2" />
+    <meta name="theme-color" content="#007AFF" />
 
     <script>
       tailwind.config = {
@@ -37,9 +43,9 @@
             },
             fontFamily: { sans: ["Inter", "sans-serif"] },
             boxShadow: {
-              'soft': '0 4px 20px rgba(0, 0, 0, 0.03)',
-              'card': '0 2px 8px rgba(0, 0, 0, 0.04)',
-            }
+              soft: "0 4px 20px rgba(0, 0, 0, 0.03)",
+              card: "0 2px 8px rgba(0, 0, 0, 0.04)",
+            },
           },
         },
       };
@@ -64,275 +70,517 @@
         transform: translateY(10px);
       }
       @keyframes enter {
-        to { opacity: 1; transform: translateY(0); }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
-</head>
-<body class="bg-bg font-sans text-text h-screen flex overflow-hidden">
-
+  </head>
+  <body class="bg-bg font-sans text-text h-screen flex overflow-hidden">
     <!-- SIDEBAR -->
-<aside class="w-72 glass-sidebar border-r border-gray-200 flex flex-col h-screen flex-shrink-0 z-50 bg-white/80 backdrop-blur-md">
-    
-    <div class="h-20 flex items-center px-6">
+    <aside
+      class="w-72 glass-sidebar border-r border-gray-200 flex flex-col h-screen flex-shrink-0 z-50 bg-white/80 backdrop-blur-md"
+    >
+      <div class="h-20 flex items-center px-6">
         <a href="/index.html" class="flex items-center gap-3 group">
-            <div class="p-1.5 bg-blue-600 rounded-lg group-hover:scale-105 transition-transform">
-                <img src="/assets/go-logo.png?v=2" alt="GoStudy! Logo" class="w-6 h-6 brightness-0 invert">
-            </div>
-            <span class="font-bold text-xl tracking-tight text-slate-900">GoStudy!</span>
+          <div
+            class="p-1.5 rounded-lg group-hover:scale-105 transition-transform"
+          >
+            <img
+              src="/assets/go-logo.png?v=2"
+              alt="GoStudy! Logo"
+              class="w-6 h-6"
+            />
+          </div>
+          <span class="font-bold text-xl tracking-tight text-slate-900"
+            >GoStudy!</span
+          >
         </a>
-    </div>
+      </div>
 
-    <div class="flex-1 overflow-y-auto px-4 py-4">
-        <p class="px-4 text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">Main Menu</p>
-        
+      <div class="flex-1 overflow-y-auto px-4 py-4">
+        <p
+          class="px-4 text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4"
+        >
+          Main Menu
+        </p>
+
         <nav class="space-y-1.5">
-            <button id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-700 font-bold border border-blue-100/50 transition-all shadow-sm">
-                <span class="material-icons-round text-[22px]">dashboard</span>
-                <span class="text-sm">Dashboard</span>
-            </button>
+          <button
+            id="nav-dashboard"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-700 font-bold border border-blue-100/50 transition-all shadow-sm"
+          >
+            <span class="material-icons-round text-[22px]">dashboard</span>
+            <span class="text-sm">Dashboard</span>
+          </button>
 
-            <button id="nav-history" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-white hover:text-gray-900 hover:shadow-sm border border-transparent transition-all text-left">
-                <span class="material-icons-round text-[22px]">history</span>
-                <span class="text-sm">My Study Plans</span>
-            </button>
+          <button
+            id="nav-history"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-white hover:text-gray-900 hover:shadow-sm border border-transparent transition-all text-left"
+          >
+            <span class="material-icons-round text-[22px]">history</span>
+            <span class="text-sm">My Study Plans</span>
+          </button>
         </nav>
-    </div>
+      </div>
 
-    <!-- Usage Indicator -->
-    <div class="px-4 pb-2">
-        <div id="usage-widget" class="rounded-2xl bg-blue-50/50 border border-blue-100 p-4 hidden">
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Uploads Used</span>
-                <a href="/pricing/pro/" id="upgrade-link" class="text-[10px] font-bold text-blue-600 hover:text-blue-700 hidden">Upgrade</a>
-            </div>
-            <div class="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
-                <div id="usage-bar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-            </div>
-            <div class="flex justify-between text-xs">
-                <span id="usage-text" class="font-bold text-gray-700">0 / 3</span>
-                <span id="usage-remaining" class="text-gray-400">3 left</span>
-            </div>
+      <!-- Usage Indicator -->
+      <div class="px-4 pb-2">
+        <div
+          id="usage-widget"
+          class="rounded-2xl bg-blue-50/50 border border-blue-100 p-4 hidden"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <span
+              class="text-xs font-bold text-gray-500 uppercase tracking-wide"
+              >Uploads Used</span
+            >
+            <a
+              href="/pricing/pro/"
+              id="upgrade-link"
+              class="text-[10px] font-bold text-blue-600 hover:text-blue-700 hidden"
+              >Upgrade</a
+            >
+          </div>
+          <div class="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
+            <div
+              id="usage-bar"
+              class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
+              style="width: 0%"
+            ></div>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span id="usage-text" class="font-bold text-gray-700">0 / 3</span>
+            <span id="usage-remaining" class="text-gray-400">3 left</span>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="p-4 mt-auto">
+      <div class="p-4 mt-auto">
         <div class="rounded-2xl bg-gray-50/50 border border-gray-100 p-2">
-            <a href="/profile" class="block">
-                <button class="flex items-center gap-3 p-2 w-full rounded-xl hover:bg-white hover:shadow-sm transition-all text-left group">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shadow-md">
-                            <span id="sidebar-initials">G</span>
-                            <img id="sidebar-img" src="" class="w-full h-full object-cover hidden">
-                        </div>
-                        <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                    </div>
-                    
-                    <div class="flex-1 overflow-hidden">
-                        <p id="sidebar-name" class="text-sm font-bold text-slate-800 truncate">Guest User</p>
-                        <p id="sidebar-plan" class="text-[11px] font-medium text-blue-600">Free Plan</p>
-                    </div>
-                    
-                    <span class="material-icons-round text-gray-400 group-hover:text-gray-600 transition-colors">settings</span>
-                </button>
-            </a>
+          <a href="/profile" class="block">
+            <button
+              class="flex items-center gap-3 p-2 w-full rounded-xl hover:bg-white hover:shadow-sm transition-all text-left group"
+            >
+              <div class="relative">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shadow-md"
+                >
+                  <span id="sidebar-initials">G</span>
+                  <img
+                    id="sidebar-img"
+                    src=""
+                    class="w-full h-full object-cover hidden"
+                  />
+                </div>
+                <div
+                  class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"
+                ></div>
+              </div>
+
+              <div class="flex-1 overflow-hidden">
+                <p
+                  id="sidebar-name"
+                  class="text-sm font-bold text-slate-800 truncate"
+                >
+                  Guest User
+                </p>
+                <p
+                  id="sidebar-plan"
+                  class="text-[11px] font-medium text-blue-600"
+                >
+                  Free Plan
+                </p>
+              </div>
+
+              <span
+                class="material-icons-round text-gray-400 group-hover:text-gray-600 transition-colors"
+                >settings</span
+              >
+            </button>
+          </a>
         </div>
-    </div>
-</aside>
+      </div>
+    </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden relative"> 
-        
-        <!-- Top Bar -->
-        <header class="h-20 flex items-center justify-between px-10 flex-shrink-0 z-40">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Overview</h2>
-            </div>
-            
-            <div class="flex items-center gap-6">
-                 
-            </div>
-        </header>
-
-        <!-- Scrollable Canvas -->
-        <div class="flex-1 overflow-y-auto p-10 scroll-smooth">
-            <div class="max-w-6xl mx-auto pb-20">
-
-                <!-- 1. UPLOAD SECTION -->
-                <div id="upload-section" class="mb-12 animate-enter">
-                     <!-- Hero Banner -->
-                     <div class="text-center mb-10">
-                        <h1 class="text-4xl font-bold text-gray-900 mb-3 tracking-tight">What do you want to learn today?</h1>
-                        <p class="text-text-secondary text-lg">Upload your lecture notes, documents, or books.</p>
-                     </div>
-
-                     <div class="bg-surface rounded-3xl p-1 shadow-soft max-w-3xl mx-auto border border-gray-100">
-                        <div class="p-8 border-2 border-dashed border-gray-200 rounded-[20px] text-center hover:border-primary/50 hover:bg-blue-50/30 transition-all cursor-pointer group relative" onclick="document.getElementById('file-input').click()">
-                            
-                            <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt" />
-                            
-                            <div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm">
-                                <span class="material-icons-round text-3xl">cloud_upload</span>
-                            </div>
-
-                            <p class="text-gray-900 font-semibold text-lg mb-2">Click to upload or drag and drop</p>
-                            <p class="text-gray-400 text-sm mb-8">PDF, DOCX, or TXT (Max 5MB)</p>
-
-                            <div class="flex justify-center gap-4">
-                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Auto-Summary</span>
-                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Quiz Generation</span>
-                                <span class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium">Concept Maps</span>
-                            </div>
-                        </div>
-                     </div>
-
-                     <!-- Difficulty Toggle -->
-                     <div class="mt-8 flex justify-center">
-                          <div class="inline-flex p-1.5 bg-white rounded-full shadow-card border border-gray-200">
-                            <button type="button" data-level="High School" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md">HIGH SCHOOL</button>
-                            <button type="button" data-level="University" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900">UNIVERSITY</button>
-                            <button type="button" data-level="Professional" class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900">PRO</button>
-                          </div>
-                     </div>
-                     <p id="validation-error" class="hidden text-red-500 text-sm font-medium mt-4 text-center"></p>
-                </div>
-                
-                <!-- 1.5 HISTORY SECTION -->
-                <div id="history-section" class="hidden animate-enter">
-                    <div class="flex justify-between items-center mb-8">
-                        <div>
-                            <h1 class="text-3xl font-bold text-gray-900 tracking-tight">My Study Plans</h1>
-                            <p class="text-text-secondary">Access and manage your previous document analyses.</p>
-                        </div>
-                        <button onclick="showSection('upload')" class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all font-bold text-sm">
-                            <span class="material-icons-round text-sm">add</span> New Plan
-                        </button>
-                    </div>
-
-                    <div id="history-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- History cards injected here -->
-                    </div>
-
-                    <div id="history-empty" class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
-                         <div class="w-20 h-20 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="material-icons-round text-4xl">inventory_2</span>
-                         </div>
-                         <h3 class="text-xl font-bold text-gray-900 mb-2">No saved plans yet</h3>
-                         <p class="text-gray-500 mb-8">Generated plans will appear here for easy access.</p>
-                         <button onclick="showSection('upload')" class="text-primary font-bold hover:underline">Start your first analysis</button>
-                    </div>
-                </div>
-
-                <!-- 2. LOADING STATE -->
-                <div id="loading-section" class="hidden min-h-[400px] flex-col items-center justify-center text-center animate-enter">
-                      <div class="relative w-24 h-24 mb-8">
-                          <div class="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
-                          <div class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                          <span class="material-icons-round absolute inset-0 flex items-center justify-center text-primary text-3xl animate-pulse">auto_awesome</span>
-                      </div>
-                      <h3 class="text-2xl font-bold text-gray-900 mb-2">Analyzing Content</h3>
-                      <p class="text-gray-500 text-sm mb-8 max-w-md mx-auto">Our AI is reading your document, extracting key concepts, and building your personalized memory palace...</p>
-                      
-                      <div class="w-64 bg-gray-100 rounded-full h-2 overflow-hidden mx-auto">
-                          <div id="loading-bar" class="h-full bg-primary w-0 rounded-full transition-all duration-500 ease-out"></div>
-                      </div>
-                      <p id="loading-percent" class="text-xs text-primary font-bold mt-3">0%</p>
-                </div>
-
-                <!-- 3. RESULTS DASHBOARD -->
-                <div id="results-section" class="hidden space-y-8 animate-enter">
-                    
-                    <!-- Actions Header -->
-                    <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                        <div class="flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center">
-                                <span class="material-icons-round">check_circle</span>
-                            </div>
-                            <div>
-                                <h2 class="text-lg font-bold text-gray-900">Study Plan Ready</h2>
-                                <p class="text-xs text-gray-500" id="file-name-display">Document Analysis</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <button onclick="exportMarkdown()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium">
-                                <span class="material-icons-round text-sm">code</span> Markdown
-                            </button>
-                             <button onclick="exportPDF()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all text-sm font-medium">
-                                <span class="material-icons-round text-sm">download</span> Download PDF
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Grid Layout -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        
-                        <!-- Summary (Full Width) -->
-                        <div class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
-                             <div class="flex items-center gap-2 mb-4">
-                                <span class="bg-yellow-100 text-yellow-700 p-1.5 rounded-lg"><span class="material-icons-round text-lg">lightbulb</span></span>
-                                <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Executive Summary</h3>
-                             </div>
-                             <p id="result-summary" class="text-gray-700 leading-relaxed text-lg font-medium"></p>
-                        </div>
-
-                        <!-- Concept Map (Feature reale dal backend) -->
-                        <div class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
-                            <div class="flex items-center gap-2 mb-6">
-                               <span class="bg-purple-100 text-purple-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">hub</span></span>
-                               <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Concept Map</h3>
-                            </div>
-                            <div id="result-concepts" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <!-- Concepts injected here -->
-                            </div>
-                       </div>
-
-                        <!-- Active Recall Quiz -->
-                         <div class="lg:col-span-2 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100 flex flex-col">
-                             <div class="flex justify-between items-center mb-6">
-                                 <div class="flex items-center gap-2">
-                                     <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">quiz</span></span>
-                                     <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Active Recall</h3>
-                                 </div>
-                                 <button onclick="toggleAnswers()" class="text-xs font-bold text-primary bg-blue-50 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors">Show/Hide Answers</button>
-                             </div>
-                             <div id="result-quiz" class="space-y-4"></div>
-                        </div>
-
-                        <!-- Spaced Repetition Schedule -->
-                        <div class="lg:col-span-1 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100">
-                             <div class="flex items-center gap-2 mb-6">
-                                 <span class="bg-green-100 text-green-600 p-1.5 rounded-lg"><span class="material-icons-round text-lg">calendar_today</span></span>
-                                 <h3 class="text-gray-900 font-bold text-sm uppercase tracking-wide">Schedule</h3>
-                             </div>
-                             <!-- Timeline -->
-                             <div class="relative pl-4 border-l-2 border-gray-100 space-y-8" id="result-schedule">
-                                <!-- Items injected here -->
-                             </div>
-                        </div>
-
-                         <!-- Memory Palace -->
-                        <div class="lg:col-span-3 bg-gradient-to-br from-indigo-600 to-primary p-10 rounded-3xl shadow-xl text-white relative overflow-hidden">
-                             <!-- Decorative circles -->
-                             <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
-                             <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-10 -mb-10 pointer-events-none"></div>
-                             
-                             <div class="relative z-10">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span class="bg-white/20 p-2 rounded-xl backdrop-blur-sm"><span class="material-icons-round">psychology</span></span>
-                                    <h3 class="font-bold text-sm uppercase tracking-widest opacity-90">Memory Palace Technique</h3>
-                                </div>
-                                <p id="result-palace" class="text-xl md:text-2xl font-serif italic leading-relaxed text-white/95"></p>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Footer -->
-                <div class="mt-20 text-center border-t border-gray-200 pt-8">
-                    <p class="text-gray-400 text-sm">Powered by GoStudy Intelligence &copy; 2025</p>
-                </div>
-
-            </div>
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+      <!-- Top Bar -->
+      <header
+        class="h-20 flex items-center justify-between px-10 flex-shrink-0 z-40"
+      >
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 tracking-tight">
+            Overview
+          </h2>
         </div>
+
+        <div class="flex items-center gap-6"></div>
+      </header>
+
+      <!-- Scrollable Canvas -->
+      <div class="flex-1 overflow-y-auto p-10 scroll-smooth">
+        <div class="max-w-6xl mx-auto pb-20">
+          <!-- 1. UPLOAD SECTION -->
+          <div id="upload-section" class="mb-12 animate-enter">
+            <!-- Hero Banner -->
+            <div class="text-center mb-10">
+              <h1 class="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
+                What do you want to learn today?
+              </h1>
+              <p class="text-text-secondary text-lg">
+                Upload your lecture notes, documents, or books.
+              </p>
+            </div>
+
+            <div
+              class="bg-surface rounded-3xl p-1 shadow-soft max-w-3xl mx-auto border border-gray-100"
+            >
+              <div
+                class="p-8 border-2 border-dashed border-gray-200 rounded-[20px] text-center hover:border-primary/50 hover:bg-blue-50/30 transition-all cursor-pointer group relative"
+                onclick="document.getElementById('file-input').click()"
+              >
+                <input
+                  type="file"
+                  id="file-input"
+                  class="hidden"
+                  accept=".pdf,.docx,.txt"
+                />
+
+                <div
+                  class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm"
+                >
+                  <span class="material-icons-round text-3xl"
+                    >cloud_upload</span
+                  >
+                </div>
+
+                <p class="text-gray-900 font-semibold text-lg mb-2">
+                  Click to upload or drag and drop
+                </p>
+                <p class="text-gray-400 text-sm mb-8">
+                  PDF, DOCX, or TXT (Max 5MB)
+                </p>
+
+                <div class="flex justify-center gap-4">
+                  <span
+                    class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium"
+                    >Auto-Summary</span
+                  >
+                  <span
+                    class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium"
+                    >Quiz Generation</span
+                  >
+                  <span
+                    class="px-3 py-1 rounded-md bg-gray-100 text-gray-500 text-xs font-medium"
+                    >Concept Maps</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Difficulty Toggle -->
+            <div class="mt-8 flex justify-center">
+              <div
+                class="inline-flex p-1.5 bg-white rounded-full shadow-card border border-gray-200"
+              >
+                <button
+                  type="button"
+                  data-level="High School"
+                  class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md"
+                >
+                  HIGH SCHOOL
+                </button>
+                <button
+                  type="button"
+                  data-level="University"
+                  class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900"
+                >
+                  UNIVERSITY
+                </button>
+                <button
+                  type="button"
+                  data-level="Professional"
+                  class="difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900"
+                >
+                  PRO
+                </button>
+              </div>
+            </div>
+            <p
+              id="validation-error"
+              class="hidden text-red-500 text-sm font-medium mt-4 text-center"
+            ></p>
+          </div>
+
+          <!-- 1.5 HISTORY SECTION -->
+          <div id="history-section" class="hidden animate-enter">
+            <div class="flex justify-between items-center mb-8">
+              <div>
+                <h1 class="text-3xl font-bold text-gray-900 tracking-tight">
+                  My Study Plans
+                </h1>
+                <p class="text-text-secondary">
+                  Access and manage your previous document analyses.
+                </p>
+              </div>
+              <button
+                onclick="showSection('upload')"
+                class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all font-bold text-sm"
+              >
+                <span class="material-icons-round text-sm">add</span> New Plan
+              </button>
+            </div>
+
+            <div
+              id="history-list"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <!-- History cards injected here -->
+            </div>
+
+            <div
+              id="history-empty"
+              class="hidden text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200"
+            >
+              <div
+                class="w-20 h-20 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center mx-auto mb-6"
+              >
+                <span class="material-icons-round text-4xl">inventory_2</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                No saved plans yet
+              </h3>
+              <p class="text-gray-500 mb-8">
+                Generated plans will appear here for easy access.
+              </p>
+              <button
+                onclick="showSection('upload')"
+                class="text-primary font-bold hover:underline"
+              >
+                Start your first analysis
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. LOADING STATE -->
+          <div
+            id="loading-section"
+            class="hidden min-h-[400px] flex-col items-center justify-center text-center animate-enter"
+          >
+            <div class="relative w-24 h-24 mb-8">
+              <div
+                class="absolute inset-0 border-4 border-gray-100 rounded-full"
+              ></div>
+              <div
+                class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"
+              ></div>
+              <span
+                class="material-icons-round absolute inset-0 flex items-center justify-center text-primary text-3xl animate-pulse"
+                >auto_awesome</span
+              >
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+              Analyzing Content
+            </h3>
+            <p class="text-gray-500 text-sm mb-8 max-w-md mx-auto">
+              Our AI is reading your document, extracting key concepts, and
+              building your personalized memory palace...
+            </p>
+
+            <div
+              class="w-64 bg-gray-100 rounded-full h-2 overflow-hidden mx-auto"
+            >
+              <div
+                id="loading-bar"
+                class="h-full bg-primary w-0 rounded-full transition-all duration-500 ease-out"
+              ></div>
+            </div>
+            <p id="loading-percent" class="text-xs text-primary font-bold mt-3">
+              0%
+            </p>
+          </div>
+
+          <!-- 3. RESULTS DASHBOARD -->
+          <div id="results-section" class="hidden space-y-8 animate-enter">
+            <!-- Actions Header -->
+            <div
+              class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="h-10 w-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center"
+                >
+                  <span class="material-icons-round">check_circle</span>
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900">
+                    Study Plan Ready
+                  </h2>
+                  <p class="text-xs text-gray-500" id="file-name-display">
+                    Document Analysis
+                  </p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <button
+                  onclick="exportMarkdown()"
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium"
+                >
+                  <span class="material-icons-round text-sm">code</span>
+                  Markdown
+                </button>
+                <button
+                  onclick="exportPDF()"
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white hover:bg-primary-hover shadow-lg shadow-blue-500/20 transition-all text-sm font-medium"
+                >
+                  <span class="material-icons-round text-sm">download</span>
+                  Download PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <!-- Summary (Full Width) -->
+              <div
+                class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100"
+              >
+                <div class="flex items-center gap-2 mb-4">
+                  <span class="bg-yellow-100 text-yellow-700 p-1.5 rounded-lg"
+                    ><span class="material-icons-round text-lg"
+                      >lightbulb</span
+                    ></span
+                  >
+                  <h3
+                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
+                  >
+                    Executive Summary
+                  </h3>
+                </div>
+                <p
+                  id="result-summary"
+                  class="text-gray-700 leading-relaxed text-lg font-medium"
+                ></p>
+              </div>
+
+              <!-- Concept Map (Feature reale dal backend) -->
+              <div
+                class="lg:col-span-3 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100"
+              >
+                <div class="flex items-center gap-2 mb-6">
+                  <span class="bg-purple-100 text-purple-600 p-1.5 rounded-lg"
+                    ><span class="material-icons-round text-lg">hub</span></span
+                  >
+                  <h3
+                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
+                  >
+                    Concept Map
+                  </h3>
+                </div>
+                <div
+                  id="result-concepts"
+                  class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
+                  <!-- Concepts injected here -->
+                </div>
+              </div>
+
+              <!-- Active Recall Quiz -->
+              <div
+                class="lg:col-span-2 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100 flex flex-col"
+              >
+                <div class="flex justify-between items-center mb-6">
+                  <div class="flex items-center gap-2">
+                    <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"
+                      ><span class="material-icons-round text-lg"
+                        >quiz</span
+                      ></span
+                    >
+                    <h3
+                      class="text-gray-900 font-bold text-sm uppercase tracking-wide"
+                    >
+                      Active Recall
+                    </h3>
+                  </div>
+                  <button
+                    onclick="toggleAnswers()"
+                    class="text-xs font-bold text-primary bg-blue-50 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors"
+                  >
+                    Show/Hide Answers
+                  </button>
+                </div>
+                <div id="result-quiz" class="space-y-4"></div>
+              </div>
+
+              <!-- Spaced Repetition Schedule -->
+              <div
+                class="lg:col-span-1 bg-surface p-8 rounded-3xl shadow-soft border border-gray-100"
+              >
+                <div class="flex items-center gap-2 mb-6">
+                  <span class="bg-green-100 text-green-600 p-1.5 rounded-lg"
+                    ><span class="material-icons-round text-lg"
+                      >calendar_today</span
+                    ></span
+                  >
+                  <h3
+                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
+                  >
+                    Schedule
+                  </h3>
+                </div>
+                <!-- Timeline -->
+                <div
+                  class="relative pl-4 border-l-2 border-gray-100 space-y-8"
+                  id="result-schedule"
+                >
+                  <!-- Items injected here -->
+                </div>
+              </div>
+
+              <!-- Memory Palace -->
+              <div
+                class="lg:col-span-3 bg-gradient-to-br from-indigo-600 to-primary p-10 rounded-3xl shadow-xl text-white relative overflow-hidden"
+              >
+                <!-- Decorative circles -->
+                <div
+                  class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 pointer-events-none"
+                ></div>
+                <div
+                  class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-10 -mb-10 pointer-events-none"
+                ></div>
+
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-white/20 p-2 rounded-xl backdrop-blur-sm"
+                      ><span class="material-icons-round"
+                        >psychology</span
+                      ></span
+                    >
+                    <h3
+                      class="font-bold text-sm uppercase tracking-widest opacity-90"
+                    >
+                      Memory Palace Technique
+                    </h3>
+                  </div>
+                  <p
+                    id="result-palace"
+                    class="text-xl md:text-2xl font-serif italic leading-relaxed text-white/95"
+                  ></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="mt-20 text-center border-t border-gray-200 pt-8">
+            <p class="text-gray-400 text-sm">
+              Powered by GoStudy Intelligence &copy; 2025
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- LOGIC -->
@@ -340,8 +588,8 @@
       import { auth, API_BASE } from "/backend/js/auth.js";
 
       // --- CONFIG & STATE ---
-      const ENDPOINT = `${API_BASE}/api/generate-plan`; 
-      
+      const ENDPOINT = `${API_BASE}/api/generate-plan`;
+
       let selectedDifficulty = "High School";
       let currentData = null;
       let answersVisible = false;
@@ -362,73 +610,90 @@
         historyList: document.getElementById("history-list"),
         historyEmpty: document.getElementById("history-empty"),
         profile: {
-          name: document.getElementById('sidebar-name'),
-          initials: document.getElementById('sidebar-initials'),
-          img: document.getElementById('sidebar-img'),
-          plan: document.getElementById('sidebar-plan')
+          name: document.getElementById("sidebar-name"),
+          initials: document.getElementById("sidebar-initials"),
+          img: document.getElementById("sidebar-img"),
+          plan: document.getElementById("sidebar-plan"),
         },
         usage: {
-          widget: document.getElementById('usage-widget'),
-          bar: document.getElementById('usage-bar'),
-          text: document.getElementById('usage-text'),
-          remaining: document.getElementById('usage-remaining'),
-          upgradeLink: document.getElementById('upgrade-link')
+          widget: document.getElementById("usage-widget"),
+          bar: document.getElementById("usage-bar"),
+          text: document.getElementById("usage-text"),
+          remaining: document.getElementById("usage-remaining"),
+          upgradeLink: document.getElementById("upgrade-link"),
         },
-        filename: document.getElementById('file-name-display')
+        filename: document.getElementById("file-name-display"),
       };
 
       // --- VIEW MANAGEMENT ---
-      window.showSection = function(section) {
-          // Hide all major sections
-          UI.upload.classList.add('hidden');
-          UI.history.classList.add('hidden');
-          UI.results.classList.add('hidden');
-          UI.loading.classList.add('hidden');
-          UI.loading.style.display = 'none';
+      window.showSection = function (section) {
+        // Hide all major sections
+        UI.upload.classList.add("hidden");
+        UI.history.classList.add("hidden");
+        UI.results.classList.add("hidden");
+        UI.loading.classList.add("hidden");
+        UI.loading.style.display = "none";
 
-          // Reset nav styles
-          UI.navDash.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
-          UI.navHistory.className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
+        // Reset nav styles
+        UI.navDash.className =
+          "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
+        UI.navHistory.className =
+          "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 transition-all text-left";
 
-          if (section === 'upload') {
-              UI.upload.classList.remove('hidden');
-              UI.navDash.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
-              UI.navDash.classList.remove('text-gray-500');
-          } else if (section === 'history') {
-              UI.history.classList.remove('hidden');
-              UI.navHistory.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
-              UI.navHistory.classList.remove('text-gray-500');
-              loadHistory();
-          } else if (section === 'results') {
-              UI.results.classList.remove('hidden');
-              UI.results.style.display = "block";
-              UI.navDash.classList.add('bg-blue-50', 'text-primary', 'font-semibold');
-              UI.navDash.classList.remove('text-gray-500');
-          }
+        if (section === "upload") {
+          UI.upload.classList.remove("hidden");
+          UI.navDash.classList.add(
+            "bg-blue-50",
+            "text-primary",
+            "font-semibold"
+          );
+          UI.navDash.classList.remove("text-gray-500");
+        } else if (section === "history") {
+          UI.history.classList.remove("hidden");
+          UI.navHistory.classList.add(
+            "bg-blue-50",
+            "text-primary",
+            "font-semibold"
+          );
+          UI.navHistory.classList.remove("text-gray-500");
+          loadHistory();
+        } else if (section === "results") {
+          UI.results.classList.remove("hidden");
+          UI.results.style.display = "block";
+          UI.navDash.classList.add(
+            "bg-blue-50",
+            "text-primary",
+            "font-semibold"
+          );
+          UI.navDash.classList.remove("text-gray-500");
+        }
       };
 
-      UI.navDash.addEventListener('click', () => showSection('upload'));
-      UI.navHistory.addEventListener('click', () => showSection('history'));
+      UI.navDash.addEventListener("click", () => showSection("upload"));
+      UI.navHistory.addEventListener("click", () => showSection("history"));
 
       // --- INITIALIZATION ---
       async function initDashboard() {
-        auth.onAuthStateChanged(user => {
-            if(user) {
-                // Update Sidebar Profile
-                UI.profile.name.innerText = user.displayName || user.email.split('@')[0];
-                if(user.photoURL) {
-                    UI.profile.img.src = user.photoURL;
-                    UI.profile.img.classList.remove('hidden');
-                    UI.profile.initials.classList.add('hidden');
-                } else {
-                     UI.profile.initials.innerText = (user.displayName || "U").charAt(0).toUpperCase();
-                }
-                
-                // Load usage data
-                loadUsage();
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            // Update Sidebar Profile
+            UI.profile.name.innerText =
+              user.displayName || user.email.split("@")[0];
+            if (user.photoURL) {
+              UI.profile.img.src = user.photoURL;
+              UI.profile.img.classList.remove("hidden");
+              UI.profile.initials.classList.add("hidden");
             } else {
-                console.log("User not logged in");
+              UI.profile.initials.innerText = (user.displayName || "U")
+                .charAt(0)
+                .toUpperCase();
             }
+
+            // Load usage data
+            loadUsage();
+          } else {
+            console.log("User not logged in");
+          }
         });
       }
 
@@ -436,60 +701,65 @@
 
       // --- USAGE TRACKING ---
       let currentUsageData = null;
-      
+
       async function loadUsage() {
-          if (!auth.currentUser) return;
-          
-          try {
-              const token = await auth.currentUser.getIdToken();
-              const response = await fetch(`${API_BASE}/api/usage`, {
-                  headers: { 'Authorization': `Bearer ${token}` }
-              });
-              
-              if (!response.ok) throw new Error('Failed to fetch usage');
-              
-              const data = await response.json();
-              currentUsageData = data;
-              
-              // Update UI
-              UI.usage.widget.classList.remove('hidden');
-              UI.usage.text.innerText = `${data.uploadsThisMonth} / ${data.limit}`;
-              UI.usage.remaining.innerText = `${data.remaining} left`;
-              UI.usage.bar.style.width = `${Math.min(100, (data.uploadsThisMonth / data.limit) * 100)}%`;
-              
-              // Update plan badge
-              if (data.plan === 'pro') {
-                  UI.profile.plan.innerText = 'Pro Plan';
-                  UI.profile.plan.classList.remove('text-blue-600');
-                  UI.profile.plan.classList.add('text-amber-600');
-                  UI.usage.upgradeLink.classList.add('hidden');
-                  UI.usage.bar.classList.remove('from-blue-500', 'to-indigo-500');
-                  UI.usage.bar.classList.add('from-amber-500', 'to-orange-500');
-              } else {
-                  UI.profile.plan.innerText = 'Free Plan';
-                  UI.usage.upgradeLink.classList.remove('hidden');
-              }
-              
-              // Change bar color if near limit
-              if (data.remaining <= 1 && data.plan === 'free') {
-                  UI.usage.bar.classList.remove('from-blue-500', 'to-indigo-500');
-                  UI.usage.bar.classList.add('from-red-500', 'to-orange-500');
-              }
-          } catch (e) {
-              console.error('Failed to load usage:', e);
+        if (!auth.currentUser) return;
+
+        try {
+          const token = await auth.currentUser.getIdToken();
+          const response = await fetch(`${API_BASE}/api/usage`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          if (!response.ok) throw new Error("Failed to fetch usage");
+
+          const data = await response.json();
+          currentUsageData = data;
+
+          // Update UI
+          UI.usage.widget.classList.remove("hidden");
+          UI.usage.text.innerText = `${data.uploadsThisMonth} / ${data.limit}`;
+          UI.usage.remaining.innerText = `${data.remaining} left`;
+          UI.usage.bar.style.width = `${Math.min(
+            100,
+            (data.uploadsThisMonth / data.limit) * 100
+          )}%`;
+
+          // Update plan badge
+          if (data.plan === "pro") {
+            UI.profile.plan.innerText = "Pro Plan";
+            UI.profile.plan.classList.remove("text-blue-600");
+            UI.profile.plan.classList.add("text-amber-600");
+            UI.usage.upgradeLink.classList.add("hidden");
+            UI.usage.bar.classList.remove("from-blue-500", "to-indigo-500");
+            UI.usage.bar.classList.add("from-amber-500", "to-orange-500");
+          } else {
+            UI.profile.plan.innerText = "Free Plan";
+            UI.usage.upgradeLink.classList.remove("hidden");
           }
+
+          // Change bar color if near limit
+          if (data.remaining <= 1 && data.plan === "free") {
+            UI.usage.bar.classList.remove("from-blue-500", "to-indigo-500");
+            UI.usage.bar.classList.add("from-red-500", "to-orange-500");
+          }
+        } catch (e) {
+          console.error("Failed to load usage:", e);
+        }
       }
 
       // --- DIFFICULTY TOGGLE ---
-      UI.diffBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+      UI.diffBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
           // Reset styles
-          UI.diffBtns.forEach(b => {
-             b.className = "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900";
+          UI.diffBtns.forEach((b) => {
+            b.className =
+              "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-gray-900";
           });
           // Set active style (Apple dark button)
-          btn.className = "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md";
-          selectedDifficulty = btn.getAttribute('data-level');
+          btn.className =
+            "difficulty-btn px-6 py-2 rounded-full text-xs font-bold transition-all bg-gray-900 text-white shadow-md";
+          selectedDifficulty = btn.getAttribute("data-level");
         });
       });
 
@@ -512,7 +782,7 @@
         UI.upload.classList.add("hidden");
         UI.loading.classList.remove("hidden");
         UI.loading.style.display = "flex";
-        
+
         // Simulated Progress Bar (Visual feedback only while waiting for backend)
         let progress = 0;
         const progressInterval = setInterval(() => {
@@ -525,11 +795,11 @@
         }, 400);
 
         try {
-           const headers = {};
-           if (auth.currentUser) {
-             const token = await auth.currentUser.getIdToken();
-             headers['Authorization'] = `Bearer ${token}`;
-           }
+          const headers = {};
+          if (auth.currentUser) {
+            const token = await auth.currentUser.getIdToken();
+            headers["Authorization"] = `Bearer ${token}`;
+          }
 
           const formData = new FormData();
           formData.append("document", file);
@@ -539,64 +809,74 @@
           const response = await fetch(ENDPOINT, {
             method: "POST",
             body: formData,
-            headers: headers
+            headers: headers,
           });
 
           if (!response.ok) {
-             const errData = await response.json().catch(() => ({}));
-             
-             // Check if this is an upload limit error
-             if (response.status === 403 && errData.error === 'Upload limit reached') {
-                 throw { 
-                     isLimitError: true, 
-                     message: errData.message,
-                     plan: errData.plan
-                 };
-             }
-             
-             throw new Error(errData.error || errData.message || `Server Error: ${response.status}`);
+            const errData = await response.json().catch(() => ({}));
+
+            // Check if this is an upload limit error
+            if (
+              response.status === 403 &&
+              errData.error === "Upload limit reached"
+            ) {
+              throw {
+                isLimitError: true,
+                message: errData.message,
+                plan: errData.plan,
+              };
+            }
+
+            throw new Error(
+              errData.error ||
+                errData.message ||
+                `Server Error: ${response.status}`
+            );
           }
 
           const data = await response.json();
-          
+
           clearInterval(progressInterval);
           UI.bar.style.width = "100%";
           UI.percent.textContent = "100%";
-          
+
           // Refresh usage data after successful upload
           loadUsage();
-          
-          setTimeout(() => {
-             renderDashboard(data);
-          }, 800);
 
+          setTimeout(() => {
+            renderDashboard(data);
+          }, 800);
         } catch (err) {
           clearInterval(progressInterval);
-          
+
           // Special handling for upload limit errors
           if (err.isLimitError) {
-              UI.loading.innerHTML = `
+            UI.loading.innerHTML = `
                 <div class="p-8 text-center bg-white rounded-3xl shadow-soft max-w-md mx-auto">
                   <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span class="material-icons-round text-3xl">lock</span>
                   </div>
                   <h3 class="text-xl font-bold text-gray-900 mb-2">Upload Limit Reached</h3>
                   <p class="mb-6 text-sm text-gray-500">${err.message}</p>
-                  ${err.plan === 'free' ? `
+                  ${
+                    err.plan === "free"
+                      ? `
                     <a href="/pricing/pro/" class="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all">
                       Upgrade to Pro — 40 uploads/month
                     </a>
                     <p class="mt-4 text-xs text-gray-400">Cancel anytime. No hidden fees.</p>
-                  ` : `
+                  `
+                      : `
                     <button onclick="location.reload()" class="bg-gray-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-gray-800 transition-colors">
                       Back to Dashboard
                     </button>
-                  `}
+                  `
+                  }
                 </div>
               `;
-              return;
+            return;
           }
-          
+
           UI.loading.innerHTML = `
             <div class="text-red-500 p-8 text-center bg-white rounded-3xl shadow-soft">
               <span class="material-icons-round text-5xl mb-4">error_outline</span>
@@ -610,33 +890,37 @@
 
       // --- HISTORY LOGIC ---
       async function loadHistory() {
-          UI.historyList.innerHTML = '<div class="col-span-full text-center py-20"><div class="animate-spin inline-block w-8 h-8 border-4 border-primary border-t-transparent rounded-full mb-4"></div><p class="text-gray-500">Loading your library...</p></div>';
-          UI.historyEmpty.classList.add('hidden');
+        UI.historyList.innerHTML =
+          '<div class="col-span-full text-center py-20"><div class="animate-spin inline-block w-8 h-8 border-4 border-primary border-t-transparent rounded-full mb-4"></div><p class="text-gray-500">Loading your library...</p></div>';
+        UI.historyEmpty.classList.add("hidden");
 
-          try {
-              const token = await auth.currentUser.getIdToken();
-              const response = await fetch(`${API_BASE}/api/generations`, {
-                  headers: { 'Authorization': `Bearer ${token}` }
-              });
-              
-              if (!response.ok) {
-                  throw new Error(`Server returned ${response.status}`);
-              }
+        try {
+          const token = await auth.currentUser.getIdToken();
+          const response = await fetch(`${API_BASE}/api/generations`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
 
-              const history = await response.json();
-              
-              if (!Array.isArray(history) || history.length === 0) {
-                  UI.historyList.innerHTML = "";
-                  UI.historyEmpty.classList.remove('hidden');
-                  return;
-              }
+          if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+          }
 
-              UI.historyList.innerHTML = "";
-              history.forEach(item => {
-                  const date = new Date(item.createdAt?._seconds * 1000 || item.createdAt).toLocaleDateString();
-                  const card = document.createElement('div');
-                  card.className = "bg-white p-6 rounded-3xl border border-gray-100 shadow-soft hover:shadow-lg hover:border-primary/20 transition-all group cursor-pointer relative flex flex-col h-full";
-                  card.innerHTML = `
+          const history = await response.json();
+
+          if (!Array.isArray(history) || history.length === 0) {
+            UI.historyList.innerHTML = "";
+            UI.historyEmpty.classList.remove("hidden");
+            return;
+          }
+
+          UI.historyList.innerHTML = "";
+          history.forEach((item) => {
+            const date = new Date(
+              item.createdAt?._seconds * 1000 || item.createdAt
+            ).toLocaleDateString();
+            const card = document.createElement("div");
+            card.className =
+              "bg-white p-6 rounded-3xl border border-gray-100 shadow-soft hover:shadow-lg hover:border-primary/20 transition-all group cursor-pointer relative flex flex-col h-full";
+            card.innerHTML = `
                       <div class="flex items-start justify-between mb-4">
                           <div class="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                               <span class="material-icons-round">description</span>
@@ -653,64 +937,69 @@
                           Open Study Plan
                       </button>
                   `;
-                  UI.historyList.appendChild(card);
-              });
-          } catch (err) {
-              UI.historyList.innerHTML = `
+            UI.historyList.appendChild(card);
+          });
+        } catch (err) {
+          UI.historyList.innerHTML = `
                   <div class="col-span-full text-center py-10 text-red-500">
                       <span class="material-icons-round text-4xl mb-2">error_outline</span>
                       <p>Failed to load history: ${err.message}</p>
                   </div>
               `;
-          }
+        }
       }
 
-      window.viewPlan = async function(id) {
-          UI.history.classList.add('hidden');
-          UI.loading.classList.remove('hidden');
-          UI.loading.style.display = 'flex';
-          UI.bar.style.width = "40%";
-          UI.percent.textContent = "Fetching...";
+      window.viewPlan = async function (id) {
+        UI.history.classList.add("hidden");
+        UI.loading.classList.remove("hidden");
+        UI.loading.style.display = "flex";
+        UI.bar.style.width = "40%";
+        UI.percent.textContent = "Fetching...";
 
-          try {
-              const token = await auth.currentUser.getIdToken();
-              const response = await fetch(`${API_BASE}/api/generations/${id}`, {
-                  headers: { 'Authorization': `Bearer ${token}` }
-              });
-              const data = await response.json();
-              
-              UI.filename.innerText = data.fileName;
-              UI.bar.style.width = "100%";
-              UI.percent.textContent = "100%";
-              
-              setTimeout(() => {
-                  renderDashboard(data.studyPlan);
-                  showSection('results');
-              }, 500);
-          } catch (err) {
-              alert(`Error loading plan: ${err.message}`);
-              showSection('history');
-          }
+        try {
+          const token = await auth.currentUser.getIdToken();
+          const response = await fetch(`${API_BASE}/api/generations/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await response.json();
+
+          UI.filename.innerText = data.fileName;
+          UI.bar.style.width = "100%";
+          UI.percent.textContent = "100%";
+
+          setTimeout(() => {
+            renderDashboard(data.studyPlan);
+            showSection("results");
+          }, 500);
+        } catch (err) {
+          alert(`Error loading plan: ${err.message}`);
+          showSection("history");
+        }
       };
 
-      window.deletePlan = async function(id) {
-          if (!confirm('Are you sure you want to delete this study plan? The associated file will be permanently removed.')) return;
-          
-          try {
-              const token = await auth.currentUser.getIdToken();
-              const response = await fetch(`${API_BASE}/api/generations/${id}`, {
-                  method: 'DELETE',
-                  headers: { 'Authorization': `Bearer ${token}` }
-              });
-              
-              if (response.ok) {
-                  loadHistory();
-              } else {
-                  throw new Error('Delete failed');
-              }
-          } catch (err) {
-              alert(`Error deleting plan: ${err.message}`);
+      window.deletePlan = async function (id) {
+        if (
+          !confirm(
+            "Are you sure you want to delete this study plan? The associated file will be permanently removed."
+          )
+        )
+          return;
+
+        try {
+          const token = await auth.currentUser.getIdToken();
+          const response = await fetch(`${API_BASE}/api/generations/${id}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          if (response.ok) {
+            loadHistory();
+          } else {
+            throw new Error("Delete failed");
           }
+        } catch (err) {
+          alert(`Error deleting plan: ${err.message}`);
+        }
       };
 
       // --- RENDERING LOGIC ---
@@ -721,10 +1010,16 @@
         UI.results.style.display = "block";
 
         // 1. Summary
-        document.getElementById("result-summary").innerText = data.summary || "No summary generated.";
-        
+        // 1. Summary (Enhanced Rendering)
+        const summaryHtml = (data.summary || "No summary generated.")
+          .replace(/\n/g, "<br>")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/- /g, "&bull; "); // Bullet points
+        document.getElementById("result-summary").innerHTML = summaryHtml;
+
         // 2. Memory Palace
-        document.getElementById("result-palace").innerText = data.memory_palace || "No mnemonic generated.";
+        document.getElementById("result-palace").innerText =
+          data.memory_palace || "No mnemonic generated.";
 
         // 3. Active Recall (Handles difficulty_rating)
         const quizDiv = document.getElementById("result-quiz");
@@ -732,20 +1027,30 @@
         if (data.active_recall?.length) {
           data.active_recall.forEach((q, i) => {
             // Generate Stars
-            const stars = Array(5).fill(0).map((_, idx) => 
-                idx < q.difficulty_rating 
-                ? '<span class="material-icons-round text-[10px] text-yellow-400">star</span>' 
-                : '<span class="material-icons-round text-[10px] text-gray-300">star</span>'
-            ).join('');
+            const stars = Array(5)
+              .fill(0)
+              .map((_, idx) =>
+                idx < q.difficulty_rating
+                  ? '<span class="material-icons-round text-[10px] text-yellow-400">star</span>'
+                  : '<span class="material-icons-round text-[10px] text-gray-300">star</span>'
+              )
+              .join("");
 
             const div = document.createElement("div");
-            div.className = "bg-gray-50 p-5 rounded-2xl border border-gray-100 hover:shadow-md transition-shadow";
+            div.className =
+              "bg-gray-50 p-5 rounded-2xl border border-gray-100 hover:shadow-md transition-shadow";
             div.innerHTML = `
               <div class="flex justify-between items-start mb-2">
-                 <span class="bg-blue-100 text-blue-600 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${i+1}</span>
-                 <div class="flex gap-0.5" title="Difficulty: ${q.difficulty_rating}/5">${stars}</div>
+                 <span class="bg-blue-100 text-blue-600 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">${
+                   i + 1
+                 }</span>
+                 <div class="flex gap-0.5" title="Difficulty: ${
+                   q.difficulty_rating
+                 }/5">${stars}</div>
               </div>
-              <p class="font-semibold text-gray-800 mb-3 text-sm">${q.question}</p>
+              <p class="font-semibold text-gray-800 mb-3 text-sm">${
+                q.question
+              }</p>
               <div class="quiz-answer hidden p-3 bg-white rounded-xl text-sm text-gray-600 border-l-4 border-green-500 shadow-sm">
                  <span class="font-bold text-green-600 block text-xs mb-1">ANSWER</span>
                  ${q.answer}
@@ -759,18 +1064,26 @@
         const schedDiv = document.getElementById("result-schedule");
         schedDiv.innerHTML = "";
         if (data.spaced_repetition?.length) {
-          data.spaced_repetition.forEach(s => {
+          data.spaced_repetition.forEach((s) => {
             const div = document.createElement("div");
             div.className = "relative flex items-start gap-4 pb-2 group";
             div.innerHTML = `
               <div class="absolute -left-[23px] top-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm z-10"></div>
               <div class="flex-1">
                   <div class="flex justify-between items-center mb-1">
-                      <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${s.day}</span>
+                      <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">${
+                        s.day
+                      }</span>
                   </div>
                   <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                      <p class="text-sm font-medium text-gray-800">${s.topic}</p>
-                      ${s.hint ? `<p class="mt-2 text-xs text-indigo-500 bg-indigo-50 inline-block px-2 py-1 rounded">💡 Hint: ${s.hint}</p>` : ''}
+                      <p class="text-sm font-medium text-gray-800">${
+                        s.topic
+                      }</p>
+                      ${
+                        s.hint
+                          ? `<p class="mt-2 text-xs text-indigo-500 bg-indigo-50 inline-block px-2 py-1 rounded">💡 Hint: ${s.hint}</p>`
+                          : ""
+                      }
                   </div>
               </div>
             `;
@@ -782,16 +1095,20 @@
         const conceptsDiv = document.getElementById("result-concepts");
         conceptsDiv.innerHTML = "";
         if (data.concept_map?.length) {
-            data.concept_map.forEach(c => {
-                const div = document.createElement("div");
-                div.className = "bg-white p-4 rounded-2xl border border-gray-100 shadow-sm";
-                
-                // Relations tags
-                const relationsHtml = c.related_to.map(r => 
-                    `<span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-md border border-gray-200">${r}</span>`
-                ).join('');
+          data.concept_map.forEach((c) => {
+            const div = document.createElement("div");
+            div.className =
+              "bg-white p-4 rounded-2xl border border-gray-100 shadow-sm";
 
-                div.innerHTML = `
+            // Relations tags
+            const relationsHtml = c.related_to
+              .map(
+                (r) =>
+                  `<span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-md border border-gray-200">${r}</span>`
+              )
+              .join("");
+
+            div.innerHTML = `
                     <div class="flex items-center gap-2 mb-2">
                         <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                         <h4 class="font-bold text-gray-800 text-sm">${c.concept}</h4>
@@ -801,36 +1118,39 @@
                         ${relationsHtml}
                     </div>
                 `;
-                conceptsDiv.appendChild(div);
-            });
+            conceptsDiv.appendChild(div);
+          });
         }
 
         // Auto scroll
-        setTimeout(() => UI.results.scrollIntoView({ behavior: "smooth" }), 100);
+        setTimeout(
+          () => UI.results.scrollIntoView({ behavior: "smooth" }),
+          100
+        );
       }
 
       // --- EXPORTS & UTILS ---
-      window.toggleAnswers = function() {
+      window.toggleAnswers = function () {
         answersVisible = !answersVisible;
-        document.querySelectorAll(".quiz-answer").forEach(a => {
-           if(answersVisible) {
-               a.classList.remove('hidden');
-               a.classList.add('block');
-           } else {
-               a.classList.add('hidden');
-               a.classList.remove('block');
-           }
+        document.querySelectorAll(".quiz-answer").forEach((a) => {
+          if (answersVisible) {
+            a.classList.remove("hidden");
+            a.classList.add("block");
+          } else {
+            a.classList.add("hidden");
+            a.classList.remove("block");
+          }
         });
       };
 
-      window.exportMarkdown = function() {
+      window.exportMarkdown = function () {
         if (!currentData) return;
         let md = `# Study Plan: ${UI.filename.innerText}\n\n`;
         md += `## Summary\n${currentData.summary}\n\n`;
-        
+
         md += `## Active Recall\n`;
-        currentData.active_recall.forEach(q => {
-            md += `- **Q:** ${q.question} (Diff: ${q.difficulty_rating}/5)\n  **A:** ${q.answer}\n`;
+        currentData.active_recall.forEach((q) => {
+          md += `- **Q:** ${q.question} (Diff: ${q.difficulty_rating}/5)\n  **A:** ${q.answer}\n`;
         });
 
         md += `\n## Memory Palace\n${currentData.memory_palace}\n`;
@@ -838,34 +1158,35 @@
         const blob = new Blob([md], { type: "text/markdown" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url; a.download = `StudyPlan.md`;
+        a.href = url;
+        a.download = `StudyPlan.md`;
         a.click();
       };
-      
-      window.exportPDF = function() {
-         const element = document.getElementById("results-section");
-         const opt = {
-           margin:       0.3,
-           filename:     'GoStudy-Plan.pdf',
-           image:        { type: 'jpeg', quality: 0.98 },
-           html2canvas:  { scale: 2, useCORS: true },
-           jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-         };
-         html2pdf().set(opt).from(element).save();
+
+      window.exportPDF = function () {
+        const element = document.getElementById("results-section");
+        const opt = {
+          margin: 0.3,
+          filename: "GoStudy-Plan.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        };
+        html2pdf().set(opt).from(element).save();
       };
 
       // --- FEEDBACK NOTIFICATION SYSTEM ---
       let feedbackShown = false;
-      
+
       function showFeedbackNotification() {
         if (feedbackShown) return;
         feedbackShown = true;
-        
+
         // Create notification element
-        const notification = document.createElement('div');
-        notification.id = 'feedback-notification';
-        notification.className = 'fixed bottom-6 right-6 z-[100] max-w-md';
-        notification.style.animation = 'slideUp 0.4s ease-out forwards';
+        const notification = document.createElement("div");
+        notification.id = "feedback-notification";
+        notification.className = "fixed bottom-6 right-6 z-[100] max-w-md";
+        notification.style.animation = "slideUp 0.4s ease-out forwards";
         notification.innerHTML = `
           <div class="bg-white rounded-3xl shadow-2xl border border-blue-100 overflow-hidden">
             <!-- Header -->
@@ -907,86 +1228,101 @@
             </div>
           </div>
         `;
-        
+
         document.body.appendChild(notification);
         startFeedbackCountdown();
       }
-      
+
       let feedbackCountdownInterval;
       let feedbackSecondsRemaining = 12;
-      
+
       function startFeedbackCountdown() {
-        const progressBar = document.getElementById('feedback-progress-bar');
-        const countdownEl = document.getElementById('feedback-countdown');
-        
+        const progressBar = document.getElementById("feedback-progress-bar");
+        const countdownEl = document.getElementById("feedback-countdown");
+
         feedbackCountdownInterval = setInterval(() => {
           feedbackSecondsRemaining--;
           if (countdownEl) countdownEl.textContent = feedbackSecondsRemaining;
-          if (progressBar) progressBar.style.width = `${(feedbackSecondsRemaining / 12) * 100}%`;
-          
+          if (progressBar)
+            progressBar.style.width = `${
+              (feedbackSecondsRemaining / 12) * 100
+            }%`;
+
           if (feedbackSecondsRemaining <= 0) {
             closeFeedbackNotification();
           }
         }, 1000);
       }
-      
-      window.stopFeedbackCountdown = function() {
+
+      window.stopFeedbackCountdown = function () {
         clearInterval(feedbackCountdownInterval);
-        const countdownEl = document.getElementById('feedback-countdown');
-        const progressBar = document.getElementById('feedback-progress-bar');
-        if (countdownEl) countdownEl.textContent = '∞';
-        if (progressBar) progressBar.style.width = '100%';
+        const countdownEl = document.getElementById("feedback-countdown");
+        const progressBar = document.getElementById("feedback-progress-bar");
+        if (countdownEl) countdownEl.textContent = "∞";
+        if (progressBar) progressBar.style.width = "100%";
       };
-      
-      window.closeFeedbackNotification = function() {
+
+      window.closeFeedbackNotification = function () {
         clearInterval(feedbackCountdownInterval);
-        const notification = document.getElementById('feedback-notification');
+        const notification = document.getElementById("feedback-notification");
         if (notification) {
-          notification.style.animation = 'slideDown 0.3s ease-in forwards';
+          notification.style.animation = "slideDown 0.3s ease-in forwards";
           setTimeout(() => notification.remove(), 300);
         }
       };
-      
+
       // Override renderDashboard to trigger feedback logic
-      const originalRenderDashboard = window.renderDashboard || ((data) => console.log('Render', data));
+      const originalRenderDashboard =
+        window.renderDashboard || ((data) => console.log("Render", data));
       // We need to make sure we hook into wherever renderDashboard is defined or usage.
       // Since renderDashboard is defined earlier in this file (I should have checked), I will assume it's global.
       // Actually, looking at previous file reads, `renderDashboard` is likely defined in this file.
       // Let's attach to the window specifically or redefine it if it was a function declaration.
-      
-      // Hook into the display results logic. 
+
+      // Hook into the display results logic.
       // I'll add a listener for the results section being shown or called.
       // But simplest is to just expose this function and let the existing renderDashboard call it if I could edit it.
       // Since I am appending, I cant easily edit the middle of the file without multi_replace.
-      // I will assume the user wants this triggered when "outputed file generated by AI". 
+      // I will assume the user wants this triggered when "outputed file generated by AI".
       // I'll try to hook into the `block` where `UI.results.classList.remove('hidden')` happens if I could.
-      
-      // Instead, I'll use a MutationObserver on the results section to detect when it becomes visible!
-      const resultsSection = document.getElementById('results-section');
-      if (resultsSection) {
-          const observer = new MutationObserver((mutations) => {
-              mutations.forEach((mutation) => {
-                  if (mutation.attributeName === 'class') {
-                      if (!resultsSection.classList.contains('hidden')) {
-                           setTimeout(showFeedbackNotification, 5000);
-                      }
-                  }
-              });
-          });
-          observer.observe(resultsSection, { attributes: true });
-      }
 
+      // Instead, I'll use a MutationObserver on the results section to detect when it becomes visible!
+      const resultsSection = document.getElementById("results-section");
+      if (resultsSection) {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.attributeName === "class") {
+              if (!resultsSection.classList.contains("hidden")) {
+                setTimeout(showFeedbackNotification, 5000);
+              }
+            }
+          });
+        });
+        observer.observe(resultsSection, { attributes: true });
+      }
     </script>
 
     <style>
       @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       @keyframes slideDown {
-        from { opacity: 1; transform: translateY(0); }
-        to { opacity: 0; transform: translateY(20px); }
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(20px);
+        }
       }
     </style>
-</body>
+  </body>
 </html>

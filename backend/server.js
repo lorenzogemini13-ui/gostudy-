@@ -447,153 +447,94 @@ app.post('/api/generate-plan', checkCredits, upload.single('document'), async (r
 
         // 3. Truncation (Safe Token Limits)
         // Approx 15k tokens to leave room for the answer
-        const truncatedText = documentText.substring(0, 60000); 
+        // 3. Truncation (Optimized for $0.07 budget)
+        // ~10k tokens input (approx $0.06 cost on standard models)
+        const truncatedText = documentText.substring(0, 40000); 
 
-        // 4. optimized system prompt (v3 - enhanced with difficulty, hints, and concept mapping)
-        // this prompt instructs the ai to generate a comprehensive study plan with:
-        // - difficulty ratings (1-5) for active recall questions
-        // - optional hints for difficult topics in spaced repetition
-        // - concept mapping for key relationships between ideas
+        // 4. COST-EFFICIENT SINGLE-PASS PROMPT
+        // Requests all deliverables in one atomic operation to minimize request overhead
         const systemPrompt = `You are an expert AI Study Assistant.
-Analyze the provided text and generate a structured study plan in JSON format.
+Analyze the text and generate a structured study plan.
 
 GOALS:
-1. SUMMARY: Provide a high-density executive summary (MAX 80 words).
-2. ACTIVE RECALL: Generate 3-5 high-yield questions.
-   - Each question must include a difficulty_rating from 1 (easy) to 5 (very hard).
-   - Answers MUST be extremely concise (MAX 2 sentences per answer).
-3. SPACED REPETITION: Create a 4-step schedule (Day 1, 3, 7, 14).
-   - For topics with difficulty >= 4, include an optional hint to aid recall.
-4. CONCEPT MAP: Generate a list of key concepts with their relationships.
-   - Each concept should link to related concepts (MAX 5 concepts).
-5. MEMORY PALACE: Describe a vivid spatial mnemonic for the single most complex concept (MAX 100 words).
+1. SUMMARY: Executive summary with **bold** key terms (MAX 250 words).
+2. MEMORY PALACE: A vivid spatial mnemonic (MAX 100 words).
+3. ACTIVE RECALL: 5 questions (difficulty 1-5).
+4. SPACED REPETITION: 4-step schedule (Day 1,3,7,14) with topic + optional hint.
+5. CONCEPT MAP: 5-7 key concepts with relationships.
 
 CONSTRAINTS:
 - Use valid JSON only.
-- Follow the snake_case schema EXACTLY (all keys must be lowercase with underscores).
-- NO preambles or explanations outside the JSON.
-- BE CONCISE. Every word must add value.
+- Snake_case keys.
+- NO extra text.
 
 SCHEMA:
 {
-  "summary": "string",
-  "active_recall": [
-    {
-      "question": "string",
-      "answer": "string",
-      "difficulty_rating": 1-5
-    }
-  ],
-  "spaced_repetition": [
-    {
-      "day": "string",
-      "topic": "string",
-      "hint": "string or null (optional, for difficult topics)"
-    }
-  ],
-  "concept_map": [
-    {
-      "concept": "string",
-      "related_to": ["string"],
-      "relationship_type": "string (e.g., 'is part of', 'depends on', 'contrasts with')"
-    }
-  ],
-  "memory_palace": "string"
+  "summary": "string (html permitted)",
+  "memory_palace": "string",
+  "active_recall": [{ "question": "string", "answer": "string", "difficulty_rating": 1-5 }],
+  "spaced_repetition": [{ "day": "string", "topic": "string", "hint": "string"}],
+  "concept_map": [{ "concept": "string", "related_to": ["string"], "relationship_type": "string" }]
 }`;
 
-        console.log('Sending to Perplexity AI...');
+        console.log('Sending single optimized request to Perplexity AI...');
         
-        // api request to perplexity with increased token limit for enhanced response
+        // Single call using standard 'sonar' model for cost efficiency
         const response = await axios.post('https://api.perplexity.ai/chat/completions', {
-            model: 'sonar-pro', 
+            model: 'sonar', // Cheaper than sonar-pro
             messages: [
                 { role: 'system', content: systemPrompt },
-                { role: 'user', content: `Analyze this material and generate the study plan accordingly:\n\n${truncatedText}` }
+                { role: 'user', content: `Analyze this material:\n\n${truncatedText}` }
             ],
             temperature: 0.2,
-            max_tokens: 4000 // increased to accommodate concept map and hints
+            max_tokens: 3000
         }, {
             headers: {
                 'Authorization': `Bearer ${process.env.PERPLEXITY_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            timeout: 60000 // 60 second timeout for robustness
+            timeout: 60000
         });
 
-        // 5. robust json parsing with comprehensive error handling
-        // handles various ai response formats and validates schema compliance
+        // 5. Response Handling
         let content = response.data?.choices?.[0]?.message?.content;
         
-        // validate that we received content from the api
-        if (!content || typeof content !== 'string') {
-            console.error("Invalid API response structure:", JSON.stringify(response.data));
-            throw new Error("AI response was empty or malformed. Please try again.");
-        }
+        if (!content) throw new Error("AI response was empty.");
         
-        // remove markdown code blocks if present (handles ```json and ``` wrappers)
+        // Clean markdown wrapper
         content = content.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
-        
-        // extract json object if ai includes preamble text before the json
-        let jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-            content = jsonMatch[0];
-        } else {
-            console.error("No JSON object found in AI response:", content);
-            throw new Error("AI response did not contain valid JSON. Please try again.");
-        }
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) content = jsonMatch[0];
 
         let studyPlan;
         try {
             studyPlan = JSON.parse(content);
             
-            // validate required fields exist in the response
-            const requiredFields = ['summary', 'active_recall', 'spaced_repetition', 'memory_palace'];
-            const missingFields = requiredFields.filter(field => !studyPlan[field]);
+            // --- VALIDATION & DEFAULTS ---
+            if (!studyPlan.summary) studyPlan.summary = "Summary not generated.";
             
-            if (missingFields.length > 0) {
-                throw new Error(`Invalid response structure: missing fields - ${missingFields.join(', ')}`);
-            }
-            
-            // validate active_recall has difficulty ratings and normalize structure
-            // ensures each question has a valid difficulty_rating between 1-5
-            if (Array.isArray(studyPlan.active_recall)) {
-                studyPlan.active_recall = studyPlan.active_recall.map((item, index) => {
-                    const rating = parseInt(item.difficulty_rating, 10);
-                    return {
-                        question: item.question || `Question ${index + 1}`,
-                        answer: item.answer || 'No answer provided',
-                        difficulty_rating: (rating >= 1 && rating <= 5) ? rating : 3 // default to medium difficulty
-                    };
-                });
-            }
-            
-            // validate spaced_repetition has hints where appropriate
-            // adds null hint if not provided for consistency
-            if (Array.isArray(studyPlan.spaced_repetition)) {
-                studyPlan.spaced_repetition = studyPlan.spaced_repetition.map(item => ({
-                    day: item.day || 'Day 1',
-                    topic: item.topic || 'Review topic',
-                    hint: item.hint || null // ensure hint field exists, even if null
-                }));
-            }
-            
-            // validate concept_map exists and has proper structure
-            // provides empty array if not present for backwards compatibility
-            if (!studyPlan.concept_map || !Array.isArray(studyPlan.concept_map)) {
-                studyPlan.concept_map = [];
-            } else {
-                studyPlan.concept_map = studyPlan.concept_map.map(item => ({
-                    concept: item.concept || 'Unknown concept',
-                    related_to: Array.isArray(item.related_to) ? item.related_to : [],
-                    relationship_type: item.relationship_type || 'relates to'
-                }));
-            }
-            
+            // Validate Arrays
+            studyPlan.active_recall = Array.isArray(studyPlan.active_recall) ? studyPlan.active_recall.map((q, i) => ({
+                question: q.question || `Question ${i+1}`,
+                answer: q.answer || "Check your notes",
+                difficulty_rating: q.difficulty_rating || 3
+            })) : [];
+
+            studyPlan.spaced_repetition = Array.isArray(studyPlan.spaced_repetition) ? studyPlan.spaced_repetition.map(s => ({
+                day: s.day || "Day 1",
+                topic: s.topic || "General Review",
+                hint: s.hint || null
+            })) : [];
+
+            studyPlan.concept_map = Array.isArray(studyPlan.concept_map) ? studyPlan.concept_map.map(c => ({
+                concept: c.concept || "Concept",
+                related_to: Array.isArray(c.related_to) ? c.related_to : [],
+                relationship_type: c.relationship_type || "relates to"
+            })) : [];
+
         } catch (jsonError) {
-            // detailed error logging for debugging json parsing issues
             console.error("JSON Parse Error:", jsonError.message);
-            console.error("Raw AI Output (first 500 chars):", content.substring(0, 500));
-            throw new Error(`AI response parsing failed: ${jsonError.message}. Please try again.`);
+            throw new Error("Failed to parse AI response.");
         }
 
         console.log('✅ Plan generated successfully!');
