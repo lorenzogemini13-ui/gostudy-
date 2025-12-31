@@ -2,14 +2,14 @@
 
 GoStudy! is an intelligent learning platform that transforms static study materials into active, science-backed study plans using AI.
 
-## 🚀 Technology Stack
+##  Technology Stack
 
 | Component | Technology |
 | :--- | :--- |
 | **Frontend** | HTML5, Vanilla JavaScript, Tailwind CSS |
 | **Icons & Fonts** | Material Icons Round, Google Fonts (Inter, JetBrains Mono) |
 | **Backend** | Node.js, Express.js |
-| **AI Engine** | Perplexity AI (`sonar-pro` model) |
+| **AI Engine** | Perplexity AI (`sonar` model) |
 | **Authentication** | Firebase Authentication (Google & Email/Password) |
 | **Database** | Google Cloud Firestore |
 | **Payments** | PayPal Subscriptions API |
@@ -18,14 +18,15 @@ GoStudy! is an intelligent learning platform that transforms static study materi
 
 ---
 
-## ✨ Core Features
+##  Core Features
 
 ### 1. AI Study Plan Generation
 Upload PDF, DOCX, or TXT files to generate:
-- **High-Density Summary**: Core concepts distilled
-- **Active Recall Quizzes**: High-yield Q&A
-- **Spaced Repetition Schedule**: 4-step plan (Day 1, 3, 7, 14)
-- **Memory Palace**: Spatial mnemonics for complex topics
+- **High-Density Summary**: Core concepts distilled with bold key terms
+- **Concept Map**: Visual hierarchical tree with main topic and branching subtopics
+- **Active Recall Quizzes**: 5 questions with difficulty ratings (1-5 stars)
+- **Spaced Repetition Schedule**: 4-step plan (Day 1, 3, 7, 14) with hints
+- **Memory Palace**: Spatial mnemonics for complex topics with 3D mode preview
 
 ### 2. Production-Safe Credits System
 - **Balance-Based**: Integer credits instead of monthly counters
@@ -41,7 +42,8 @@ Upload PDF, DOCX, or TXT files to generate:
 - **Polling-Based Confirmation**: Frontend waits for webhook processing
 
 ### 4. User Dashboard
-- **File Upload**: Up to 5MB per file
+- **File Upload**: Up to 5MB per file (PDF, DOCX, TXT)
+- **Visual Concept Map**: Tree-style diagram with main topic and subtopics
 - **Credits Display**: Real-time balance with progress bar
 - **Study History**: Previous plans stored in Firestore
 - **Limit Handling**: Pro upgrade CTA when credits exhausted
@@ -54,10 +56,9 @@ Upload PDF, DOCX, or TXT files to generate:
 
 ---
 
-## 🗺️ Site Map
+##  Site Map
 
-```mermaid
-graph TD
+
     Home["/ (Landing Page)"] --> Login["/login/"]
     Home --> Articles["/articles/ (Blog)"]
     Home --> Pricing["/pricing/"]
@@ -75,12 +76,11 @@ graph TD
         Contact["/contact/"]
         HowItWorks["/how-it-works/"]
         Methodology["/methodology/"]
-    end
-```
+
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ### Authentication Flow
 1. **Client**: Authenticates via Firebase SDK
@@ -102,17 +102,18 @@ graph TD
 5. **Event Logged**: Stored in `processed_webhooks`
 
 ### Plan Generation Pipeline
-1. **Upload**: `multer` saves to `/tmp/`
+1. **Upload**: `multer` saves to `/tmp/` (5MB limit)
 2. **Extraction**: `pdf-parse` or `mammoth` extracts text
 3. **AI Request**: Sent to Perplexity AI with JSON system prompt
-4. **Persistence**: Saved to Firestore + disk
-5. **Credit Deduction**: Atomic transaction with ledger entry
+4. **Response Processing**: Validates and normalizes concept map structure
+5. **Persistence**: Saved to Firestore + disk (`saved_plans/`)
+6. **Credit Deduction**: Atomic transaction with ledger entry
 
 ---
 
-## 📂 File Structure
+## File Structure
 
-```
+
 backend/
 ├── server.js          # Express server, API routes, credits system
 ├── js/auth.js         # Client-side Firebase + API constants
@@ -126,11 +127,11 @@ articles/              # Blog content
 methodology/           # Science-backed approach explanation
 onboarding/            # New user flow
 assets/                # Global images and branding
-```
+
 
 ---
 
-## 🔐 Security Features
+##  Security Features
 
 - **Firebase ID Token Verification**: All authenticated routes
 - **PayPal Webhook Signature**: Prevents spoofed events
@@ -140,16 +141,12 @@ assets/                # Global images and branding
 
 ---
 
-## ⚙️ Environment Variables
+##  Environment Variables
 
-```bash
-# Required
 PERPLEXITY_API_KEY=xxx
 FIREBASE_SERVICE_ACCOUNT={"type":"service_account",...}
-
-# PayPal (Production)
 PAYPAL_CLIENT_ID=xxx
 PAYPAL_CLIENT_SECRET=xxx
 PAYPAL_WEBHOOK_ID=xxx
 NODE_ENV=production
-```
+
