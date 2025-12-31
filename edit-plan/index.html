@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Auth Logic -->
+    <script type="module" src="/backend/js/auth.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Study Plan - GoStudy!</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+
+    <!-- favicon -->
+    <link rel="icon" href="/assets/go-logo.png?v=2" type="image/png" />
+    <link rel="shortcut icon" href="/assets/go-logo.png?v=2" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/go-logo.png?v=2" />
+    <meta name="theme-color" content="#007AFF" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#007AFF",
+              "primary-hover": "#0062cc",
+              bg: "#F5F5F7",
+              surface: "#FFFFFF",
+              text: "#1D1D1F",
+              "text-secondary": "#86868B",
+            },
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            boxShadow: {
+              soft: "0 4px 20px rgba(0, 0, 0, 0.03)",
+              card: "0 2px 8px rgba(0, 0, 0, 0.04)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .editor-content {
+        min-height: 120px;
+        outline: none;
+      }
+      .editor-content:focus {
+        background: rgba(59, 130, 246, 0.02);
+      }
+      .editor-content:empty:before {
+        content: attr(data-placeholder);
+        color: #9ca3af;
+        pointer-events: none;
+      }
+      .sticky-toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .toolbar-btn {
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #6b7280;
+        transition: all 0.15s;
+      }
+      .toolbar-btn:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+      .toolbar-btn.active {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+      /* Concept Map Styles */
+      .concept-container {
+        position: relative;
+        min-height: 300px;
+        width: 100%;
+        overflow: visible;
+      }
+      .concept-node {
+        position: absolute;
+        cursor: move;
+        user-select: none;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+        border: 2px solid #c7d7fe;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #1e40af;
+        text-align: center;
+        min-width: 120px;
+        max-width: 200px;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transition: box-shadow 0.2s, transform 0.1s;
+      }
+      .concept-node:hover {
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+      }
+      .concept-node.dragging {
+        opacity: 0.8;
+        transform: scale(1.02);
+        z-index: 100;
+      }
+      .concept-node.main {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-color: #f59e0b;
+        color: #92400e;
+        font-size: 16px;
+        padding: 14px 28px;
+      }
+      .concept-node-text {
+        outline: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .concept-node-text:focus {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 4px;
+        padding: 2px 6px;
+        margin: -2px -6px;
+      }
+      .concept-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      /* Question Card Styles */
+      .question-card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        border: 1px solid #f1f5f9;
+        transition: all 0.2s;
+      }
+      .question-card:hover {
+        border-color: #e2e8f0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+      .star-rating {
+        display: flex;
+        gap: 2px;
+      }
+      .star-rating .material-icons-round {
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.1s;
+      }
+      .star-rating .material-icons-round:hover {
+        transform: scale(1.2);
+      }
+      /* Schedule Timeline */
+      .timeline-container {
+        position: relative;
+        padding-left: 40px;
+      }
+      .timeline-line {
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, #22c55e 0%, #86efac 100%);
+      }
+      .timeline-item {
+        position: relative;
+        padding-bottom: 32px;
+      }
+      .timeline-item:last-child {
+        padding-bottom: 0;
+      }
+      .timeline-dot {
+        position: absolute;
+        left: -33px;
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        background: #22c55e;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+      }
+      /* Save indicator */
+      .save-indicator {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 20px;
+        transition: all 0.3s;
+      }
+      .save-indicator.saving {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .save-indicator.saved {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .save-indicator.error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+    </style>
+  </head>
+  <body class="bg-bg font-sans text-text min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-100">
+      <div class="max-w-6xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Back Link -->
+          <a
+            href="/dashboard/"
+            class="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors text-sm font-medium"
+          >
+            <span class="material-icons-round text-lg">arrow_back</span>
+            Return to Dashboard
+          </a>
+
+          <!-- Title & Filename -->
+          <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-900">Edit Study Plan</h1>
+            <p id="filename-display" class="text-sm text-gray-400 mt-1">filename</p>
+          </div>
+
+          <!-- Badge & Save Indicator -->
+          <div class="flex items-center gap-4">
+            <div id="save-indicator" class="save-indicator saved hidden">
+              <span class="material-icons-round text-sm">check_circle</span>
+              <span id="save-text">Saved</span>
+            </div>
+            <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold">
+              Study Plan
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sticky Toolbar -->
+    <div class="sticky-toolbar">
+      <div class="max-w-6xl mx-auto px-6 py-2">
+        <div class="flex items-center gap-1">
+          <button onclick="formatText('bold')" class="toolbar-btn" title="Bold">
+            <strong>B</strong>
+          </button>
+          <button onclick="formatText('italic')" class="toolbar-btn" title="Italic">
+            <em>I</em>
+          </button>
+          <button onclick="formatText('underline')" class="toolbar-btn" title="Underline">
+            <span class="underline">U</span>
+          </button>
+          <div class="w-px h-5 bg-gray-200 mx-2"></div>
+          <button onclick="formatHeading('H1')" class="toolbar-btn" title="Heading 1">H1</button>
+          <button onclick="formatHeading('H2')" class="toolbar-btn" title="Heading 2">H2</button>
+          <div class="w-px h-5 bg-gray-200 mx-2"></div>
+          <button onclick="formatText('insertUnorderedList')" class="toolbar-btn" title="Bullet List">
+            <span class="material-icons-round text-sm">format_list_bulleted</span>
+          </button>
+          <button onclick="formatText('insertOrderedList')" class="toolbar-btn" title="Numbered List">
+            <span class="material-icons-round text-sm">format_list_numbered</span>
+          </button>
+          <div class="w-px h-5 bg-gray-200 mx-2"></div>
+          <button onclick="insertLink()" class="toolbar-btn" title="Insert Link">
+            <span class="material-icons-round text-sm">link</span>
+          </button>
+          <div class="w-px h-5 bg-gray-200 mx-2"></div>
+          <button onclick="document.execCommand('undo')" class="toolbar-btn" title="Undo">
+            <span class="material-icons-round text-sm">undo</span>
+          </button>
+          <button onclick="document.execCommand('redo')" class="toolbar-btn" title="Redo">
+            <span class="material-icons-round text-sm">redo</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8 space-y-8">
+      <!-- Summary Section -->
+      <section class="glass-panel rounded-3xl p-8 shadow-soft">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center text-xl">
+            💡
+          </span>
+          <h2 class="text-lg font-bold text-gray-900">Summary</h2>
+        </div>
+        <div
+          id="summary-editor"
+          class="editor-content text-gray-700 leading-relaxed"
+          contenteditable="true"
+          data-placeholder="Enter your summary here..."
+        ></div>
+      </section>
+
+      <!-- Concept Map Section -->
+      <section class="glass-panel rounded-3xl p-8 shadow-soft">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
+              <span class="material-icons-round">hub</span>
+            </span>
+            <h2 class="text-lg font-bold text-gray-900">Concept Map</h2>
+          </div>
+          <span class="text-xs text-gray-400 italic">Drag nodes to reposition • Double-click to edit</span>
+        </div>
+        <div id="concept-map" class="concept-container">
+          <svg id="concept-lines" class="concept-svg"></svg>
+          <!-- Nodes will be injected here -->
+        </div>
+      </section>
+
+      <!-- Active Recall Section -->
+      <section class="glass-panel rounded-3xl p-8 shadow-soft">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+              ❓
+            </span>
+            <h2 class="text-lg font-bold text-gray-900">Active Recall</h2>
+          </div>
+          <button
+            onclick="addQuestion()"
+            class="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors"
+          >
+            <span class="material-icons-round text-sm">add</span>
+            Add Question
+          </button>
+        </div>
+        <div id="questions-container" class="space-y-4">
+          <!-- Questions will be injected here -->
+        </div>
+      </section>
+
+      <!-- Schedule & Memory Palace Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Schedule Section -->
+        <section class="glass-panel rounded-3xl p-8 shadow-soft">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-10 h-10 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl">
+              📅
+            </span>
+            <h2 class="text-lg font-bold text-gray-900">Schedule</h2>
+          </div>
+          <div id="schedule-container" class="timeline-container">
+            <div class="timeline-line"></div>
+            <!-- Timeline items will be injected here -->
+          </div>
+        </section>
+
+        <!-- Memory Palace Section -->
+        <section class="glass-panel rounded-3xl p-8 shadow-soft">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center text-xl">
+                🧠
+              </span>
+              <h2 class="text-lg font-bold text-gray-900">Memory Palace</h2>
+            </div>
+            <button
+              class="px-4 py-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-sm hover:shadow-md transition-all"
+            >
+              Go into 3D Mode (Coming Soon!)
+            </button>
+          </div>
+          <div
+            id="palace-editor"
+            class="editor-content text-gray-700 leading-relaxed"
+            contenteditable="true"
+            data-placeholder="Describe your memory palace..."
+          ></div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center pt-8 border-t border-gray-100">
+        <p class="text-gray-400 text-sm">
+          Powered by GoStudy Intelligence &copy; 2025
+        </p>
+      </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script type="module">
+      import { auth, API_BASE } from "/backend/js/auth.js";
+
+      // --- STATE ---
+      let planData = null;
+      let saveTimeout = null;
+      let conceptNodes = [];
+      let draggedNode = null;
+      let dragOffset = { x: 0, y: 0 };
+
+      // --- DOM REFS ---
+      const summaryEditor = document.getElementById("summary-editor");
+      const palaceEditor = document.getElementById("palace-editor");
+      const filenameDisplay = document.getElementById("filename-display");
+      const saveIndicator = document.getElementById("save-indicator");
+      const saveText = document.getElementById("save-text");
+      const conceptMap = document.getElementById("concept-map");
+      const conceptLines = document.getElementById("concept-lines");
+      const questionsContainer = document.getElementById("questions-container");
+      const scheduleContainer = document.getElementById("schedule-container");
+
+      // --- INITIALIZATION ---
+      function init() {
+        // Load plan data from sessionStorage
+        const storedData = sessionStorage.getItem("editPlanData");
+        if (!storedData) {
+          alert("No plan data found. Redirecting to dashboard.");
+          window.location.href = "/dashboard/";
+          return;
+        }
+
+        planData = JSON.parse(storedData);
+        
+        // Populate the UI
+        filenameDisplay.textContent = planData.fileName || "Untitled";
+        
+        const sp = planData.studyPlan;
+        
+        // Summary
+        summaryEditor.innerHTML = formatSummaryHtml(sp.summary || "");
+        
+        // Memory Palace
+        palaceEditor.innerHTML = sp.memory_palace || "";
+        
+        // Concept Map
+        renderConceptMap(sp.concept_map);
+        
+        // Active Recall Questions
+        renderQuestions(sp.active_recall || []);
+        
+        // Schedule
+        renderSchedule(sp.spaced_repetition || []);
+
+        // Setup event listeners
+        setupEditorListeners();
+      }
+
+      function formatSummaryHtml(text) {
+        return text
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+      }
+
+      function setupEditorListeners() {
+        // Auto-save on content changes
+        summaryEditor.addEventListener("input", scheduleSave);
+        palaceEditor.addEventListener("input", scheduleSave);
+      }
+
+      // --- CONCEPT MAP ---
+      function renderConceptMap(conceptMapData) {
+        if (!conceptMapData) return;
+
+        const mainTopic = conceptMapData.main_topic || "Main Topic";
+        const subtopics = conceptMapData.subtopics || [];
+
+        // Calculate positions
+        const containerWidth = conceptMap.offsetWidth;
+        const centerX = containerWidth / 2;
+        const mainY = 40;
+        const subtopicY = 180;
+        const subtopicSpacing = Math.min(180, (containerWidth - 100) / Math.max(subtopics.length, 1));
+
+        // Create main node
+        conceptNodes = [];
+        createConceptNode("main", mainTopic, centerX - 80, mainY, true);
+
+        // Create subtopic nodes
+        const startX = centerX - ((subtopics.length - 1) * subtopicSpacing) / 2 - 60;
+        subtopics.forEach((topic, i) => {
+          createConceptNode(`sub-${i}`, topic, startX + i * subtopicSpacing, subtopicY, false);
+        });
+
+        // Draw lines
+        requestAnimationFrame(drawConnections);
+      }
+
+      function createConceptNode(id, text, x, y, isMain) {
+        const node = document.createElement("div");
+        node.id = `node-${id}`;
+        node.className = `concept-node${isMain ? " main" : ""}`;
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        node.innerHTML = `<span class="concept-node-text" contenteditable="true">${text}</span>`;
+
+        // Drag events
+        node.addEventListener("pointerdown", startDrag);
+        
+        // Edit events
+        const textEl = node.querySelector(".concept-node-text");
+        textEl.addEventListener("input", () => {
+          scheduleSave();
+        });
+        textEl.addEventListener("dblclick", (e) => {
+          e.stopPropagation();
+          textEl.focus();
+        });
+
+        conceptMap.appendChild(node);
+        conceptNodes.push({ id, node, isMain });
+      }
+
+      function startDrag(e) {
+        if (e.target.classList.contains("concept-node-text") && document.activeElement === e.target) {
+          return; // Don't drag when editing text
+        }
+        
+        const node = e.currentTarget;
+        draggedNode = node;
+        node.classList.add("dragging");
+        
+        const rect = node.getBoundingClientRect();
+        const containerRect = conceptMap.getBoundingClientRect();
+        dragOffset.x = e.clientX - rect.left;
+        dragOffset.y = e.clientY - rect.top;
+
+        document.addEventListener("pointermove", onDrag);
+        document.addEventListener("pointerup", endDrag);
+        node.setPointerCapture(e.pointerId);
+      }
+
+      function onDrag(e) {
+        if (!draggedNode) return;
+        
+        const containerRect = conceptMap.getBoundingClientRect();
+        let newX = e.clientX - containerRect.left - dragOffset.x;
+        let newY = e.clientY - containerRect.top - dragOffset.y;
+
+        // Keep within bounds
+        newX = Math.max(0, Math.min(newX, containerRect.width - draggedNode.offsetWidth));
+        newY = Math.max(0, Math.min(newY, containerRect.height - draggedNode.offsetHeight));
+
+        draggedNode.style.left = `${newX}px`;
+        draggedNode.style.top = `${newY}px`;
+
+        drawConnections();
+      }
+
+      function endDrag(e) {
+        if (draggedNode) {
+          draggedNode.classList.remove("dragging");
+          draggedNode = null;
+          scheduleSave();
+        }
+        document.removeEventListener("pointermove", onDrag);
+        document.removeEventListener("pointerup", endDrag);
+      }
+
+      function drawConnections() {
+        const mainNode = conceptNodes.find((n) => n.isMain);
+        if (!mainNode) return;
+
+        const mainRect = mainNode.node.getBoundingClientRect();
+        const containerRect = conceptMap.getBoundingClientRect();
+        const mainCenterX = mainRect.left + mainRect.width / 2 - containerRect.left;
+        const mainBottomY = mainRect.bottom - containerRect.top;
+
+        let pathD = "";
+        conceptNodes.forEach((n) => {
+          if (!n.isMain) {
+            const nodeRect = n.node.getBoundingClientRect();
+            const nodeCenterX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
+            const nodeTopY = nodeRect.top - containerRect.top;
+
+            // Draw curved line
+            const midY = (mainBottomY + nodeTopY) / 2;
+            pathD += `M ${mainCenterX} ${mainBottomY} Q ${mainCenterX} ${midY}, ${nodeCenterX} ${nodeTopY} `;
+          }
+        });
+
+        conceptLines.innerHTML = `<path d="${pathD}" stroke="#c7d7fe" stroke-width="2" fill="none"/>`;
+      }
+
+      // --- QUESTIONS ---
+      function renderQuestions(questions) {
+        questionsContainer.innerHTML = "";
+        questions.forEach((q, i) => {
+          addQuestionCard(i + 1, q.question, q.answer, q.difficulty_rating || 3);
+        });
+      }
+
+      function addQuestionCard(num, question, answer, rating) {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.innerHTML = `
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
+              ${num}
+            </div>
+            <div class="flex-1">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Question</span>
+                <div class="star-rating" data-rating="${rating}">
+                  ${[1, 2, 3, 4, 5]
+                    .map(
+                      (i) =>
+                        `<span class="material-icons-round ${i <= rating ? "text-yellow-400" : "text-gray-300"}" data-star="${i}">star</span>`
+                    )
+                    .join("")}
+                </div>
+              </div>
+              <div
+                class="text-sm font-semibold text-gray-800 mb-3 outline-none"
+                contenteditable="true"
+                data-field="question"
+              >${question}</div>
+              <div class="bg-gray-50 p-3 rounded-xl">
+                <span class="text-[10px] font-bold text-green-600 uppercase tracking-widest block mb-1">Answer</span>
+                <div
+                  class="text-sm text-gray-600 outline-none"
+                  contenteditable="true"
+                  data-field="answer"
+                >${answer}</div>
+              </div>
+            </div>
+            <button onclick="this.closest('.question-card').remove(); scheduleSave();" class="text-gray-300 hover:text-red-500 transition-colors">
+              <span class="material-icons-round text-lg">close</span>
+            </button>
+          </div>
+        `;
+
+        // Star rating interactions
+        const stars = card.querySelectorAll(".star-rating .material-icons-round");
+        stars.forEach((star) => {
+          star.addEventListener("click", (e) => {
+            const newRating = parseInt(e.target.dataset.star);
+            const ratingContainer = e.target.closest(".star-rating");
+            ratingContainer.dataset.rating = newRating;
+            stars.forEach((s, idx) => {
+              s.classList.toggle("text-yellow-400", idx < newRating);
+              s.classList.toggle("text-gray-300", idx >= newRating);
+            });
+            scheduleSave();
+          });
+        });
+
+        // Edit listeners
+        card.querySelectorAll("[contenteditable]").forEach((el) => {
+          el.addEventListener("input", scheduleSave);
+        });
+
+        questionsContainer.appendChild(card);
+      }
+
+      window.addQuestion = function () {
+        const num = questionsContainer.children.length + 1;
+        addQuestionCard(num, "New question...", "Answer here...", 3);
+        scheduleSave();
+      };
+
+      // --- SCHEDULE ---
+      function renderSchedule(schedule) {
+        // Keep the timeline line, clear other content
+        const existingItems = scheduleContainer.querySelectorAll(".timeline-item");
+        existingItems.forEach((item) => item.remove());
+
+        schedule.forEach((s) => {
+          const item = document.createElement("div");
+          item.className = "timeline-item";
+          item.innerHTML = `
+            <div class="timeline-dot"></div>
+            <div>
+              <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">${s.day}</span>
+              <p class="text-sm font-semibold text-gray-800 mt-2">${s.topic}</p>
+              ${s.hint ? `<p class="text-xs text-gray-500 mt-1">💡 ${s.hint}</p>` : ""}
+            </div>
+          `;
+          scheduleContainer.appendChild(item);
+        });
+      }
+
+      // --- TOOLBAR ACTIONS ---
+      window.formatText = function (command) {
+        document.execCommand(command, false, null);
+      };
+
+      window.formatHeading = function (level) {
+        document.execCommand("formatBlock", false, level);
+      };
+
+      window.insertLink = function () {
+        const url = prompt("Enter URL:");
+        if (url) {
+          document.execCommand("createLink", false, url);
+        }
+      };
+
+      // --- SAVE LOGIC ---
+      window.scheduleSave = function () {
+        // Show saving indicator
+        saveIndicator.classList.remove("hidden", "saved", "error");
+        saveIndicator.classList.add("saving");
+        saveText.textContent = "Saving...";
+
+        // Debounce
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(savePlan, 1500);
+      };
+
+      async function savePlan() {
+        if (!planData || !planData.planId) {
+          showSaveStatus("error", "Cannot save - no plan ID");
+          return;
+        }
+
+        try {
+          // Gather current data
+          const updatedPlan = {
+            summary: summaryEditor.innerText,
+            memory_palace: palaceEditor.innerText,
+            concept_map: gatherConceptMapData(),
+            active_recall: gatherQuestionsData(),
+            spaced_repetition: planData.studyPlan.spaced_repetition // Keep original
+          };
+
+          const token = await auth.currentUser.getIdToken();
+          const response = await fetch(`${API_BASE}/api/generations/${planData.planId}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ studyPlan: updatedPlan })
+          });
+
+          if (!response.ok) {
+            throw new Error("Save failed");
+          }
+
+          // Update local state
+          planData.studyPlan = updatedPlan;
+          sessionStorage.setItem("editPlanData", JSON.stringify(planData));
+          
+          showSaveStatus("saved", "Saved");
+        } catch (err) {
+          console.error("Save error:", err);
+          showSaveStatus("error", "Save failed");
+        }
+      }
+
+      function showSaveStatus(status, text) {
+        saveIndicator.classList.remove("hidden", "saving", "saved", "error");
+        saveIndicator.classList.add(status);
+        saveText.textContent = text;
+      }
+
+      function gatherConceptMapData() {
+        const nodes = conceptMap.querySelectorAll(".concept-node");
+        let mainTopic = "Main Topic";
+        const subtopics = [];
+
+        nodes.forEach((node) => {
+          const text = node.querySelector(".concept-node-text").innerText;
+          if (node.classList.contains("main")) {
+            mainTopic = text;
+          } else {
+            subtopics.push(text);
+          }
+        });
+
+        return { main_topic: mainTopic, subtopics };
+      }
+
+      function gatherQuestionsData() {
+        const cards = questionsContainer.querySelectorAll(".question-card");
+        return Array.from(cards).map((card) => ({
+          question: card.querySelector('[data-field="question"]').innerText,
+          answer: card.querySelector('[data-field="answer"]').innerText,
+          difficulty_rating: parseInt(card.querySelector(".star-rating").dataset.rating) || 3
+        }));
+      }
+
+      // --- AUTH CHECK ---
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          window.location.href = "/login/";
+        } else {
+          init();
+        }
+      });
+    </script>
+  </body>
+</html>

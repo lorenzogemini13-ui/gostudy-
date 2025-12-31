@@ -873,6 +873,46 @@ app.get('/api/generations/:id', authenticate, async (req, res) => {
     }
 });
 
+// Update a specific generation's study plan
+app.put('/api/generations/:id', authenticate, async (req, res) => {
+    if (!db) return res.status(500).json({ error: 'Firestore not initialized' });
+
+    try {
+        const doc = await db.collection('generations').doc(req.params.id).get();
+        if (!doc.exists || doc.data().userId !== req.user.uid) {
+            return res.status(404).json({ error: 'Generation not found' });
+        }
+
+        const { studyPlan } = req.body;
+        if (!studyPlan) {
+            return res.status(400).json({ error: 'Study plan data required' });
+        }
+
+        // Validate structure
+        const requiredFields = ['summary', 'concept_map', 'active_recall', 'spaced_repetition', 'memory_palace'];
+        for (const field of requiredFields) {
+            if (studyPlan[field] === undefined) {
+                return res.status(400).json({ error: `Missing required field: ${field}` });
+            }
+        }
+
+        // Save to disk
+        const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
+        await fsPromises.writeFile(filePath, JSON.stringify(studyPlan, null, 2));
+
+        // Update Firestore timestamp
+        await doc.ref.update({
+            updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+
+        console.log(`📝 Plan ${doc.id} updated by user ${req.user.uid}`);
+        res.json({ message: 'Plan updated successfully' });
+    } catch (error) {
+        console.error('Error updating generation:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Delete a specific generation
 app.delete('/api/generations/:id', authenticate, async (req, res) => {
     if (!db) return res.status(500).json({ error: 'Firestore not initialized' });

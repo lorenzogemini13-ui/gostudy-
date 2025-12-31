@@ -525,6 +525,13 @@
               </div>
               <div class="flex gap-3">
                 <button
+                  onclick="editPlan()"
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium"
+                >
+                  <span class="material-icons-round text-sm">edit</span>
+                  Edit
+                </button>
+                <button
                   onclick="exportMarkdown()"
                   class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors text-sm font-medium"
                 >
@@ -630,11 +637,7 @@
               >
                 <div class="flex items-center justify-between mb-6">
                   <div class="flex items-center gap-3">
-                    <span
-                      class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-lg"
-                    >
-                      🏛️
-                    </span>
+                    <span class="material-icons-round text-lg">memory</span>
                     <h3 class="text-gray-900 font-bold text-base">
                       Memory Palace
                     </h3>
@@ -672,6 +675,7 @@
 
       let selectedDifficulty = "High School";
       let currentData = null;
+      let currentPlanId = null;
       let answersVisible = false;
 
       // DOM Elements
@@ -1050,6 +1054,9 @@
           console.log('🔍 viewPlan response:', data);
           console.log('🔍 data.studyPlan:', data.studyPlan);
 
+          // Track the current plan ID for editing
+          currentPlanId = id;
+
           UI.filename.innerText = data.fileName;
           UI.bar.style.width = "100%";
           UI.percent.textContent = "100%";
@@ -1329,6 +1336,23 @@
           jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
         };
         html2pdf().set(opt).from(element).save();
+      };
+
+      // Edit Plan - Navigate to edit page with plan data
+      window.editPlan = function () {
+        if (!currentData) {
+          alert('No plan data available to edit.');
+          return;
+        }
+        
+        // Store plan data in sessionStorage for edit page
+        const planData = {
+          studyPlan: currentData,
+          fileName: UI.filename.innerText,
+          planId: currentPlanId
+        };
+        sessionStorage.setItem('editPlanData', JSON.stringify(planData));
+        window.location.href = '/edit-plan/';
       };
 
       // --- FEEDBACK NOTIFICATION SYSTEM ---
