@@ -141,7 +141,7 @@
         padding-top: 24px;
       }
       .concept-branches::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 50%;
@@ -157,7 +157,7 @@
         position: relative;
       }
       .concept-branch::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 50%;
@@ -548,12 +548,12 @@
                 class="lg:col-span-3 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500 hover:backdrop-blur-xl group"
               >
                 <div class="flex items-center gap-3 mb-4">
-                  <span class="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center">
+                  <span
+                    class="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center"
+                  >
                     <span class="material-icons-round text-lg">bolt</span>
                   </span>
-                  <h3 class="text-gray-900 font-bold text-base">
-                    Summary
-                  </h3>
+                  <h3 class="text-gray-900 font-bold text-base">Summary</h3>
                 </div>
                 <p
                   id="result-summary"
@@ -566,17 +566,14 @@
                 class="lg:col-span-3 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500 hover:backdrop-blur-xl"
               >
                 <div class="flex items-center gap-3 mb-6">
-                  <span class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
+                  <span
+                    class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center"
+                  >
                     <span class="material-icons-round text-lg">hub</span>
                   </span>
-                  <h3 class="text-gray-900 font-bold text-base">
-                    Concept Map
-                  </h3>
+                  <h3 class="text-gray-900 font-bold text-base">Concept Map</h3>
                 </div>
-                <div
-                  id="result-concepts"
-                  class="flex flex-col items-center"
-                >
+                <div id="result-concepts" class="flex flex-col items-center">
                   <!-- Tree visualization injected here -->
                 </div>
               </div>
@@ -587,7 +584,9 @@
               >
                 <div class="flex justify-between items-center mb-6">
                   <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                    <span
+                      class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center"
+                    >
                       <span class="material-icons-round text-lg">help</span>
                     </span>
                     <h3 class="text-gray-900 font-bold text-base">
@@ -609,12 +608,12 @@
                 class="lg:col-span-1 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500"
               >
                 <div class="flex items-center gap-3 mb-6">
-                  <span class="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center">
+                  <span
+                    class="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center"
+                  >
                     <span class="material-icons-round text-lg">event</span>
                   </span>
-                  <h3 class="text-gray-900 font-bold text-base">
-                    Schedule
-                  </h3>
+                  <h3 class="text-gray-900 font-bold text-base">Schedule</h3>
                 </div>
                 <!-- Timeline -->
                 <div
@@ -631,7 +630,9 @@
               >
                 <div class="flex items-center justify-between mb-6">
                   <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-lg">
+                    <span
+                      class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-lg"
+                    >
                       🏛️
                     </span>
                     <h3 class="text-gray-900 font-bold text-base">
@@ -914,6 +915,8 @@
           }
 
           const data = await response.json();
+          
+          console.log('🔍 Upload response:', data);
 
           clearInterval(progressInterval);
           UI.bar.style.width = "100%";
@@ -1043,6 +1046,9 @@
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await response.json();
+          
+          console.log('🔍 viewPlan response:', data);
+          console.log('🔍 data.studyPlan:', data.studyPlan);
 
           UI.filename.innerText = data.fileName;
           UI.bar.style.width = "100%";
@@ -1085,15 +1091,21 @@
 
       // --- RENDERING LOGIC ---
       function renderDashboard(data) {
+        console.log("🔍 renderDashboard called with:", data);
+        console.log("🔍 data type:", typeof data);
+        console.log("🔍 data.summary:", data?.summary);
+        console.log("🔍 data.active_recall:", data?.active_recall);
+        console.log("🔍 data.concept_map:", data?.concept_map);
+
         currentData = data;
         UI.loading.style.display = "none";
         UI.results.classList.add("hidden"); // Reset
-        
+
         // Re-trigger animation
         UI.results.classList.remove("animate-blur-in");
         void UI.results.offsetWidth; // Trigger reflow
         UI.results.classList.add("animate-blur-in");
-        
+
         UI.results.classList.remove("hidden");
         UI.results.style.display = "block";
 
@@ -1129,14 +1141,18 @@
             div.innerHTML = `
               <div class="flex items-start gap-4">
                  <div class="pt-1">
-                   <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold border border-blue-100 group-hover/quiz:bg-blue-600 group-hover/quiz:text-white transition-all duration-300">${i + 1}</div>
+                   <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold border border-blue-100 group-hover/quiz:bg-blue-600 group-hover/quiz:text-white transition-all duration-300">${
+                     i + 1
+                   }</div>
                  </div>
                  <div class="flex-1">
                    <div class="flex justify-between items-center mb-1">
                      <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Question</span>
                      <div class="flex gap-0.5">${stars}</div>
                    </div>
-                   <p class="text-sm font-semibold text-slate-800 leading-snug mb-3">${q.question}</p>
+                   <p class="text-sm font-semibold text-slate-800 leading-snug mb-3">${
+                     q.question
+                   }</p>
                    
                    <div class="quiz-answer hidden overflow-hidden">
                       <div class="bg-slate-50/50 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 text-sm text-slate-600 italic leading-relaxed animate-enter">
@@ -1157,15 +1173,20 @@
         if (data.spaced_repetition?.length) {
           data.spaced_repetition.forEach((s) => {
             const div = document.createElement("div");
-            div.className = "relative flex items-start gap-5 pb-6 last:pb-0 group/step";
+            div.className =
+              "relative flex items-start gap-5 pb-6 last:pb-0 group/step";
             div.innerHTML = `
               <div class="absolute -left-[23px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-sm z-10 group-hover/step:scale-125 transition-transform duration-300"></div>
               <div class="flex-1">
                   <div class="flex items-center gap-2 mb-1.5">
-                      <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full uppercase tracking-wider">${s.day}</span>
+                      <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full uppercase tracking-wider">${
+                        s.day
+                      }</span>
                   </div>
                   <div class="p-1">
-                      <p class="text-sm font-semibold text-slate-800 leading-tight">${s.topic}</p>
+                      <p class="text-sm font-semibold text-slate-800 leading-tight">${
+                        s.topic
+                      }</p>
                       ${
                         s.hint
                           ? `<p class="mt-2 text-[11px] text-gray-500 bg-gray-50/50 p-2 rounded-xl border border-gray-100/50 line-clamp-2 hover:line-clamp-none transition-all cursor-help"><span class="mr-1">💡</span>${s.hint}</p>`
@@ -1181,53 +1202,79 @@
         // 5. Concept Map (Tree Visualization)
         const conceptsDiv = document.getElementById("result-concepts");
         conceptsDiv.innerHTML = "";
-        
+
         if (data.concept_map && data.concept_map.main_topic) {
           // New hierarchical format
           const mainTopic = data.concept_map.main_topic;
           const subtopics = data.concept_map.subtopics || [];
-          
+
           const treeHtml = `
             <div class="concept-tree w-full">
               <!-- Main Topic Node -->
               <div class="concept-node main">${mainTopic}</div>
               
-              ${subtopics.length > 0 ? `
+              ${
+                subtopics.length > 0
+                  ? `
                 <!-- Branches Container -->
-                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(subtopics.length * 160, 800)}px;">
-                  <div class="concept-horizontal-line" style="left: ${100/(subtopics.length*2)}%; right: ${100/(subtopics.length*2)}%;"></div>
-                  ${subtopics.map(topic => `
+                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(
+                  subtopics.length * 160,
+                  800
+                )}px;">
+                  <div class="concept-horizontal-line" style="left: ${
+                    100 / (subtopics.length * 2)
+                  }%; right: ${100 / (subtopics.length * 2)}%;"></div>
+                  ${subtopics
+                    .map(
+                      (topic) => `
                     <div class="concept-branch">
                       <div class="concept-node">${topic}</div>
                     </div>
-                  `).join('')}
+                  `
+                    )
+                    .join("")}
                 </div>
-              ` : '<p class="text-gray-400 text-sm mt-4">No subtopics generated</p>'}
+              `
+                  : '<p class="text-gray-400 text-sm mt-4">No subtopics generated</p>'
+              }
             </div>
           `;
-          
+
           conceptsDiv.innerHTML = treeHtml;
         } else if (Array.isArray(data.concept_map) && data.concept_map.length) {
           // Backwards compatibility: old array format
           const mainTopic = data.concept_map[0]?.concept || "Main Topic";
-          const subtopics = data.concept_map.slice(1).map(c => c.concept);
-          
+          const subtopics = data.concept_map.slice(1).map((c) => c.concept);
+
           const treeHtml = `
             <div class="concept-tree w-full">
               <div class="concept-node main">${mainTopic}</div>
-              ${subtopics.length > 0 ? `
-                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(subtopics.length * 160, 800)}px;">
-                  <div class="concept-horizontal-line" style="left: ${100/(subtopics.length*2)}%; right: ${100/(subtopics.length*2)}%;"></div>
-                  ${subtopics.map(topic => `
+              ${
+                subtopics.length > 0
+                  ? `
+                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(
+                  subtopics.length * 160,
+                  800
+                )}px;">
+                  <div class="concept-horizontal-line" style="left: ${
+                    100 / (subtopics.length * 2)
+                  }%; right: ${100 / (subtopics.length * 2)}%;"></div>
+                  ${subtopics
+                    .map(
+                      (topic) => `
                     <div class="concept-branch">
                       <div class="concept-node">${topic}</div>
                     </div>
-                  `).join('')}
+                  `
+                    )
+                    .join("")}
                 </div>
-              ` : ''}
+              `
+                  : ""
+              }
             </div>
           `;
-          
+
           conceptsDiv.innerHTML = treeHtml;
         }
 
