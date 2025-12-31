@@ -96,6 +96,85 @@
       .animate-blur-in {
         animation: blurIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
+      /* Concept Map Tree Styles */
+      .concept-tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+      }
+      .concept-node {
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+        border: 2px solid #c7d7fe;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #1e40af;
+        text-align: center;
+        min-width: 120px;
+        max-width: 200px;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        transition: all 0.3s ease;
+      }
+      .concept-node:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+      }
+      .concept-node.main {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-color: #f59e0b;
+        color: #92400e;
+        font-size: 16px;
+        padding: 14px 28px;
+      }
+      .concept-connector {
+        width: 2px;
+        height: 24px;
+        background: #c7d7fe;
+      }
+      .concept-branches {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        position: relative;
+        padding-top: 24px;
+      }
+      .concept-branches::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 24px;
+        background: #c7d7fe;
+      }
+      .concept-branch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+      .concept-branch::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 16px;
+        background: #c7d7fe;
+      }
+      .concept-branch .concept-node {
+        margin-top: 16px;
+      }
+      .concept-horizontal-line {
+        position: absolute;
+        top: 0;
+        height: 2px;
+        background: #c7d7fe;
+      }
     </style>
   </head>
   <body class="bg-bg font-sans text-text h-screen flex overflow-hidden">
@@ -468,16 +547,12 @@
               <div
                 class="lg:col-span-3 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500 hover:backdrop-blur-xl group"
               >
-                <div class="flex items-center gap-2 mb-4">
-                  <span class="bg-yellow-100 text-yellow-700 p-1.5 rounded-lg"
-                    ><span class="material-icons-round text-lg"
-                      >lightbulb</span
-                    ></span
-                  >
-                  <h3
-                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
-                  >
-                    Executive Summary
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center">
+                    <span class="material-icons-round text-lg">bolt</span>
+                  </span>
+                  <h3 class="text-gray-900 font-bold text-base">
+                    Summary
                   </h3>
                 </div>
                 <p
@@ -490,21 +565,19 @@
               <div
                 class="lg:col-span-3 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500 hover:backdrop-blur-xl"
               >
-                <div class="flex items-center gap-2 mb-6">
-                  <span class="bg-purple-100 text-purple-600 p-1.5 rounded-lg"
-                    ><span class="material-icons-round text-lg">hub</span></span
-                  >
-                  <h3
-                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
-                  >
+                <div class="flex items-center gap-3 mb-6">
+                  <span class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
+                    <span class="material-icons-round text-lg">hub</span>
+                  </span>
+                  <h3 class="text-gray-900 font-bold text-base">
                     Concept Map
                   </h3>
                 </div>
                 <div
                   id="result-concepts"
-                  class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  class="flex flex-col items-center"
                 >
-                  <!-- Concepts injected here -->
+                  <!-- Tree visualization injected here -->
                 </div>
               </div>
 
@@ -513,15 +586,11 @@
                 class="lg:col-span-2 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500 flex flex-col"
               >
                 <div class="flex justify-between items-center mb-6">
-                  <div class="flex items-center gap-2">
-                    <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"
-                      ><span class="material-icons-round text-lg"
-                        >quiz</span
-                      ></span
-                    >
-                    <h3
-                      class="text-gray-900 font-bold text-sm uppercase tracking-wide"
-                    >
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                      <span class="material-icons-round text-lg">help</span>
+                    </span>
+                    <h3 class="text-gray-900 font-bold text-base">
                       Active Recall
                     </h3>
                   </div>
@@ -539,15 +608,11 @@
               <div
                 class="lg:col-span-1 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500"
               >
-                <div class="flex items-center gap-2 mb-6">
-                  <span class="bg-green-100 text-green-600 p-1.5 rounded-lg"
-                    ><span class="material-icons-round text-lg"
-                      >calendar_today</span
-                    ></span
-                  >
-                  <h3
-                    class="text-gray-900 font-bold text-sm uppercase tracking-wide"
-                  >
+                <div class="flex items-center gap-3 mb-6">
+                  <span class="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center">
+                    <span class="material-icons-round text-lg">event</span>
+                  </span>
+                  <h3 class="text-gray-900 font-bold text-base">
                     Schedule
                   </h3>
                 </div>
@@ -562,37 +627,27 @@
 
               <!-- Memory Palace -->
               <div
-                class="lg:col-span-3 glass-panel p-10 rounded-3xl shadow-xl text-slate-800 relative overflow-hidden group min-h-[220px] flex flex-col justify-center translate-y-0 hover:-translate-y-1 transition-all duration-500"
+                class="lg:col-span-3 glass-panel p-8 rounded-3xl shadow-soft hover:shadow-lg transition-all duration-500"
               >
-                <!-- Subtle Dark Overlay or Tint -->
-                <div class="absolute inset-0 bg-blue-50/20 pointer-events-none"></div>
-                
-                <!-- Decorative circles (Glass style) -->
-                <div
-                  class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-16 -mt-16 pointer-events-none group-hover:scale-110 transition-transform duration-700"
-                ></div>
-                <div
-                  class="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full -ml-10 -mb-10 pointer-events-none group-hover:scale-110 transition-transform duration-700 delay-100"
-                ></div>
-
-                <div class="relative z-10">
-                  <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-primary/10 text-primary p-2.5 rounded-2xl backdrop-blur-md shadow-sm"
-                      ><span class="material-icons-round text-xl"
-                        >psychology</span
-                      ></span
-                    >
-                    <h3
-                      class="font-bold text-xs uppercase tracking-[0.2em] text-gray-500"
-                    >
-                      Memory Palace Technique
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center text-lg">
+                      🏛️
+                    </span>
+                    <h3 class="text-gray-900 font-bold text-base">
+                      Memory Palace
                     </h3>
                   </div>
-                  <p
-                    id="result-palace"
-                    class="text-xl md:text-2xl font-serif italic leading-relaxed text-slate-800 antialiased"
-                  ></p>
+                  <button
+                    class="px-4 py-2 bg-gradient-to-r from-green-400 to-green-500 text-white text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-all"
+                  >
+                    Go into 3D Mode(Coming Soon!)
+                  </button>
                 </div>
+                <p
+                  id="result-palace"
+                  class="text-gray-700 leading-relaxed text-base"
+                ></p>
               </div>
             </div>
           </div>
@@ -1123,39 +1178,57 @@
           });
         }
 
-        // 5. Concept Map
+        // 5. Concept Map (Tree Visualization)
         const conceptsDiv = document.getElementById("result-concepts");
         conceptsDiv.innerHTML = "";
-        if (data.concept_map?.length) {
-          data.concept_map.forEach((c) => {
-            const div = document.createElement("div");
-            div.className =
-              "bg-white p-4 rounded-2xl border border-gray-100 shadow-sm";
-
-            // Relations tags
-            const relationsHtml = c.related_to
-              .map(
-                (r) =>
-                  `<span class="text-[9px] font-bold bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full border border-purple-100/50">${r}</span>`
-              )
-              .join("");
-
-            div.innerHTML = `
-                    <div class="group/concept p-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-                            <h4 class="font-bold text-slate-800 text-sm tracking-tight">${c.concept}</h4>
-                        </div>
-                        <div class="pl-3.5 border-l border-slate-100 mb-2">
-                             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider mb-2">${c.relationship_type}</p>
-                             <div class="flex flex-wrap gap-1.5">
-                                ${relationsHtml}
-                             </div>
-                        </div>
+        
+        if (data.concept_map && data.concept_map.main_topic) {
+          // New hierarchical format
+          const mainTopic = data.concept_map.main_topic;
+          const subtopics = data.concept_map.subtopics || [];
+          
+          const treeHtml = `
+            <div class="concept-tree w-full">
+              <!-- Main Topic Node -->
+              <div class="concept-node main">${mainTopic}</div>
+              
+              ${subtopics.length > 0 ? `
+                <!-- Branches Container -->
+                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(subtopics.length * 160, 800)}px;">
+                  <div class="concept-horizontal-line" style="left: ${100/(subtopics.length*2)}%; right: ${100/(subtopics.length*2)}%;"></div>
+                  ${subtopics.map(topic => `
+                    <div class="concept-branch">
+                      <div class="concept-node">${topic}</div>
                     </div>
-                `;
-            conceptsDiv.appendChild(div);
-          });
+                  `).join('')}
+                </div>
+              ` : '<p class="text-gray-400 text-sm mt-4">No subtopics generated</p>'}
+            </div>
+          `;
+          
+          conceptsDiv.innerHTML = treeHtml;
+        } else if (Array.isArray(data.concept_map) && data.concept_map.length) {
+          // Backwards compatibility: old array format
+          const mainTopic = data.concept_map[0]?.concept || "Main Topic";
+          const subtopics = data.concept_map.slice(1).map(c => c.concept);
+          
+          const treeHtml = `
+            <div class="concept-tree w-full">
+              <div class="concept-node main">${mainTopic}</div>
+              ${subtopics.length > 0 ? `
+                <div class="concept-branches" style="width: 100%; max-width: ${Math.min(subtopics.length * 160, 800)}px;">
+                  <div class="concept-horizontal-line" style="left: ${100/(subtopics.length*2)}%; right: ${100/(subtopics.length*2)}%;"></div>
+                  ${subtopics.map(topic => `
+                    <div class="concept-branch">
+                      <div class="concept-node">${topic}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+          
+          conceptsDiv.innerHTML = treeHtml;
         }
 
         // Auto scroll

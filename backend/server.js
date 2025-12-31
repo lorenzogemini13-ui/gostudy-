@@ -251,7 +251,25 @@ const getCreditsBalance = async (userId) => {
         return { ...newUserData, id: userId };
     }
     
-    return { ...userDoc.data(), id: userId };
+    const userData = userDoc.data();
+
+    // Fix for manual plan changes in Firebase Console
+    // If admin sets plan='pro' manually, balance remains at 3 (free). This fixes it to 40.
+    if (userData.plan === 'pro' && !userData.paypalSubscriptionId && !userData.manualProCreditsGranted) {
+        const newBalance = PLAN_CREDITS.pro;
+        
+        // Update DB
+        await userRef.update({
+            credits_balance: newBalance,
+            manualProCreditsGranted: true
+        });
+        
+        console.log(`🔧 Auto-corrected credits for manual Pro user ${userId} to ${newBalance}`);
+        
+        return { ...userData, credits_balance: newBalance, manualProCreditsGranted: true, id: userId };
+    }
+
+    return { ...userData, id: userId };
 };
 
 // Deduct credits atomically with transaction (returns success/failure)
@@ -461,7 +479,7 @@ GOALS:
 2. MEMORY PALACE: A vivid spatial mnemonic (MAX 100 words).
 3. ACTIVE RECALL: 5 questions (difficulty 1-5).
 4. SPACED REPETITION: 4-step schedule (Day 1,3,7,14) with topic + optional hint.
-5. CONCEPT MAP: 5-7 key concepts with relationships.
+5. CONCEPT MAP: Hierarchical tree with 1 main topic and 3-5 subtopics branching from it.
 
 CONSTRAINTS:
 - Use valid JSON only.
@@ -474,7 +492,7 @@ SCHEMA:
   "memory_palace": "string",
   "active_recall": [{ "question": "string", "answer": "string", "difficulty_rating": 1-5 }],
   "spaced_repetition": [{ "day": "string", "topic": "string", "hint": "string"}],
-  "concept_map": [{ "concept": "string", "related_to": ["string"], "relationship_type": "string" }]
+  "concept_map": { "main_topic": "string", "subtopics": ["string", "string", "string"] }
 }`;
 
         console.log('Sending single optimized request to Perplexity AI...');
@@ -526,11 +544,23 @@ SCHEMA:
                 hint: s.hint || null
             })) : [];
 
-            studyPlan.concept_map = Array.isArray(studyPlan.concept_map) ? studyPlan.concept_map.map(c => ({
-                concept: c.concept || "Concept",
-                related_to: Array.isArray(c.related_to) ? c.related_to : [],
-                relationship_type: c.relationship_type || "relates to"
-            })) : [];
+            // Handle new hierarchical format or convert old array format
+            if (studyPlan.concept_map && typeof studyPlan.concept_map === 'object' && !Array.isArray(studyPlan.concept_map)) {
+                // New format: { main_topic, subtopics }
+                studyPlan.concept_map = {
+                    main_topic: studyPlan.concept_map.main_topic || "Main Topic",
+                    subtopics: Array.isArray(studyPlan.concept_map.subtopics) ? studyPlan.concept_map.subtopics : []
+                };
+            } else if (Array.isArray(studyPlan.concept_map)) {
+                // Old format: convert array to hierarchical structure
+                const concepts = studyPlan.concept_map.map(c => c.concept || "Concept");
+                studyPlan.concept_map = {
+                    main_topic: concepts[0] || "Main Topic",
+                    subtopics: concepts.slice(1)
+                };
+            } else {
+                studyPlan.concept_map = { main_topic: "Main Topic", subtopics: [] };
+            }
 
         } catch (jsonError) {
             console.error("JSON Parse Error:", jsonError.message);
