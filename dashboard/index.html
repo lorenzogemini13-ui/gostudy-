@@ -919,8 +919,8 @@
           }
 
           const data = await response.json();
-          
-          console.log('🔍 Upload response:', data);
+
+          console.log("🔍 Upload response:", data);
 
           clearInterval(progressInterval);
           UI.bar.style.width = "100%";
@@ -1050,9 +1050,9 @@
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await response.json();
-          
-          console.log('🔍 viewPlan response:', data);
-          console.log('🔍 data.studyPlan:', data.studyPlan);
+
+          console.log("🔍 viewPlan response:", data);
+          console.log("🔍 data.studyPlan:", data.studyPlan);
 
           // Track the current plan ID for editing
           currentPlanId = id;
@@ -1066,7 +1066,15 @@
             showSection("results");
           }, 500);
         } catch (err) {
-          alert(`Error loading plan: ${err.message}`);
+          console.error("View Plan Error:", err);
+          if (err.message.includes("Plan content missing")) {
+            alert(
+              "This study plan cannot be found. It may have been lost due to a server restart before the database migration was applied. Please regenerate it."
+            );
+            // Optional: offer to delete it from the UI or just let them delete it manually
+          } else {
+            alert(`Error loading plan: ${err.message}`);
+          }
           showSection("history");
         }
       };
@@ -1341,18 +1349,18 @@
       // Edit Plan - Navigate to edit page with plan data
       window.editPlan = function () {
         if (!currentData) {
-          alert('No plan data available to edit.');
+          alert("No plan data available to edit.");
           return;
         }
-        
+
         // Store plan data in sessionStorage for edit page
         const planData = {
           studyPlan: currentData,
           fileName: UI.filename.innerText,
-          planId: currentPlanId
+          planId: currentPlanId,
         };
-        sessionStorage.setItem('editPlanData', JSON.stringify(planData));
-        window.location.href = '/edit-plan/';
+        sessionStorage.setItem("editPlanData", JSON.stringify(planData));
+        window.location.href = "/edit-plan/";
       };
 
       // --- FEEDBACK NOTIFICATION SYSTEM ---

@@ -576,14 +576,20 @@ SCHEMA:
                 const idToken = authHeader.split('Bearer ')[1];
                 const decodedToken = await admin.auth().verifyIdToken(idToken);
                 
+                // DATA PERSISTENCE FIX: Save studyPlan directly to Firestore
                 const docRef = await db.collection('generations').add({
                     userId: decodedToken.uid,
                     fileName: req.file.originalname,
+                    studyPlan: studyPlan, // <--- Save full plan here
                     createdAt: admin.firestore.FieldValue.serverTimestamp()
                 });
                 
-                // Save to disk using the Firestore ID as filename
-                await savePlanToFile(decodedToken.uid, docRef.id, studyPlan);
+                // Save to disk using the Firestore ID as filename (Optional backup)
+                try {
+                     await savePlanToFile(decodedToken.uid, docRef.id, studyPlan);
+                } catch (diskErr) {
+                    console.warn("Failed to save backup to disk (non-critical):", diskErr.message);
+                }
                 
                 // Deduct credits atomically (idempotency key = generation ID)
                 const deductResult = await deductCredits(
@@ -597,7 +603,7 @@ SCHEMA:
                     console.error('⚠️ Credit deduction failed after generation:', deductResult.error);
                 }
                 
-                console.log('💾 Plan saved to Firestore and disk for user:', decodedToken.uid);
+                console.log('💾 Plan saved to Firestore for user:', decodedToken.uid);
             } catch (authError) {
                 console.error('Failed to save to Firestore (possibly invalid token):', authError.message);
                 // We still return the plan to the user even if saving fails
@@ -857,15 +863,26 @@ app.get('/api/generations/:id', authenticate, async (req, res) => {
         }
 
         const data = doc.data();
+
+        // 1. Plan A: Check if studyPlan is in Firestore (New records)
+        if (data.studyPlan) {
+             return res.json({ id: doc.id, ...data });
+        }
+
+        // 2. Plan B: Check disk (Legacy records)
         const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
         
         try {
             const fileContent = await fsPromises.readFile(filePath, 'utf-8');
             const studyPlan = JSON.parse(fileContent);
+            
+            // Self-repair: Save back to Firestore for future
+            doc.ref.update({ studyPlan }).catch(err => console.warn("Failed to migrate legacy plan to Firestore:", err));
+
             res.json({ id: doc.id, ...data, studyPlan });
         } catch (fileError) {
-            console.error('Error reading saved plan file:', fileError);
-            res.status(500).json({ error: 'Failed to read plan file' });
+            console.error('Error reading saved plan file:', fileError.message);
+            res.status(404).json({ error: 'Plan content missing. It may have been lost due to server restart.' });
         }
     } catch (error) {
         console.error('Error fetching generation:', error);
@@ -896,14 +913,19 @@ app.put('/api/generations/:id', authenticate, async (req, res) => {
             }
         }
 
-        // Save to disk
-        const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
-        await fsPromises.writeFile(filePath, JSON.stringify(studyPlan, null, 2));
-
-        // Update Firestore timestamp
+        // 1. Update Firestore
         await doc.ref.update({
+            studyPlan: studyPlan,
             updatedAt: admin.firestore.FieldValue.serverTimestamp()
         });
+
+        // 2. Update disk (Backup/Legacy compatibility)
+        try {
+            const filePath = path.join(__dirname, 'saved_plans', req.user.uid, `${doc.id}.json`);
+             await fsPromises.writeFile(filePath, JSON.stringify(studyPlan, null, 2));
+        } catch (diskErr) {
+            console.warn("Failed to update disk backup (non-critical):", diskErr.message);
+        }
 
         console.log(`📝 Plan ${doc.id} updated by user ${req.user.uid}`);
         res.json({ message: 'Plan updated successfully' });

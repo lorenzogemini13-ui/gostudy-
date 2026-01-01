@@ -6,9 +6,9 @@ GoStudy! is an intelligent learning platform that transforms static study materi
 
 | Component | Technology |
 | :--- | :--- |
-| **Frontend** | HTML5, Vanilla JavaScript, Tailwind CSS |
+| **Frontend** | HTML5, Vanilla JavaScript (ES Modules), Tailwind CSS (CDN) |
 | **Icons & Fonts** | Material Icons Round, Google Fonts (Inter, JetBrains Mono) |
-| **Backend** | Node.js, Express.js |
+| **Backend** | Node.js, Express.js (API Only) |
 | **AI Engine** | Perplexity AI (`sonar` model) |
 | **Authentication** | Firebase Authentication (Google & Email/Password) |
 | **Database** | Google Cloud Firestore |
@@ -54,6 +54,12 @@ Upload PDF, DOCX, or TXT files to generate:
 - **Subscription Status**: Current plan and usage stats
 - **Secure Actions**: Password updates and account deletion
 
+### 6. Study Plan Editor
+- **Rich Text Editing**: Content editable interface for plans
+- **Concept Map Editor**: Interactive node manipulation
+- **Schedule Management**: Drag-and-drop or click-to-edit schedule items
+- **Memory Palace Visualization**: Enhanced view for spatial mnemonics
+
 ---
 
 ##  Site Map
@@ -67,6 +73,7 @@ Upload PDF, DOCX, or TXT files to generate:
     Onboarding --> Dashboard["/dashboard/"]
     
     Dashboard --> Profile["/profile/"]
+    Dashboard --> EditPlan["/edit-plan/"]
     Dashboard --> GenPlan["/api/generate-plan"]
     
     Pricing --> Pro["/pricing/pro/ (PayPal)"]
@@ -116,10 +123,11 @@ Upload PDF, DOCX, or TXT files to generate:
 
 backend/
 ├── server.js          # Express server, API routes, credits system
-├── js/auth.js         # Client-side Firebase + API constants
+├── js/auth.js         # Client-side auth logic (Shared with frontend)
 └── saved_plans/       # Generated study plans (per user)
 
 dashboard/             # Upload UI, credits display, study plans
+edit-plan/             # Editor interface for study plans
 pricing/               # Tier details + PayPal integration
   └── pro/             # Pro subscription with PayPal button
 profile/               # Account settings, subscription status
@@ -149,4 +157,3 @@ PAYPAL_CLIENT_ID=xxx
 PAYPAL_CLIENT_SECRET=xxx
 PAYPAL_WEBHOOK_ID=xxx
 NODE_ENV=production
-
