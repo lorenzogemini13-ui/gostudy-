@@ -1004,6 +1004,69 @@ app.put('/api/account', authenticate, async (req, res) => {
     }
 });
 
+// --- 7. STUDY PREFERENCES ---
+
+// Get User Preferences
+app.get('/api/preferences', authenticate, async (req, res) => {
+    if (!db) return res.status(500).json({ error: 'Firestore not initialized' });
+
+    try {
+        const userDoc = await db.collection('users').doc(req.user.uid).get();
+        if (!userDoc.exists) {
+            // Return defaults if user doesn't exist (shouldn't happen for auth'd users usually, but safe fallback)
+            return res.json({
+                tone: "neutral",
+                difficulty_adaptation: true,
+                pace: "balanced",
+                reminder_frequency: "medium",
+                focus_preference: "mixed"
+            });
+        }
+
+        const data = userDoc.data();
+        const preferences = data.preferences || {
+            tone: "neutral",
+            difficulty_adaptation: true,
+            pace: "balanced",
+            reminder_frequency: "medium",
+            focus_preference: "mixed"
+        };
+
+        res.json(preferences);
+    } catch (error) {
+        console.error('Error fetching preferences:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Update User Preferences
+app.put('/api/preferences', authenticate, async (req, res) => {
+    if (!db) return res.status(500).json({ error: 'Firestore not initialized' });
+
+    try {
+        const { tone, difficulty_adaptation, pace, reminder_frequency, focus_preference } = req.body;
+        
+        // Construct preferences object with validation/defaults
+        const preferences = {
+            tone: tone || "neutral",
+            difficulty_adaptation: difficulty_adaptation ?? true,
+            pace: pace || "balanced",
+            reminder_frequency: reminder_frequency || "medium",
+            focus_preference: focus_preference || "mixed"
+        };
+
+        await db.collection('users').doc(req.user.uid).set({
+            preferences: preferences
+        }, { merge: true });
+
+        console.log(`Updated preferences for user: ${req.user.uid}`);
+        res.json({ message: 'Preferences updated successfully', preferences });
+    } catch (error) {
+        console.error('Error updating preferences:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // --- 7. NEW DASHBOARD ENDPOINTS (MOCK) ---
 
 app.get('/api/courses', authenticate, (req, res) => {
