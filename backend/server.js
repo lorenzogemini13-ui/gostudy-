@@ -463,16 +463,61 @@ app.post('/api/generate-plan', checkCredits, upload.single('document'), async (r
 
         console.log(`Extracted ${documentText.length} characters.`);
 
-        // 3. Truncation (Safe Token Limits)
-        // Approx 15k tokens to leave room for the answer
-        // 3. Truncation (Optimized for $0.07 budget)
-        // ~10k tokens input (approx $0.06 cost on standard models)
         const truncatedText = documentText.substring(0, 40000); 
+
+        // --- FETCH USER PREFERENCES ---
+        let prefsPrompt = "";
+        try {
+            // Decoded token is available in req.user from auth middleware
+            if (req.user && req.user.uid && db) {
+                const userDoc = await db.collection('users').doc(req.user.uid).get();
+                if (userDoc.exists) {
+                    const p = userDoc.data().preferences;
+                    if (p) {
+                         const toneMap = {
+                            "neutral": "Maintain a neutral, academic tone.",
+                            "motivational": "Use a highly motivational and encouraging tone. Use phrases like 'You got this!' and 'Keep going!'.",
+                            "strict": "Use a strict, direct, and no-nonsense tone. Focus purely on efficiency.",
+                            "friendly": "Use a friendly, casual, and approachable tone.",
+                            "concise": "Be extremely concise. Use bullet points where possible and avoid fluff."
+                        };
+                        const toneInstruction = toneMap[p.tone] || toneMap["neutral"];
+                        
+                        const focusMap = {
+                            "theory": "Prioritize deep theoretical understanding and definitions in the summary and concept map.",
+                            "practice": "Prioritize practical applications, examples, and problem-solving strategies.",
+                            "mixed": "Maintain a balance between theory and practice."
+                        };
+                        const focusInstruction = focusMap[p.focus_preference] || focusMap["mixed"];
+
+                        const paceMap = {
+                            "relaxed": "For the spaced repetition schedule, keep it light and manageable.",
+                            "intensive": "For the questions and schedule, imply a rigorous and intensive study pace.",
+                            "balanced": ""
+                        };
+                        const paceInstruction = paceMap[p.pace] || "";
+
+                        prefsPrompt = `
+CUSTOMIZATION SETTINGS:
+- TONE: ${toneInstruction}
+- FOCUS: ${focusInstruction}
+- ${paceInstruction}
+${p.difficulty_adaptation ? "- ADAPTATION: The questions should challenge the user based on the content complexity." : ""}
+`;
+                        console.log(`🎨 Applying styles: Tone=${p.tone}, Focus=${p.focus_preference}`);
+                    }
+                }
+            }
+        } catch (prefErr) {
+            console.warn("Failed to load preferences for generation logic:", prefErr.message);
+        }
 
         // 4. COST-EFFICIENT SINGLE-PASS PROMPT
         // Requests all deliverables in one atomic operation to minimize request overhead
         const systemPrompt = `You are an expert AI Study Assistant.
 Analyze the text and generate a structured study plan.
+
+${prefsPrompt}
 
 GOALS:
 1. SUMMARY: Executive summary with **bold** key terms (MAX 250 words).
