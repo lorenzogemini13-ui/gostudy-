@@ -16,20 +16,22 @@ export const API_BASE = (window.location.hostname === 'localhost' || window.loca
   ? 'http://localhost:3000'
   : 'https://go-study-backend.onrender.com';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDWjdgDTwK-WFxaWoLZbVzGFHxqmociHaI",
-  authDomain: "gostudy-7334c.firebaseapp.com",
-  projectId: "gostudy-7334c",
-  storageBucket: "gostudy-7334c.firebasestorage.app",
-  messagingSenderId: "583210603138",
-  appId: "1:583210603138:web:532c915ed82096f7929a9b",
-  measurementId: "G-S1ZMJ0F26K"
-};
+// Initialize Firebase (Async with Top-Level Await)
+let app, auth, googleProvider;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+try {
+  const response = await fetch(`${API_BASE}/api/config/auth`);
+  if (!response.ok) throw new Error("Failed to fetch auth config");
+  const firebaseConfig = await response.json();
+  
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  googleProvider = new GoogleAuthProvider();
+} catch (error) {
+  console.error("CRITICAL: Could not initialize Firebase Application:", error);
+  // Fallback or alert user
+  if (window.showError) window.showError("Failed to initialize security subsystem.");
+}
 
 // --- UI ELEMENTS ---
 const loginForm = document.getElementById('login-form');

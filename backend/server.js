@@ -19,8 +19,60 @@ const app = express();
 
 // --- 2. SECURITY & LIMITS ---
 // Allow all origins (dev) or restrict in production
-app.use(cors({ origin: '*' })); 
+const ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://go-study-backend.onrender.com'
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (ALLOWED_ORIGINS.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
 app.use(express.json());
+
+// --- ZOD VALIDATION SCHEMAS ---
+const { z } = require('zod');
+
+const StudyPlanSchema = z.object({
+    summary: z.string().max(10000, "Summary too long"), // Reasonable limit
+    memory_palace: z.string().max(5000, "Memory palace too long"),
+    active_recall: z.array(z.object({
+        question: z.string().max(500),
+        answer: z.string().max(2000),
+        difficulty_rating: z.union([z.number().min(1).max(5), z.string()]) // Handle string rating if flexible
+    })).max(50, "Too many questions"),
+    spaced_repetition: z.array(z.object({
+        day: z.string(),
+        topic: z.string().max(200),
+        hint: z.string().nullable().optional()
+    })).max(20),
+    concept_map: z.object({
+        main_topic: z.string().max(200),
+        subtopics: z.array(z.string().max(200)).max(20)
+    })
+});
+
+// --- CONFIG ENDPOINT (SECURELY SERVE PUBLIC KEYS) ---
+app.get('/api/config/auth', (req, res) => {
+    // Only return PUBLIC keys needed for client-side Firebase init
+    res.json({
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+        measurementId: process.env.FIREBASE_MEASUREMENT_ID
+    });
+});
 
 // --- 3. FIREBASE ADMIN INITIALIZATION ---
 const admin = require('firebase-admin');
@@ -166,8 +218,8 @@ const getPayPalAccessToken = async () => {
 // Verify PayPal webhook signature
 const verifyPayPalWebhook = async (headers, body) => {
     if (!PAYPAL_CONFIG.clientId || !PAYPAL_CONFIG.webhookId) {
-        console.warn('⚠️ PayPal credentials not configured, skipping webhook verification');
-        return true; // Skip verification in dev
+        console.error('⚠️ PayPal credentials not configured. Webhook verification FAILED.');
+        return false;
     }
     
     try {
@@ -573,6 +625,16 @@ SCHEMA:
         try {
             studyPlan = JSON.parse(content);
             
+            // --- 5a. ZOD VALIDATION ---
+            // Validate the structure before processing/saving
+            try {
+                studyPlan = StudyPlanSchema.parse(studyPlan);
+            } catch (validationError) {
+                console.error("Zod Validation Error:", validationError.errors);
+                // Attempt to return partial/invalid plan is dangerous, so we throw
+                throw new Error("AI generated invalid plan structure: " + JSON.stringify(validationError.errors));
+            }
+
             // --- VALIDATION & DEFAULTS ---
             if (!studyPlan.summary) studyPlan.summary = "Summary not generated.";
             
@@ -950,17 +1012,21 @@ app.put('/api/generations/:id', authenticate, async (req, res) => {
             return res.status(400).json({ error: 'Study plan data required' });
         }
 
-        // Validate structure
-        const requiredFields = ['summary', 'concept_map', 'active_recall', 'spaced_repetition', 'memory_palace'];
-        for (const field of requiredFields) {
-            if (studyPlan[field] === undefined) {
-                return res.status(400).json({ error: `Missing required field: ${field}` });
-            }
+        // Validate structure with Zod
+        const result = StudyPlanSchema.safeParse(studyPlan);
+        if (!result.success) {
+            return res.status(400).json({ 
+                error: 'Invalid study plan structure', 
+                details: result.error.errors 
+            });
         }
+        
+        // Use the validated data
+        const validatedPlan = result.data;
 
         // 1. Update Firestore
         await doc.ref.update({
-            studyPlan: studyPlan,
+            studyPlan: validatedPlan,
             updatedAt: admin.firestore.FieldValue.serverTimestamp()
         });
 
