@@ -22,7 +22,8 @@ const app = express();
 const ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'https://go-study-backend.onrender.com'
+    'https://go-study-backend.onrender.com',
+    'https://gostudy-test.vercel.app'
 ];
 
 app.use(cors({
