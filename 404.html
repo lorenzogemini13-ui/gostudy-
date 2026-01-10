@@ -23,41 +23,9 @@
       rel="stylesheet"
     />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/assets/css/output.css" rel="stylesheet">
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-            },
-            colors: {
-              primary: "#0071e3", // Apple Blue style
-              dark: "#1d1d1f", // Apple Dark Gray
-              "gray-50": "#fbfbfd",
-            },
-            boxShadow: {
-              premium: "0 20px 40px -15px rgba(0, 0, 0, 0.1)",
-            },
-            animation: {
-              float: "float 6s ease-in-out infinite",
-              "fade-up": "fadeUp 0.8s ease-out forwards",
-            },
-            keyframes: {
-              float: {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-20px)" },
-              },
-              fadeUp: {
-                "0%": { opacity: "0", transform: "translateY(20px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-            },
-          },
-        },
-      };
-    </script>
+    
 
     <style>
       html {

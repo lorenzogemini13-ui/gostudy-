@@ -72,7 +72,7 @@ const StudyPlanSchema = z.object({
     active_recall: z.array(z.object({
         question: z.string().max(500),
         answer: z.string().max(2000),
-        difficulty_rating: z.union([z.number().min(1).max(5), z.string()]),
+        difficulty_rating: z.union([z.number().min(1).max(5), z.string()]).optional(),
         level: z.number().min(1).max(3).optional(),
         type: z.enum(["multiple_choice", "short_answer"]).optional(),
         options: z.array(z.string()).optional(),
@@ -702,11 +702,12 @@ SCHEMA:
     "type": "multiple_choice" | "short_answer",
     "options": ["string", "string", "string", "string"],
     "related_concept": "string",
-    "difficulty_rating": 1-5 
+    "difficulty_rating": 1-5  // REQUIRED: Rating from 1 (easiest) to 5 (hardest)
   }],
   "spaced_repetition": [{ "day": "string", "topic": "string", "hint": "string"}],
   "concept_map": { "main_topic": "string", "subtopics": ["string", "string", "string"] }
-}`;
+}
+MUST: Ensure difficulty_rating is ALWAYS present for every active_recall item.`;
 
         console.log('Sending single optimized request to Perplexity AI...');
         

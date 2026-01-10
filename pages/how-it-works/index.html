@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How it Works - GoStudy!</title>
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link href="/assets/css/output.css" rel="stylesheet">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,37 +17,7 @@
   <link rel="icon" href="/assets/go-logo.png?v=2" type="image/png" />
   <meta name="theme-color" content="#007AFF" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#007AFF", 
-            secondary: "#F5F5F7", 
-            dark: "#1D1D1F",
-            success: "#34C759",
-          },
-          fontFamily: {
-            sans: ["Inter", "-apple-system", "sans-serif"],
-            mono: ["JetBrains Mono", "monospace"],
-          },
-          boxShadow: {
-            'subtle': '0 4px 20px rgba(0,0,0,0.04)',
-            'glow': '0 0 40px rgba(0,122,255,0.15)',
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            }
-          }
-        },
-      },
-    };
-  </script>
+  
 
   <style>
     /* Hide scrollbar */

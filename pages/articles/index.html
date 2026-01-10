@@ -6,7 +6,7 @@
   <title>The Study Log - GoStudy!</title>
   
    <!-- tailwind -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link href="/assets/css/output.css" rel="stylesheet">
 
   <!-- ggl fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,40 +15,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 
   <!-- Config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["Inter", "-apple-system", "sans-serif"],
-            mono: ["JetBrains Mono", "monospace"],
-            display: ["Inter", "sans-serif"], // Unified font for clean look
-          },
-          colors: {
-            primary: "#007AFF",
-            secondary: "#F5F5F7",
-            dark: "#1D1D1F",
-            "dark-secondary": "#151516"
-          },
-          animation: {
-            'fade-in': 'fadeIn 0.5s ease-out forwards',
-            'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          },
-          keyframes: {
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            }
-          }
-        }
-      }
-    };
-  </script>
+  
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/go-logo.png?v=2" type="image/png" />
