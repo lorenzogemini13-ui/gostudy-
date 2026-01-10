@@ -385,18 +385,20 @@ const getCreditsBalance = async (userId) => {
 };
 
 // Deduct credits atomically with transaction (returns success/failure)
-const deductCredits = async (userId, amount, description, idempotencyKey) => {
+const deductCredits = async (userId, amount, description, idempotencyKey = null) => {
     if (!db) return { success: false, error: 'Database not initialized' };
     
-    // Check idempotency first
-    const existingLedger = await db.collection('credits_ledger')
-        .where('idempotencyKey', '==', idempotencyKey)
-        .limit(1)
-        .get();
-    
-    if (!existingLedger.empty) {
-        console.log(`⚠️ Duplicate deduction attempt: ${idempotencyKey}`);
-        return { success: true, duplicate: true }; // Already processed
+    // Check idempotency first (only if key is provided)
+    if (idempotencyKey) {
+        const existingLedger = await db.collection('credits_ledger')
+            .where('idempotencyKey', '==', idempotencyKey)
+            .limit(1)
+            .get();
+        
+        if (!existingLedger.empty) {
+            console.log(`⚠️ Duplicate deduction attempt: ${idempotencyKey}`);
+            return { success: true, duplicate: true }; // Already processed
+        }
     }
     
     const userRef = db.collection('users').doc(userId);
