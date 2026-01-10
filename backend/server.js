@@ -1096,9 +1096,9 @@ app.post('/api/chat', authenticate, async (req, res) => {
         const hourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const rateLimitSnapshot = await db.collection('credits_ledger')
             .where('userId', '==', userId)
-            .where('type', '==', 'usage')
+            .where('type', '==', 'deduction')
             .where('description', '==', 'AI Chat Interaction')
-            .where('timestamp', '>=', hourAgo)
+            .where('createdAt', '>=', hourAgo)
             .get();
 
         if (rateLimitSnapshot.size >= 20) {
