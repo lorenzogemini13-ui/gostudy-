@@ -1093,15 +1093,29 @@ app.post('/api/chat', authenticate, async (req, res) => {
 
     try {
         // 1. Rate Limiting (20 msgs/hour)
+        // Note: We fetch more broadly and filter in memory to avoid needing a complex composite index on Firestore.
         const hourAgo = new Date(Date.now() - 60 * 60 * 1000);
-        const rateLimitSnapshot = await db.collection('credits_ledger')
+        
+        // Query only by userId and type (equality filters usually don't need a composite index)
+        const snapshot = await db.collection('credits_ledger')
             .where('userId', '==', userId)
             .where('type', '==', 'deduction')
-            .where('description', '==', 'AI Chat Interaction')
-            .where('createdAt', '>=', hourAgo)
             .get();
 
-        if (rateLimitSnapshot.size >= 20) {
+        // In-memory filter for specific description and time window
+        let recentMsgCount = 0;
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            // Check description and createdAt (handle both Firestore Timestamp and JS Date)
+            if (data.description === 'AI Chat Interaction') {
+                const timestamp = data.createdAt && data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                if (timestamp >= hourAgo) {
+                    recentMsgCount++;
+                }
+            }
+        });
+
+        if (recentMsgCount >= 20) {
             return res.status(429).json({ 
                 error: 'Rate limit exceeded', 
                 message: 'You can only send 20 messages per hour. Please wait a while.' 
