@@ -1089,7 +1089,14 @@ app.post('/api/chat', authenticate, async (req, res) => {
         return res.status(400).json({ error: 'Messages array is required.' });
     }
 
-    const userId = req.user.uid;
+    const userId = req.user.uid || req.user.user_id;
+    if (!userId) {
+        console.error("❌ Auth Error: userId not found in token", req.user);
+        return res.status(401).json({ error: "User ID missing from token." });
+    }
+    
+    // Debug log to confirm we have the ID when querying
+    // console.log(`[CHAT] Checking limits for user: ${userId}`);
 
     try {
         // 1. Rate Limiting (20 msgs/hour)
