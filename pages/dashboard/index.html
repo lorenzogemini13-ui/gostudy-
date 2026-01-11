@@ -2169,6 +2169,13 @@
         }
       };
 
+      // Expose for debugging (Localhost only)
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        window.renderDashboard = renderDashboard;
+        window.SequentialStudy = SequentialStudy;
+        console.log("🔧 Debug mode: renderDashboard and SequentialStudy exposed to window");
+      }
+
       // --- MOBILE SIDEBAR LOGIC ---
       document.addEventListener("DOMContentLoaded", () => {
         const toggleBtn = document.getElementById("mobile-menu-toggle");
